@@ -1,8 +1,14 @@
 import React from 'react'
 
+import Navbar from './Heading/Heading'
+
 const Message = () => {
   return (
-    <div>Message</div>
+  
+    <div className='text-red-600'>Message
+     <Navbar/>
+    </div>
+   
   )
 }
 

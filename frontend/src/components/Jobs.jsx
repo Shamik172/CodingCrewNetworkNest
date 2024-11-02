@@ -2,7 +2,9 @@ import React from 'react'
 
 const Jobs = () => {
   return (
-    <div>Jobs</div>
+    <div className='text-red-600'>Jobs
+         <Navbar/>
+    </div>
   )
 }
 

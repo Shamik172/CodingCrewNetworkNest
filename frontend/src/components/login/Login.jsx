@@ -1,31 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./login.css";
-
-
+import styles from "./login.module.css";
 
 function Login() {
   return (
-    <div className="login-container">
-      <div className="background-overlay"></div> {/* Dark overlay */}
-      <div className="login-box">
-        <img src="/src/assets/loginbox3bg.png" alt="Avengers Logo" className="logo"/>
-        <h2>Welcome, Hero!</h2>
-        <form>
-          <div className="input-group">
-            <label>Username</label>
-            <input type="text" placeholder="Enter your username" />
+    <div className={styles.login_container}>
+      <div className={styles.background_overlay}></div> {/* Dark overlay */}
+      <div className={styles.login_box}>
+        <img src="/src/assets/loginbox3bg.png" alt="Avengers Logo" className={styles.logo} />
+        <h2 className={styles.header}>Welcome, Hero!</h2>
+        <form action="/">
+          <div className={styles.input_group}>
+            <label className={styles.label}>Username</label>
+            <input type="text" placeholder="Enter your username" className={styles.input} />
           </div>
-          <div className="input-group">
-            <label>Password</label>
-            <input type="password" placeholder="Enter your password" />
+          <div className={styles.input_group}>
+            <label className={styles.label}>Password</label>
+            <input type="password" placeholder="Enter your password" className={styles.input} />
           </div>
-          <button className="login-button" type="submit">
+          <button className={styles.login_button} type="submit">
             Assemble
           </button>
         </form>
-        <p className="not-member">
-          Not part of the Avengers yet? <Link to="/signup" className="signup-link">Sign up</Link>
+        <p className={styles.not_member}>
+          Not part of the Avengers yet? <Link to="/signup" className={styles.signup_link}>Sign up</Link>
         </p>
       </div>
     </div>

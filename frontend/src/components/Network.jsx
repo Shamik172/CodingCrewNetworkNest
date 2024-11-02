@@ -2,7 +2,9 @@ import React from 'react'
 
 const Networ = () => {
   return (
-    <div>Networ</div>
+    <div className='text-red-600'>Networ
+      <Navbar/>
+    </div>
   )
 }
 

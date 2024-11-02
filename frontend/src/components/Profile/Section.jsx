@@ -36,6 +36,7 @@ const Section = (props) => {
       </div>
 
       {isOverflowing && (
+        
         <button
           onClick={() => setShowMore((prev) => !prev)}
           className={`text-gray-600 mt-4 flex items-center justify-center mx-auto ${showMore ? '' : 'animate-bounce'}`}

@@ -5,6 +5,7 @@ import Modal from './Modal'; // Import the Modal component
 import { IoIosAddCircleOutline } from "react-icons/io";
 
 const Skills = () => {
+  
   const [skills, setSkills] = useState(['React']);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -15,7 +16,7 @@ const Skills = () => {
   const removeSkillHandler = (skillToRemove) => {
     setSkills((prevSkills) => prevSkills.filter(skill => skill !== skillToRemove));
   };
-
+ 
   return (
     <>
       <Section title='Skills'>

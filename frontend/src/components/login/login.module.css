@@ -1,0 +1,105 @@
+.login_container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Aligns the login box to the right */
+  width: 100vw;
+  height: 100vh;
+  /* background-image: url("./assets/marvel-avengers-logo-red-desktop-wallpaper-4k.jpg") no-repeat center center fixed; */
+  background-size: cover;
+}
+
+.background_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* dark overlay */
+}
+
+.login_box {
+  position: relative;
+  z-index: 1;
+  background-color: rgba(127, 61, 61, 0.447); /* semi-transparent */
+  padding: 2rem;
+  border-radius: 10px;
+  width: 320px;
+  margin-right: 2.5%; /* Adds spacing from the right edge */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+.logo {
+  height: 120px;
+  /* width: 160px; */
+}
+
+.header {
+  color: #f9c900;
+  font-family: 'Roboto', sans-serif;
+  font-size: 26px;
+  margin-bottom: 1.5rem;
+}
+
+.input_group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.label {
+  color: #f9c900;
+  font-size: 14px;
+}
+
+.input {
+  width: 95%;
+  padding: 0.6rem;
+  margin-top: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Light, semi-transparent border */
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.2); /* Light transparent background */
+  color: #b9abab; /* Dark text color for contrast */
+  font-size: 14px;
+}
+
+.input::placeholder {
+  color: rgba(250, 245, 245, 0.6); /* Semi-transparent placeholder text */
+}
+
+.login_button {
+  width: 95%;
+  padding: 0.8rem;
+  background-color: #d81e5b;
+  border: none;
+  color: white;
+  font-size: 17px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  transition: background 0.3s;
+  margin-left: 7px;
+}
+
+.login_button:hover {
+  background-color: #29d329;
+}
+
+.not_member {
+  margin-top: 1rem;
+  font-size: 14px;
+  color: #ce9c9f; /* Dark text for contrast */
+  font-family: 'Roboto', sans-serif;
+}
+
+.signup_link {
+  color: #29cf45; /* Avengers red for emphasis */
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 0.3rem;
+  transition: color 0.3s;
+}
+
+.signup_link:hover {
+  color: #13b3b0; /* Darker shade on hover */
+}

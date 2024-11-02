@@ -1,0 +1,104 @@
+.signup_container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Aligns the signup box to the left */
+  width: 100vw;
+  height: 100vh;
+  background: url("/assets/avenger-bg.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+.background_overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Dark overlay */
+}
+
+.signup_box {
+  position: relative;
+  z-index: 1;
+  background-color: rgba(127, 61, 61, 0.447); /* Light semi-transparent background */
+  padding: 2rem;
+  border-radius: 10px;
+  width: 320px;
+  margin-left: 2%; /* Adds spacing from the left edge */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.logo {
+  height: 120px;
+  /* width: 160px; */
+}
+
+.header {
+  color: #cbbebe;
+  font-family: 'Roboto', sans-serif;
+  font-size: 26px;
+  margin-bottom: 1.5rem;
+}
+
+.input_group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.label {
+  color: #e9e0e0;
+}
+
+.input {
+  width: 95%;
+  padding: 0.6rem;
+  margin-top: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Light, semi-transparent border */
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.2); /* Light transparent background */
+  color: #b9abab; /* Dark text color for contrast */
+  font-size: 14px;
+}
+
+.input::placeholder {
+  color: rgba(237, 232, 232, 0.6); /* Semi-transparent placeholder text */
+}
+
+.signup_button {
+  width: 95%;
+  padding: 0.8rem;
+  background-color: #d81e5b;
+  border: none;
+  color: white;
+  font-size: 17px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  transition: background 0.3s;
+  margin-left: 7px;
+}
+
+.signup_button:hover {
+  background-color: #b3134b;
+}
+
+.already_member {
+  margin-top: 1rem;
+  font-size: 14px;
+  color: #9be89e; /* Dark text for contrast */
+  font-family: 'Roboto', sans-serif;
+}
+
+.login_link {
+  color: #d81e5b; /* Avengers red for emphasis */
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 0.3rem;
+  transition: color 0.3s;
+}
+
+.login_link:hover {
+  color: #b3134b; /* Darker shade on hover */
+}
