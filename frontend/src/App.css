@@ -1,0 +1,21 @@
+.App {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* background-image: linear-gradient(45deg, red, yellow); */
+    background-size: cover;
+    background-position: center;
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  
+  .img-set{
+    background-image: url('./assets/avengers3.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+   
+  }
+  
+  
