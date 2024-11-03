@@ -3,7 +3,7 @@ const Post = require('../models/post');
 const User = require('../models/user');
 const post = require('../models/post');
 
-exports.postCreatePost = (req, res, next) => {
+exports.postCreatePost = (req, res, next) => { 
     // console.log(req.body);
     // console.log(req.session.user);
 
@@ -14,15 +14,15 @@ exports.postCreatePost = (req, res, next) => {
         return res.status(403).json({message: "Login First"});
     }
 
-    const newPost = new Post({
+    const newPost = new Post({ 
         author: author,
         description, images, videos
     });
-    newPost.save()
+    newPost.save() 
     .then(savedPost=>{
         return User.findByIdAndUpdate(author, {
             $push: { posts: savedPost._id }
-        })
+        }) 
     })
     .then(()=>{
         return res.status(200).json({message: "done"});
