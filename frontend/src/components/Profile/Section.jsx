@@ -1,51 +1,26 @@
-import React, { useState, useRef, useEffect } from "react";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import React from "react";
+import { IoIosAddCircleOutline } from "react-icons/io";
 
 const Section = (props) => {
-  const [showMore, setShowMore] = useState(false);
-  const [isOverflowing, setIsOverflowing] = useState(false);
-  const contentRef = useRef(null);
-
-  useEffect(() => {
-    const checkOverflow = () => {
-      if (contentRef.current) {
-        const lineHeight = parseFloat(getComputedStyle(contentRef.current).lineHeight);
-        const maxHeight = lineHeight * 2; // max height for two lines
-        setIsOverflowing(contentRef.current.scrollHeight > maxHeight);
-      }
-    };
-
-    checkOverflow();
-    window.addEventListener("resize", checkOverflow);
-    return () => window.removeEventListener("resize", checkOverflow);
-  }, []);
-
   return (
     <div className="max-w-2xl md:mx-auto my-4 p-6 bg-white text-black shadow-lg shadow-sky-700 rounded-lg relative top-20 mx-2">
-      <h2 className="text-3xl font-bold text-gray-800 mb-2 text-center">
+      <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center bg-slate-400 py-2 rounded-xl">
         {props.title}
       </h2>
 
-      <div
-        ref={contentRef}
-        className={`flex flex-wrap transition-all duration-100 ${
-          showMore ? 'max-h-full' : 'max-h-[3.5rem] overflow-hidden'
-        }`}
-      >
+      <div className={`flex flex-wrap transition-all duration-100 mb-12`}>
         {props.children}
       </div>
 
-      {isOverflowing && (
-        
+      {/* Add Icon Button in Bottom Right Corner */}
+      <div className="absolute bottom-4 right-4 z-10">
         <button
-          onClick={() => setShowMore((prev) => !prev)}
-          className={`text-gray-600 mt-4 flex items-center justify-center mx-auto ${showMore ? '' : 'animate-bounce'}`}
+          onClick={props.onAddClick} // Trigger the add functionality
+          className="rounded-full p-2 text-xl font-semibold bg-green-500 hover:bg-green-600 text-white"
         >
-          {/* {showMore ? 'Show Less' : 'Show More'} */}
-          <FaChevronUp className={`ml-2 transition-transform duration-300 ${!showMore ? 'rotate-180' : ''}`} />
-
+          <IoIosAddCircleOutline size={40}/>
         </button>
-      )}
+      </div>
     </div>
   );
 };

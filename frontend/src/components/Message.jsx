@@ -6,7 +6,7 @@ const Message = () => {
   return (
   
     <div className='text-red-600'>Message
-     <Navbar/>
+     <Navbar isLogin={true}/>
     </div>
    
   )

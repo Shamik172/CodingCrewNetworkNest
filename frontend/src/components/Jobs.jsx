@@ -3,7 +3,7 @@ import Navbar from './Heading/Heading'
 const Jobs = () => {
   return (
     <div className='text-red-600'>Jobs
-         <Navbar/>
+         <Navbar isLogin={true}/>
     </div>
   )
 }

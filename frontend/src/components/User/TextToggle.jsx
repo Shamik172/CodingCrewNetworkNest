@@ -8,8 +8,8 @@ function TextToggle({desc}) {
   };
 
   return (
-    <div className="mx-4 my-1 text-sm font-cursive text-lime-100 ">
-      <div className={`${showMore ? '' : 'line-clamp-2'} overflow-hidden`}>
+    <div className="mx-4 my-1 text-sm font-serif">
+      <div className={`text-blue-950  ${showMore ? '' : 'line-clamp-2'} overflow-hidden`}>
        {desc}
       </div>
       <button

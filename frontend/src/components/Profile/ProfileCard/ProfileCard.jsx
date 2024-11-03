@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from './ProfileCard.module.css'
 
 
-const ProfileCard = ({ profileImage, coverImage, name, description }) => {
+const ProfileCard = ({ profileImage, coverImage, name, description, isLogin }) => {
   
   const [isOverlayVisible, setOverlayVisible] = useState(false);
   const [isOverlayVisibleCover, setOverlayVisibleCover] = useState(false);
@@ -39,14 +39,32 @@ const ProfileCard = ({ profileImage, coverImage, name, description }) => {
           onClick={handleButtonClick}
         />
       </div>
-      <div className={styles.bioSection}>
-        <ul>
-          <li className="text-center text-2xl font-semibold">
-            <h2>{name}</h2>
-          </li>
-          <li className="text-center font-semibold underline">{description}</li>
-        </ul>
-      </div>
+
+      {isLogin ?(
+         <div className={styles.bioSection}>
+         <ul>
+           <li className="text-center text-2xl font-semibold">
+             <h2>{name}</h2>
+           </li>
+           <li className="text-center font-semibold underline">{description}</li>
+         </ul>
+       </div>
+      ): (
+       <button className="mt-5 flex">
+          <a href="/login" className="flex items-center">
+            <span className="bg-green-500 pl-4 p-1 text-center border-b-2 text-xl rounded-l-full text-white">
+              Login
+            </span>
+          
+            <span className="bg-blue-500 pr-4 text-center p-1 border-b-2 text-xl rounded-r-full text-white">
+              Signup
+            </span>
+          </a>
+        </button>
+
+      
+      ) }
+     
 
       {isOverlayVisible && (
         <div className={styles.overlay} onClick={handleOverlayClick}>

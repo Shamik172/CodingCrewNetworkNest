@@ -1,24 +1,25 @@
 import React, { useState } from "react";
-import { FaHome, FaUserFriends, FaBriefcase, FaEnvelope, FaBell, FaUserCircle } from "react-icons/fa";  // Import icons from React Icons
+import { FaHome, FaUserFriends, FaBriefcase, FaEnvelope, FaBell, FaUserCircle } from "react-icons/fa";
+import { useLocation } from "react-router-dom"; // Import useLocation for current route detection
 import Search from "./Search";
 import Logo from "./Logo";
 import { NavIcon } from "./NavIcon";
 import { MobileIcon } from "./MobileIcon";
-import img from "../../assets/image1.jpeg"
+import img from "../../assets/image1.jpeg";
 
-
-
-function Navbar() {
+function Navbar({isLogin}) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const location = useLocation(); // Get the current path
+
   const TitleIconObject = [
-    {IconTitle : 'Home', Icon: FaHome, url: '/'},
-    {IconTitle : 'Network', Icon: FaUserFriends, url: '/networks'},
-    {IconTitle : 'Jobs', Icon: FaBriefcase, url: '/jobs'},
-    {IconTitle : 'Messaging', Icon: FaEnvelope, url: '/message'},
-    {IconTitle : 'Notifications', Icon: FaBell, url: '/notifications'},
-    {IconTitle : 'Profile', Icon: FaUserCircle, url: '/profile'},
-  ]
+    { IconTitle: 'Home', Icon: FaHome, url: '/' },
+    { IconTitle: 'Network', Icon: FaUserFriends, url: '/networks' },
+    { IconTitle: 'Jobs', Icon: FaBriefcase, url: '/jobs' },
+    { IconTitle: 'Messaging', Icon: FaEnvelope, url: '/message' },
+    { IconTitle: 'Notifications', Icon: FaBell, url: '/notifications' },
+    { IconTitle: 'Profile', Icon: FaUserCircle, url: '/profile' },
+  ];
 
   const handleSearchChange = (e) => setSearchQuery(e.target.value);
   const handleSearchSubmit = (e) => {
@@ -28,26 +29,56 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-primary-color border-b  border-primary-color px-4 sm:px-8 py-2 shadow-md fixed w-full top-0 z-10 text-Light-Beige">
+    <nav className="bg-primary-color border-b border-primary-color px-4 sm:px-8 py-2 shadow-md fixed w-full top-0 z-50 text-Light-Beige">
+      <div className="flex items-center justify-between">
+        {/* Logo */}
+        <Logo logoName={img} />
 
-      <div className="flex items-center justify-between ">
-         {/* Logo */}
-         <Logo logoName={img}/>
+        {/* Search Bar */}
+        <form onSubmit={handleSearchSubmit} className="flex items-center w-full max-w-md mx-4">
+          <Search handleSearchChange={handleSearchChange} searchQuery={searchQuery} />
+        </form>
 
-         {/* Search Bar */}
-         <form  onSubmit={handleSearchSubmit}
-            className="flex items-center w-full max-w-md mx-4 ">
-            <Search handleSearchChange={handleSearchChange} searchQuery={searchQuery}/>
-          </form>
-         
+        {/* Icons with Tooltips Below for Desktop */}
 
+        { isLogin ? (
+              <div className="hidden md:flex space-x-6 items-center text-Light-Beige relative">
+              {TitleIconObject.map((item) => (
+                <NavIcon
+                  key={item.IconTitle}
+                  Icon={item.Icon}
+                  IconTitle={item.IconTitle}
+                  url={item.url}
+                  isActive={location.pathname === item.url} // Check if the current path matches
+                />
+              ))}
+            </div>
+        )
+          :(
+            <div className="hidden md:flex space-x-6 items-center text-Light-Beige relative">
+            
+               
+                <NavIcon
+                  key={TitleIconObject[0].IconTitle}
+                  Icon={TitleIconObject[0].Icon}
+                  IconTitle={TitleIconObject[0].IconTitle}
+                  url={TitleIconObject[0].url}
+                  isActive={location.pathname === TitleIconObject[0].url} // Check if the current path matches
+                />
 
+               <NavIcon
+                  key={TitleIconObject[5].IconTitle}
+                  Icon={TitleIconObject[5].Icon}
+                  IconTitle={TitleIconObject[5].IconTitle}
+                  url={TitleIconObject[5].url}
+                  isActive={location.pathname === TitleIconObject[5].url} // Check if the current path matches
+                />
 
-         {/* Icons with Tooltips Below for Desktop */}
-         <div className="hidden md:flex space-x-6 items-center text-Light-Beige relative">
-            {TitleIconObject.map(item => <NavIcon key={item.IconTitle} Icon={item.Icon} IconTitle={item.IconTitle} url={item.url}/> )}
-         </div>
-
+            
+            </div>
+          )
+        }
+        
 
         {/* Hamburger Icon for Mobile */}
         <button
@@ -62,9 +93,16 @@ function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden mt-2 space-y-2 text-Light-Beige ">
-           
-            {TitleIconObject.map(item=> <MobileIcon Icon={item.Icon} IconTitle={item.IconTitle} url={item.url}/>)}
+        <div className="md:hidden mt-2 space-y-2 text-Light-Beige">
+          {TitleIconObject.map((item) => (
+            <MobileIcon
+              key={item.IconTitle}
+              Icon={item.Icon}
+              IconTitle={item.IconTitle}
+              url={item.url}
+              isActive={location.pathname === item.url} // Check for active path in mobile view
+            />
+          ))}
         </div>
       )}
     </nav>

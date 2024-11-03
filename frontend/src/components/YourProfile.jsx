@@ -8,12 +8,39 @@ import Education from './Profile/Education/Education'
 const YourProfile = () => {
   return (
    <>
-      <Navbar/>
-      <ProfileSection/>
-      <Skills/>
-      <Project/>
-      <Experience/>
-      <Education/>
+      <div className='flex md:justify-center md:space-x-10 justify-center'>
+                <Navbar isLogin={true}/>
+            <div className='relative top-20 h-96 w-60 bg-white text-black hidden md:flex flex-col rounded-lg p-5'>
+                 <div className='text-xl font-semibold border-b-2 pb-2'>Connection:
+                     <span className=' ml-2 font-light relative top-0.5'>3<sup>+</sup></span>
+                 </div>
+                 <div className='space-y-2'>
+                    <div>Sumanta</div>
+                    <div>Sumanta</div>
+                    <div>Sumanta</div>
+                    <div>Sumanta</div>
+                    <div>Sumanta</div>
+                    <div>Sumanta</div>
+                    <div>Sumanta</div>
+                    <div>Sumanta</div>
+                    <div>Sumanta</div>
+                    <div>Sumanta</div>
+                    <div>Sumanta</div>
+                    <div>Sumanta</div>
+                 </div>
+                
+            </div>
+            <div>
+               
+                <ProfileSection/>
+                <Skills/>
+                <Project/>
+                <Experience/>
+                <Education/>
+            </div>
+        
+      </div>
+      
    </>
   )
 }
