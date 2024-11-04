@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Navbar from './Heading/Heading'
-import UserProfileCard from './User/UserProfileCard'
+import UserPost from './User/UserPost'
 import ProfileCard from './Profile/ProfileCard/ProfileCard';
 import image from '../assets/doraemon.jpeg';
 import image1 from '../assets/cover.jpeg';
@@ -10,7 +10,7 @@ import data from '../components/Test/data.json'
 
 const Home = () => {
 
-    const [isLogin, setLogin] = useState(false);
+    const [isLogin, setLogin] = useState(true);
     
   return (
     <>
@@ -33,7 +33,7 @@ const Home = () => {
 
              <div className='md:w-3/4 w-full md:mx-0  mx-4  max-w-2xl flex flex-col items-center  '>
               
-                {data.map(item =>  <UserProfileCard key={item.name} UserProfile={item} isLogin={isLogin}/>)}
+                {data.map(item =>  <UserPost key={item.name} UserProfile={item} isLogin={isLogin}/>)}
            
              </div>
              <div className='bg-red-400 w-1/5 h-96 mx-2 rounded-md mt-2  max-w-56 hidden lg:flex'></div>
