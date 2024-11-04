@@ -20,6 +20,7 @@ const io = socketIo(server, {
   cors: {
     origin: "http://localhost:5173", // Allow frontend origin for CORS
     methods: ["GET", "POST"],
+    credentials: true
   },
 });
 
@@ -78,10 +79,12 @@ app.use((req, res, next) => {
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/userProfile');
 const postRoutes = require('./routes/posts');
+const jobRoutes = require('./routes/jobRoutes');
 
 app.use('/auth', authRoutes);
 app.use('/user', profileRoutes);
 app.use('/post', postRoutes);
+app.use('/job',jobRoutes);
 
 // Socket.IO setup for real-time messaging
 io.on("connection", (socket) => {

@@ -110,6 +110,34 @@ exports.applyJob = (req, res, next) => {
     })
 }
 
-exports.manageJob = (rq, res, next) => {
-    
+exports.filterJob = (req, res, next) => {
+    const {title, location, companyName, skillsRequired, jobType} = req.query;
+    const filter = {};
+
+    if(title){
+        filter.title = {$regex: title, $options: "i"}
+    }
+
+    if(location){
+        filter.location = {$regex: location, $options: "i"}
+    }
+
+    if(skillsRequired){
+        filter.skillsRequired = {$regex: skillsRequired, $options: "i"}
+    }
+
+    if(companyName){
+        filter.companyName = {$regex: companyName, $options: "i"}
+    }
+
+    if(jobType){
+        filter.jobType = {$regex: jobType, $options: "i"}
+    }
+
+
+    Job.find(filter)
+    .then(jobs=>{
+        return res.status(200).json(jobs);
+    })
+    .catch(err=>console.log(err));
 }
