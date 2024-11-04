@@ -6,6 +6,7 @@ import Logo from "./Logo";
 import { NavIcon } from "./NavIcon";
 import { MobileIcon } from "./MobileIcon";
 import img from "../../assets/image1.jpeg";
+import NavDropDown from "./NavDropDown";
 
 function Navbar({isLogin}) {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +19,7 @@ function Navbar({isLogin}) {
     { IconTitle: 'Jobs', Icon: FaBriefcase, url: '/jobs' },
     { IconTitle: 'Messaging', Icon: FaEnvelope, url: '/message' },
     { IconTitle: 'Notifications', Icon: FaBell, url: '/notifications' },
-    { IconTitle: 'Profile', Icon: FaUserCircle, url: '/profile' },
+    
   ];
 
   const handleSearchChange = (e) => setSearchQuery(e.target.value);
@@ -52,10 +53,14 @@ function Navbar({isLogin}) {
                   isActive={location.pathname === item.url} // Check if the current path matches
                 />
               ))}
+
+              
+              <NavDropDown/>
             </div>
+            
         )
           :(
-            <div className="hidden md:flex space-x-6 items-center text-Light-Beige relative">
+            <div className="flex space-x-6 items-center text-Light-Beige relative">
             
                
                 <NavIcon
@@ -66,13 +71,16 @@ function Navbar({isLogin}) {
                   isActive={location.pathname === TitleIconObject[0].url} // Check if the current path matches
                 />
 
-               <NavIcon
-                  key={TitleIconObject[5].IconTitle}
-                  Icon={TitleIconObject[5].Icon}
-                  IconTitle={TitleIconObject[5].IconTitle}
-                  url={TitleIconObject[5].url}
-                  isActive={location.pathname === TitleIconObject[5].url} // Check if the current path matches
-                />
+             <div className=" flex space-x-2">
+                <a href="/login" className="bg-gradient-to-r from-violet-500 to-fuchsia-500  size-10  border-none text-sm p-1 flex justify-center items-center rounded-full text-white box-content relative cursor-pointer animate">
+                
+                    Login  
+                </a>
+
+                <a href="/signup" className=" bg-gradient-to-r from-sky-500 to-indigo-500 size-10  border-none text-sm p-1 flex justify-center items-center rounded-full text-white box-content relative cursor-pointer animate">
+                    Signup
+                </a>
+            </div>
 
             
             </div>
@@ -81,7 +89,8 @@ function Navbar({isLogin}) {
         
 
         {/* Hamburger Icon for Mobile */}
-        <button
+
+        {isLogin &&  <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden text-Light-Beige focus:outline-none"
         >
@@ -89,10 +98,12 @@ function Navbar({isLogin}) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
         </button>
+        }
       </div>
+       
 
       {/* Mobile Menu */}
-      {isOpen && (
+      {(isOpen ) && (
         <div className="md:hidden mt-2 space-y-2 text-Light-Beige">
           {TitleIconObject.map((item) => (
             <MobileIcon
@@ -102,7 +113,17 @@ function Navbar({isLogin}) {
               url={item.url}
               isActive={location.pathname === item.url} // Check for active path in mobile view
             />
+
+
           ))}
+
+            <MobileIcon
+              key={'profile'}
+              Icon={FaUserCircle}
+              IconTitle={'profile'}
+              url={'/profile'}
+              isActive={location.pathname === '/profile'} // Check for active path in mobile view
+            />
         </div>
       )}
     </nav>

@@ -1,8 +1,9 @@
 import React from 'react'
+import UniversalModal from '../UniversalModal'
 
 const Test = () => {
   return (
-    <div>Test</div>
+    <UniversalModal setModalHandler={()=>console.log('hell0')}/>
   )
 }
 

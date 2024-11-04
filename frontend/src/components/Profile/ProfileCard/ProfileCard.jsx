@@ -27,13 +27,13 @@ const ProfileCard = ({ profileImage, coverImage, name, description, isLogin }) =
     <div className={styles.profileContainer}>
       <div className={styles.profileCard}>
         <img
-          className={styles.coverPhoto}
+          className={`${styles.coverPhoto} bg-gray-400`}
           src={coverImage}
           alt="Cover"
           onClick={handleCoverButtonClick}
         />
         <img
-          className={styles.profilePhoto}
+          className={`${styles.profilePhoto} bg-gray-500`}
           src={profileImage}
           alt="Profile"
           onClick={handleButtonClick}
@@ -50,15 +50,12 @@ const ProfileCard = ({ profileImage, coverImage, name, description, isLogin }) =
          </ul>
        </div>
       ): (
-       <button className="mt-5 flex">
-          <a href="/login" className="flex items-center">
-            <span className="bg-green-500 pl-4 p-1 text-center border-b-2 text-xl rounded-l-full text-white">
+       <button className="mt-5 flex flex-col space-y-2">
+          <a href="/login" className="px-5 p-1 text-center  text-xl  text-white box-content rounded-full relative  bg-green-500 hover:bg-green-600  left-1">  {/*-top-1 left-7  */}
               Login
-            </span>
-          
-            <span className="bg-blue-500 pr-4 text-center p-1 border-b-2 text-xl rounded-r-full text-white">
-              Signup
-            </span>
+          </a>
+          <a href="/signup" className=' bg-gradient-to-r from-sky-500 to-indigo-500 hover:bg-gradient-to-l hover:from-sky-600 hover:to-indigo-600 px-6 text-center p-1 border-b-2 text-xl rounded-full text-white relative box-content right-2'>
+             Signup     
           </a>
         </button>
 
