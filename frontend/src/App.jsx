@@ -9,6 +9,7 @@ import Jobs from './components/Jobs';
 import Notifications from './components/Notifications';
 import Message from './components/Message';
 import YourProfile from './components/YourProfile';
+import Test from './components/Test/Test';
 
 function App() {
   const router = createBrowserRouter([
@@ -20,6 +21,7 @@ function App() {
     { path: '/profile', element: <YourProfile /> },
     { path: '/login', element: <Login /> },
     { path: '/signup', element: <Signup /> },
+    { path: '/test', element: <Test/> },
   ]);
 
   return (

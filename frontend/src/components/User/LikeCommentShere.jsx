@@ -1,11 +1,13 @@
 import React from 'react'
 
-const LikeCommentShere = ({Icon, title, col}) => {
+const LikeCommentShere = ({Icon, title, col, isLogin, ClickHandler}) => {
   return (
-    <button className="flex items-center space-x-1 hover:text-gray-900
+
+        
+       <button onClick={ClickHandler} className="flex w-1/3 p-3 justify-center hover:bg-blue-50 
      ">
-          <Icon color={col}/>
-          <span>{title}</span>
+          <Icon color={col}  className={`hover:${col} hover:scale-150`}/>
+          {/* <span>{title}</span> */}
         </button>
   )
 }
