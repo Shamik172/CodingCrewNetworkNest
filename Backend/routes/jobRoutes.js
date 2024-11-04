@@ -8,6 +8,8 @@ router.post('/postjob', isAuth, jobController.createJob);
 
 router.post('/applyjob/:jobId', isAuth, jobController.applyJob);
 
+router.get('/filterjob', jobController.filterJob);
+
 router.delete('/deletejob/:jobId', isAuth, jobController.deleteJob);
 
 module.exports = router; 

@@ -21,14 +21,13 @@ exports.postLogin = (req, res, next)=>{
     const username = req.body.username;
 
     if (!username || !password) {
-        return res.status(400).json({ message: 'All fields required'});
+        return res.status(400).json({ message: 'All fields are required'});
     }
 
     User.findOne({username: username})
     .then(user=>{
         if(!user){
-            console.log("User doesn't exists");
-            return res.redirect(200,'/signup');
+            return res.status(404).json({ message: "User doesn't exist" });
         }
         bcrypt.compare(password, user.password)
         .then(doMatch => {
@@ -41,16 +40,14 @@ exports.postLogin = (req, res, next)=>{
 
                 req.session.user = {id: user._id, username: user.username};
                 req.session.token = token;
-                console.log("Logged in successfully");
-                console.log(user.username);
-                return res.redirect(200,'/index');
+                // console.log(user.username);
+                return res.status(200).json({message: "Logged in successfully"})
             }
-            console.log('Invalid password');
-            return res.redirect(200,'/login');
+            return res.status(401).json({ message: 'Invalid password' });
         })
-        .catch(err=>console.log(err));
+        .catch(err => res.status(500).json({ message: 'Server error', error: err }));
     })
-    .catch(err=>console.log(err));
+    .catch(err => res.status(500).json({ message: 'Server error', error: err }));
 }
 
 exports.postSignup = (req, res, next) => {
@@ -67,7 +64,7 @@ exports.postSignup = (req, res, next) => {
     // const profilePicture = req.files['profilePicture'] ? req.files['profilePicture'][0] : '';
     // const coverPicture = req.files['coverPicture'] ? req.files['coverPicture'][0] : '';
 
-    if (!email || !password || !username || !name) {
+    if (!email || !password || !username) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 
@@ -92,7 +89,7 @@ exports.postSignup = (req, res, next) => {
         })
         .then(result=>{
             console.log("user created successfully");
-            res.redirect(201,'/login');
+            res.redirect(200,'/login');
         })
         .catch(err=>console.log(err));
     })
