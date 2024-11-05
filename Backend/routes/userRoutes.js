@@ -9,4 +9,6 @@ router.get('/profile/:username', userController.getUserProfile);
 
 router.post('/edit/:username', isAuth, userController.postEditUser);
 
+router.get('/search', userController.searchUser);
+
 module.exports = router;
