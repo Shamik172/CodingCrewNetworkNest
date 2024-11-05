@@ -37,7 +37,7 @@ function ProfileSection() {
   };
 
   return (
-    <div className="max-w-2xl md:mx-auto p-6 bg-white shadow-lg rounded-lg relative top-20 mx-2">
+    <div className="max-w-2xl md:mx-auto p-6 bg-white dark:bg-black  shadow-sky-700 shadow-md  rounded-lg relative top-20 mx-2">
       <div className="relative">
         {/* Cover Picture */}
         <CoverPic
@@ -81,11 +81,11 @@ function ProfileSection() {
 
       {/* Profile Content */}
       <div className="mt-6 px-10">
-        <h2 className="text-lg font-semibold text-gray-800">Username:</h2>
-        <p className="text-sm text-gray-500 mb-4">{profile.username}</p>
+        <h2 className="text-lg font-semibold text-gray-800 dark:text-purple-500">Username:</h2>
+        <p className="text-sm text-gray-500 mb-4 relative left-10 dark:text-white">{profile.username}</p>
 
-        <h2 className="text-lg font-semibold text-gray-800">Email:</h2>
-        <p className="text-sm text-gray-500 mb-4">{profile.email}</p>
+        <h2 className="text-lg font-semibold text-gray-800  dark:text-purple-500">Email:</h2>
+        <p className="text-sm text-gray-500 mb-4 relative left-10 dark:text-white">{profile.email}</p>
       </div>
 
 

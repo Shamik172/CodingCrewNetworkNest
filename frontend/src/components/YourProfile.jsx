@@ -10,8 +10,8 @@ const YourProfile = () => {
    <>
       <div className='flex md:justify-center md:space-x-10 justify-center'>
                 <Navbar isLogin={true}/>
-            <div className='relative top-20 h-96 w-60 bg-white text-black hidden md:flex flex-col rounded-lg p-5'>
-                 <div className='text-xl font-semibold border-b-2 pb-2'>Connection:
+            <div className='relative top-20 h-96 w-60   hidden md:flex flex-col rounded-lg p-5  bg-white dark:bg-black text-black dark:text-white'>
+                 <div className='text-xl font-semibold border-b-2 dark:border-blue-950 pb-2'>Connection:
                      <span className=' ml-2 font-light relative top-0.5'>3<sup>+</sup></span>
                  </div>
                  <div className='space-y-2'>
@@ -40,7 +40,7 @@ const YourProfile = () => {
             </div>
         
       </div>
-      <div className='relative -top-20 h-20'></div>
+      <div className='relative -top-20 h-20 -z-10'></div>
       
    </>
   )
