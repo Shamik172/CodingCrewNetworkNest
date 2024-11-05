@@ -15,17 +15,17 @@ const NavDropDown = () => {
 
 
   return (
-    <div className=" text-right relative top-1">
-      <Menu>
+    <div className=" text-right absolute -top-4 -left-3">
+      <Menu >
         <MenuButton className="inline-flex items-center rounded-full   text-sm/6 font-semibold text-white ">
-            <img src={image} alt="/" className='size-10 rounded-full min-w-10'/>
+            <img src={image} alt="/" className='size-9 rounded-full min-w-9'/>
             <ChevronDownIcon className="size-4 fill-white/60 relative top-2 -left-4" />
         </MenuButton>
 
         <MenuItems
           transition
           anchor="bottom end"
-          className="w-52 origin-top-right rounded-xl border border-white/5 bg-white p-1 text-sm/6 text-black transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 z-50 "
+          className="w-48 origin-top-right rounded-xl border border-white/5 bg-white p-1 text-sm/6 text-black transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 z-[100] "
         >
           <MenuItem>
             <a href='/profile' className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 hover:bg-gray-300">
@@ -55,7 +55,7 @@ const NavDropDown = () => {
           <MenuItem>
             <button type='submit' className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 hover:bg-gray-300">
               <PiSignOutThin className="size-4" color='grey'/>
-              SignOut
+              LogOut
               <kbd className="ml-auto hidden font-sans text-xs text-black/50 group-data-[focus]:inline">⌘S</kbd>
             </button>
           </MenuItem>

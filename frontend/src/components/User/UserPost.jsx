@@ -33,7 +33,7 @@ function UserPost({ UserProfile, isLogin }) {
 
   return (
     <>
-      <div className="relative w-full md:mx-auto shadow-blue-300 border-none rounded-lg shadow-md overflow-hidden bg-[#f9f9f9] mx-1 inline-block mb-8 mt-2 text-black">
+      <div className="relative w-full md:mx-auto shadow-blue-300 border-none rounded-lg shadow-md overflow-hidden bg-slate-50 mx-1 inline-block mb-8 mt-2 text-black">
         {/* Remove card icon */}
         <FaTimes
           className="absolute top-2 right-2 text-gray-500 hover:text-red-500 cursor-pointer"

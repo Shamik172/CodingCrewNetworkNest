@@ -1,8 +1,18 @@
 import React from 'react'
+import JobPostingForm from './JobPostingForm'
+
+
+
+
 
 const Test = () => {
+  const Store = [];
+
+  
   return (
-    <div>Test</div>
+    <div className=''>
+       <JobPostingForm/>
+    </div>
   )
 }
 
