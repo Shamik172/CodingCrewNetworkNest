@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 const User = require('./models/user');
 const multer = require('multer');
 const path = require('path');
@@ -74,17 +75,26 @@ app.use((req, res, next) => {
             next();
         })
         .catch(err => console.log(err));
-});  
+}); 
 
-const authRoutes = require('./routes/auth');
-const profileRoutes = require('./routes/userProfile');
-const postRoutes = require('./routes/posts');
+app.use(cors({
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  }));
+
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const postRoutes = require('./routes/postRoutes');
 const jobRoutes = require('./routes/jobRoutes');
+const connectionRoutes = require('./routes/connectionRoutes');
+
 
 app.use('/auth', authRoutes);
-app.use('/user', profileRoutes);
+app.use('/user', userRoutes);
 app.use('/post', postRoutes);
-app.use('/job',jobRoutes);
+app.use('/job',  jobRoutes);
+app.use('/connection', connectionRoutes);
 
 // Socket.IO setup for real-time messaging
 io.on("connection", (socket) => {

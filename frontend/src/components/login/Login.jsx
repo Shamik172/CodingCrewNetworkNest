@@ -14,13 +14,14 @@ function Login() {
     setError(""); // Clear any previous error message
 
     try {
-      const response = await axios.post("http://localhost:5000/login", { username, password }, { withCredentials: true });
-      
+      const response = await axios.post("http://localhost:3000/auth/login", { username, password }, { withCredentials: true });
+      // console.log(response);
       // Redirect if login is successful
       if (response.status === 200) {
-        navigate("/index"); // Adjust path as needed
+        navigate("/"); // Adjust path as needed
       }
     } catch (err) {
+      // console.log(response.message);
       setError(err.response?.data?.message || "Login failed");
     }
   };

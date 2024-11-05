@@ -38,3 +38,23 @@ exports.postEditUser = (req, res, next) => {
     })
     .catch(err=>console.log(err));
 }
+
+exports.searchUser = (req, res, next) => {
+    const {name, username} = req.query;
+    const filter = {};
+    if(name){
+        filter.name = {$regex : name, $options: "i"}
+    }
+    if(username){
+        filter.username = {$regex : username, $options: "i"}
+    }
+
+    User.find(filter)
+    .then(users=>{
+        res.status(200).json(users);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({message: "Internal server error"});
+    })
+}

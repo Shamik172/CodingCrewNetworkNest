@@ -22,7 +22,7 @@ export const NavIcon = ({ Icon, IconTitle, url }) => {
           {/* Icon with Active Color */}
           <Icon
             className={`${
-              isActive ? 'text-blue-800' : 'text-Light-Beige'
+              isActive ? 'text-blue-600' : 'text-Light-Beige'
             } hover:text-white transition-colors duration-200`}
             size={28}
           />

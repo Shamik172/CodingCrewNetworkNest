@@ -17,6 +17,7 @@ exports.getIndex = (req, res, next) => {
 
 
 exports.postLogin = (req, res, next)=>{
+    // console.log(req.body);
     const password = req.body.password;
     const username = req.body.username;
 
@@ -71,8 +72,8 @@ exports.postSignup = (req, res, next) => {
     User.findOne({$or: [{ email }, { username }]})
     .then(user=>{
         if(user){
-            console.log("User already exists");
-            return res.redirect(400,'/signup');
+            // console.log("User already exists");
+            return res.status(400).json({ message: 'User already exists.' });
         }
         return bcrypt.hash(password, 12)
         .then(hashedPassword=>{
@@ -88,8 +89,8 @@ exports.postSignup = (req, res, next) => {
         return newUser.save()
         })
         .then(result=>{
-            console.log("user created successfully");
-            res.redirect(200,'/login');
+            // console.log("user created successfully");
+            res.status(200).json({ message: 'User created successfully.'});
         })
         .catch(err=>console.log(err));
     })

@@ -3,7 +3,7 @@ const isAuth = require('../middleware/isAuth.js');
 
 const router = express.Router();
 
-const authController = require('../controller/auth.js');
+const authController = require('../controller/authController.js');
 
 
 router.get('/login', authController.getLogin);
