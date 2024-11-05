@@ -40,6 +40,7 @@ const YourProfile = () => {
             </div>
         
       </div>
+      <div className='relative -top-20 h-20'></div>
       
    </>
   )
