@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MdBookmark } from "react-icons/md";
+import AOS from 'aos'; // Import AOS for initialization
+import 'aos/dist/aos.css'; // Import the AOS CSS for animations
 
 const CompactJobPostCard = ({ job }) => {
   const {
@@ -53,9 +55,21 @@ const CompactJobPostCard = ({ job }) => {
     };
   }, [isModalOpen]);
 
+
+
+    // Initialize AOS animation
+    useEffect(() => {
+      AOS.init({
+          duration: 1000, // Duration of the animation
+          easing: 'ease-in-out', // Easing function for the animation
+          once: false, // Only animate once when scrolled into view
+          offset:200,
+      });
+  }, []);
+
   return (
     <>
-      <div
+      <div data-aos="flip-up" data-aos-delay="300"
         className="relative w-full bg-white dark:bg-black dark:text-orange-600 rounded-lg p-4 cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white  "
        
       >

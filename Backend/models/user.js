@@ -27,6 +27,7 @@ const userSchema = new Schema({
     connections: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     pendingRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     receivedRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    sentRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     likedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     createdJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }],
