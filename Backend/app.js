@@ -26,6 +26,7 @@ const io = socketIo(server, {
 });
 
 const MONGODB_URI = process.env.MONGODB_URI;
+console.log(MONGODB_URI);
 
 // Multer setup for file storage
 const fileStorage = multer.diskStorage({

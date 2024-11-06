@@ -1,5 +1,5 @@
 import React from 'react'
-import JobPostingForm from './JobPostingForm'
+import MessageSection from './MessageSection';
 
 
 
@@ -11,7 +11,7 @@ const Test = () => {
   
   return (
     <div className=''>
-       <JobPostingForm/>
+       <MessageSection/>
     </div>
   )
 }
