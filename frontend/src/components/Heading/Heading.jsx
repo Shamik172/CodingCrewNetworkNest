@@ -29,7 +29,7 @@ function Navbar({ isLogin }) {
   };
 
   return (
-    <nav className="bg-primary-color border-b border-primary-color px-4 sm:px-8 py-2 shadow-md fixed w-full top-0 z-[60] text-Light-Beige">
+    <nav className="bg-slate-500 dark:bg-blue-950 border-b border-primary-color px-4 sm:px-8 py-2 shadow-md fixed w-full top-0 z-[60] text-Light-Beige">
       <div className="flex items-center justify-between">
         {/* Logo */}
         <Logo logoName={img} />

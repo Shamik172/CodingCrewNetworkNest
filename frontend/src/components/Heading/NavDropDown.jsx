@@ -1,69 +1,67 @@
-import React from 'react'
-import { NavIcon } from './NavIcon';
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import {
-  ArchiveBoxXMarkIcon,
-  ChevronDownIcon,
-  Square2StackIcon,
-  TrashIcon,
-} from '@heroicons/react/16/solid'
-import { PiSignOutThin } from "react-icons/pi";
-import { IoSettingsOutline } from "react-icons/io5";
-import { IoMdContact } from "react-icons/io";
-import image from '../../assets/image.jpg'
+import React, { useState, useRef, useEffect } from 'react';
+import img from '../../assets/avengers.jpg'
 const NavDropDown = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null); // Create a ref for the dropdown
 
+  const toggleDropdown = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  // Close the dropdown if clicked outside of it
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    // Attach event listener
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    // Cleanup event listener on component unmount
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div className=" text-right absolute -top-4 -left-3">
-      <Menu >
-        <MenuButton className="inline-flex items-center rounded-full   text-sm/6 font-semibold text-white ">
-            <img src={image} alt="/" className='size-9 rounded-full min-w-9'/>
-            <ChevronDownIcon className="size-4 fill-white/60 relative top-2 -left-4" />
-        </MenuButton>
 
-        <MenuItems
-          transition
-          anchor="bottom end"
-          className="w-48 origin-top-right rounded-xl border border-white/5 bg-white p-1 text-sm/6 text-black transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 z-[100] "
+    
+    <div className="relative inline-block text-left top-1" ref={dropdownRef}>
+      <div>
+        <button
+          onClick={toggleDropdown}
+          className="inline-flex justify-center w-full size-10 rounded-full  shadow-sm text-sm font-medium text-gray-700   ring-white ring "
         >
-          <MenuItem>
-            <a href='/profile' className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 hover:bg-gray-300">
-              <IoMdContact className="size-4 " color='gray'/>
-                Profile
-              <kbd className="ml-auto hidden font-sans text-xs text-black/50 group-data-[focus]:inline">⌘E</kbd>
+          <img src={img} alt="" className='size-10 rounded-full min-w-10'/>
+          
+        </button>
+      </div>
+
+      {isOpen && (
+        <>
+        
+        <div className="absolute right-0 z-10 mt-2 w-48 rounded-md r shadow-sm  border dark:border-slate-800 bg-white dark:bg-black dark:text-white ring-1 ring-black ring-opacity-5 dark:shadow-white">
+          <div className=" divide-y dark:divide-slate-800" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+            <a href="/profile" className="rounded-t-md block px-4 py-2 text-sm text-gray-700 dark:text-purple-100 hover:bg-gray-100 dark:hover:bg-slate-800 " role="menuitem">
+              Profile
             </a>
-          </MenuItem>
-          <MenuItem>
-            <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 hover:bg-gray-300">
-              <IoSettingsOutline  className="size-4" color='gray'/>
+            <a href="#" className="block px-4 py-2 text-sm text-gray-700 dark:text-purple-100 hover:bg-gray-100 dark:hover:bg-slate-800" role="menuitem">
               Settings
-              <kbd className="ml-auto hidden font-sans text-xs text-black/50 group-data-[focus]:inline">⌘D</kbd>
-            </button>
-          </MenuItem>
-          <div className="my-1 h-px bg-white/5" />
-          <MenuItem>
-            <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 hover:bg-gray-300">
-              <ArchiveBoxXMarkIcon className="size-4 " color='grey'/>
-              Archive
-              <kbd className="ml-auto hidden font-sans text-xs text-black/50 group-data-[focus]:inline">⌘A</kbd>
-            </button>
-          </MenuItem>
-
-
-          <form action="#" method="POST">
-          <MenuItem>
-            <button type='submit' className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 hover:bg-gray-300">
-              <PiSignOutThin className="size-4" color='grey'/>
-              LogOut
-              <kbd className="ml-auto hidden font-sans text-xs text-black/50 group-data-[focus]:inline">⌘S</kbd>
-            </button>
-          </MenuItem>
-          </form>
-        </MenuItems>
-      </Menu>
+            </a>
+            <a href="#" className="block px-4 py-2 text-sm text-gray-700 dark:text-purple-100 hover:bg-gray-100 dark:hover:bg-slate-800" role="menuitem ">
+              Add Cart
+            </a>
+            <a href="/logout" className="rounded-b-md block px-4 py-2 text-sm text-gray-700 dark:text-purple-100 hover:bg-gray-100 dark:hover:bg-slate-800" role="menuitem">
+              Logout
+            </a>
+          </div>
+        </div>
+        </>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default NavDropDown
+export default NavDropDown;

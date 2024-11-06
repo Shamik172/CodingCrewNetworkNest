@@ -14,7 +14,7 @@ const Modal = ({ isOpen, onClose, onAddSkill }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
       <div className="bg-white p-4 rounded-md shadow-lg">
         <h2 className="text-xl font-bold mb-4">Add New Skill</h2>
         <input
