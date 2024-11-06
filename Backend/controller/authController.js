@@ -22,13 +22,13 @@ exports.postLogin = (req, res, next)=>{
     const username = req.body.username;
 
     if (!username || !password) {
-        return res.status(400).json({ message: 'All fields are required'});
+        return res.status(401).json({ message: 'All fields are required'});
     }
 
     User.findOne({username: username})
     .then(user=>{
         if(!user){
-            return res.status(404).json({ message: "User doesn't exist" });
+            return res.status(401).json({ message: "User doesn't exist" });
         }
         bcrypt.compare(password, user.password)
         .then(doMatch => {
@@ -65,7 +65,7 @@ exports.postSignup = (req, res, next) => {
     // const profilePicture = req.files['profilePicture'] ? req.files['profilePicture'][0] : '';
     // const coverPicture = req.files['coverPicture'] ? req.files['coverPicture'][0] : '';
 
-    if (!email || !password || !username) {
+    if (!email || !password || !username || !name) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 
