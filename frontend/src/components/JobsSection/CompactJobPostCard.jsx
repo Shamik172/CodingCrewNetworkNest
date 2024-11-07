@@ -69,7 +69,7 @@ const CompactJobPostCard = ({ job }) => {
 
   return (
     <>
-      <div data-aos="flip-up" data-aos-delay="300"
+      <div data-aos="flip-up" data-aos-delay="200"
         className="relative w-full bg-white dark:bg-black dark:text-orange-600 rounded-lg p-4 cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white  "
        
       >

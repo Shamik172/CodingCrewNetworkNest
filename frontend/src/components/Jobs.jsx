@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Heading/Heading';
-import CompactJobPostCard from './JobsSection/CompactJobPostCard ';
+
+import CompactJobPostCard from './JobsSection/CompactJobPostCard';
 import SearchDropDown from './JobsSection/SearchDropDown';
 import { IoReturnUpBackOutline } from "react-icons/io5"
 import { Link } from 'react-router-dom';
