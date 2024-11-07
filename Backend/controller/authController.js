@@ -98,12 +98,24 @@ exports.postSignup = (req, res, next) => {
 };
 
 exports.postLogout = (req, res) => {
+    console.log("reached");
     req.session.destroy(err => {
         if (err) {
             return res.status(500).json({ message: 'Logout failed' });
         }
         res.clearCookie('connect.sid'); 
         console.log('Logged out successfully');
-        res.redirect('/login'); 
+        // res.redirect('/login'); 
+        return res.status(200).json({message: "Logged out successfully"});
     });
   };
+
+  exports.isLoggedIn = (req, res, next) =>{
+    const user = req.session.user;
+    console.log(user);
+    if(user){
+        res.json({isLoggedIn: true, user});
+    } else{
+        res.json({isLoggedIn : false})
+    }
+}

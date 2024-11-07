@@ -1,28 +1,44 @@
-import React from 'react'
-import { NavIcon } from './NavIcon';
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import {
-  ArchiveBoxXMarkIcon,
-  ChevronDownIcon,
-  Square2StackIcon,
-  TrashIcon,
-} from '@heroicons/react/16/solid'
-import { PiSignOutThin } from "react-icons/pi";
-import { IoSettingsOutline } from "react-icons/io5";
-import { IoMdContact } from "react-icons/io";
-import image from '../../assets/image.jpg'
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-const NavDropDown = () => {
+import React, { useState, useRef, useEffect } from 'react';
+import img from '../../assets/avengers.jpg';
+import axios from 'axios'; // Import axios for making HTTP requests
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import YourProfile from '../YourProfile';
 
+
+const NavDropDown = ({userData, isLogin}) => {
+  
+
+
+ 
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
   const navigate = useNavigate();
+  
+  const toggleDropdown = () => {
+    setIsOpen((prev) => !prev);
+  };
 
-  // Handle logout
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:3000/auth/logout", {}, { withCredentials: true });
+      console.log("before ");
+      await axios.get("http://localhost:3000/auth/logout", { withCredentials: true });
+      console.log("after ");
       // Redirect to login page after successful logout
-      navigate("/login");
+      // removerData();
+      navigate("/");
     } catch (err) {
       if (err.response) {
         alert(err.response.data.message);
@@ -32,55 +48,71 @@ const NavDropDown = () => {
     }
   };
 
+  const handleProfile = async() => {
+    console.log("ik",userData);
+    try{
+      console.log("reached");
+      await axios.get(`http://localhost:3000/user/profile/${userData.username}`, {withCredentials: true});
+      // console.log(isLogin," ",userData," ",removerData);
+      navigate('/profile', {
+        state: {
+          profileData: userData,
+          isLogins: isLogin
+        }
+      });
+      // return <YourProfile userData={userData} />
+    }catch(err){
+      if (err.response) {
+        alert(err.response.data.message);
+      } else {
+        alert("Something went wrong")
+      }
+      console.log(err.message);
+    }
+  }
+
   return (
-    <div className=" text-right relative top-1">
-      <Menu>
-        <MenuButton className="inline-flex items-center rounded-full   text-sm/6 font-semibold text-white ">
-            <img src={image} alt="/" className='size-10 rounded-full min-w-10'/>
-            <ChevronDownIcon className="size-4 fill-white/60 relative top-2 -left-4" />
-        </MenuButton>
-
-        <MenuItems
-          transition
-          anchor="bottom end"
-          className="w-52 origin-top-right rounded-xl border border-white/5 bg-white p-1 text-sm/6 text-black transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0 z-50 "
+    <div className="relative inline-block text-left top-1" ref={dropdownRef}>
+      <div>
+        <button
+          onClick={toggleDropdown}
+          className="inline-flex justify-center w-full size-10 rounded-full shadow-sm text-sm font-medium text-gray-700 ring-white ring"
         >
-          <MenuItem>
-            <a href='/profile' className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 hover:bg-gray-300">
-              <IoMdContact className="size-4 " color='gray'/>
-                Profile
-              <kbd className="ml-auto hidden font-sans text-xs text-black/50 group-data-[focus]:inline">⌘E</kbd>
-            </a>
-          </MenuItem>
-          <MenuItem>
-            <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 hover:bg-gray-300">
-              <IoSettingsOutline  className="size-4" color='gray'/>
+          <img src={img} alt="" className="size-10 rounded-full min-w-10" />
+        </button>
+      </div>
+
+      {isOpen && (
+        <div className="absolute right-0 z-10 mt-2 w-48 rounded-md shadow-sm border dark:border-slate-800 bg-white dark:bg-black dark:text-white ring-1 ring-black ring-opacity-5 dark:shadow-white">
+          <div className="divide-y dark:divide-slate-800" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+
+          <button
+              onClick={handleProfile}
+              className="w-full rounded-b-md block px-4 py-2 text-sm text-gray-700 dark:text-purple-100 hover:bg-gray-100 dark:hover:bg-slate-800 text-left"
+              role="menuitem"
+            >
+              Profile
+            </button>  
+
+
+            <a href="#" className="block px-4 py-2 text-sm text-gray-700 dark:text-purple-100 hover:bg-gray-100 dark:hover:bg-slate-800" role="menuitem">
               Settings
-              <kbd className="ml-auto hidden font-sans text-xs text-black/50 group-data-[focus]:inline">⌘D</kbd>
-            </button>
-          </MenuItem>
-          <div className="my-1 h-px bg-white/5" />
-          <MenuItem>
-            <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 hover:bg-gray-300">
-              <ArchiveBoxXMarkIcon className="size-4 " color='grey'/>
-              Archive
-              <kbd className="ml-auto hidden font-sans text-xs text-black/50 group-data-[focus]:inline">⌘A</kbd>
-            </button>
-          </MenuItem>
-
-
-          <MenuItem>
-            <button type='submit' onClick ={handleLogout} className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 hover:bg-gray-300">
-              <PiSignOutThin className="size-4" color='grey'/>
+            </a>
+            <a href="#" className="block px-4 py-2 text-sm text-gray-700 dark:text-purple-100 hover:bg-gray-100 dark:hover:bg-slate-800" role="menuitem">
+              Add Cart
+            </a>
+            <button
+              onClick={handleLogout}
+              className="w-full rounded-b-md block px-4 py-2 text-sm text-gray-700 dark:text-purple-100 hover:bg-gray-100 dark:hover:bg-slate-800 text-left"
+              role="menuitem"
+            >
               Logout
-              <kbd className="ml-auto hidden font-sans text-xs text-black/50 group-data-[focus]:inline">⌘S</kbd>
             </button>
-          </MenuItem>
-
-        </MenuItems>
-      </Menu>
+          </div>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default NavDropDown
+export default NavDropDown;
