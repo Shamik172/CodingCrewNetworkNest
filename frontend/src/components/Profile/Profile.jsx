@@ -1,34 +1,82 @@
-import React, { useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
 import CoverPic from './CoverPic';
+import axios from 'axios';
 
 import NameAndBio from './NameAndBio';
 import Modal from './EditModel';
 
-function ProfileSection() {
+function ProfileSection({userId}) {
+  
   const [profile, setProfile] = useState({
-    username: 'sumanta123',
-    name: 'Sumanta Sahoo',
-    bio: 'Full Stack Developer',
+    username: 'Dummy User',
+    name: 'Dummy User',
+    bio: 'In love with you',
     profilePicture: 'https://via.placeholder.com/150',
     coverPicture: 'https://via.placeholder.com/600x200',
-    email: 'johndoe@example.com',
-    skills: ['JavaScript', 'React', 'Node.js'],
-    interests: 'Coding, Music, Gaming',
+    email: 'johndoe@example.com'
   });
 
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isCoverModalOpen, setIsCoverModalOpen] = useState(false);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
 
-  const handleImageChange = (e, type) => {
-    const { files } = e.target;
-    if (files && files[0]) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setProfile((prev) => ({ ...prev, [type]: event.target.result }));
-      };
-      reader.readAsDataURL(files[0]);
-    }
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/user/profilePage/${userId}`, { withCredentials: true });
+        // Set the fetched skills data in the state
+        // console.log(response.data.coverPicture.length);
+          setProfile((prevProfile) => {
+            // Filter out null or undefined values from response.data
+            const validData = Object.fromEntries(
+              Object.entries(response.data).filter(([key, value]) => value != null)
+            );
+            
+            return {
+              ...prevProfile,
+              ...validData, // Only update with non-null and non-undefined values
+              profilePicture: validData.profilePicture || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyqC7jaYkUxXArH-BrVsMkPgT7fDVfhJC9MRYosWZ32LPIA1NDcuLRUR4&s', 
+              coverPicture: validData.coverPicture || 'https://via.placeholder.com/600x200',
+            };
+          });
+      } catch (error) {
+        console.error('Error fetching skills:', error);
+      }
+    };
+
+    fetchProfile(); // Call the function to fetch the skills
+  }, [userId]);
+
+  const handleImageChange = async (e, imageType) => {
+    // const { files } = e.target;
+    // if (files && files[0]) {
+    //   const reader = new FileReader();
+    //   reader.onload = (event) => {
+    //     setProfile((prev) => ({ ...prev, [type]: event.target.result }));
+    //   };
+    //   reader.readAsDataURL(files[0]);
+    // }
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append([imageType], file, file.name);
+    console.log("fike",formData);
+
+  try {
+    const response = await axios.post(
+      `http://localhost:3000/user/${imageType}/${userId}`, 
+      formData,
+      { withCredentials: true, headers: { 'Content-Type': 'multipart/form-data' } }
+    );
+    
+    // Update the profile state with the new image URL
+    setProfile((prevProfile) => ({
+      ...prevProfile,
+      [imageType]: response.data[imageType],
+    }));
+  } catch (error) {
+    console.error('Error uploading image:', error);
+  }
   };
 
   const handleInputChange = (e) => {
@@ -128,7 +176,7 @@ function ProfileSection() {
       {/* Edit Profile Info Modal */}
       <Modal isOpen={isInfoModalOpen} onClose={() => setIsInfoModalOpen(false)}>
         <h3 className="text-xl font-semibold mb-4">Edit Profile Information</h3>
-        <div className="mb-4">
+        <div className="mb-4">  
           <label className="block text-sm font-medium text-gray-700">Name</label>
           <input
             type="text"

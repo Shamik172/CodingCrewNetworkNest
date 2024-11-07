@@ -15,7 +15,7 @@ import { MdOutlineDarkMode } from "react-icons/md";
 import { useState, useEffect } from 'react';
 function App() {
   const router = createBrowserRouter([
-    { path: '/', element: <Home /> },
+    { path: '/', element: <Home  /> },
     { path: '/networks', element: <Network /> },
     { path: '/jobs', element: <Jobs /> },
     { path: '/message', element: <Message /> },

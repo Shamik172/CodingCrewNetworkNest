@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaHome, FaUserFriends, FaBriefcase, FaEnvelope, FaBell, FaUserCircle } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom"; // Link for client-side routing
 import Search from "./Search";
@@ -8,7 +8,7 @@ import { MobileIcon } from "./MobileIcon";
 import img from "../../assets/image1.jpeg";
 import NavDropDown from "./NavDropDown";
 
-function Navbar({ isLogin }) {
+function Navbar({ isLogin, userData, removerData }) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation(); // Get the current path
@@ -52,9 +52,8 @@ function Navbar({ isLogin }) {
               />
             ))}
             <div className="relative">
-               <NavDropDown />
+               <NavDropDown userData={userData} removerData={removerData} isLogin={isLogin} />
             </div>
-           
           </div>
         ) : (
           <div className="flex space-x-6 items-center text-Light-Beige relative">
@@ -117,15 +116,8 @@ function Navbar({ isLogin }) {
             Icon={FaUserCircle}
             IconTitle={"Profile"}
             url={"/profile"}
-            isActive={location.pathname === "/profile"} // Check for active path in mobile view
+            isActive={location.pathname === "/profile"}
           />
-   
-
-
-
-            {/* to impements */}
-          <div>Settings</div>
-          <div>Logout</div>
         </div>
       )}
     </nav>

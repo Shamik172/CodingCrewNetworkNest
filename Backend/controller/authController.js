@@ -22,13 +22,13 @@ exports.postLogin = (req, res, next)=>{
     const username = req.body.username;
 
     if (!username || !password) {
-        return res.status(400).json({ message: 'All fields are required'});
+        return res.status(401).json({ message: 'All fields are required'});
     }
 
     User.findOne({username: username})
     .then(user=>{
         if(!user){
-            return res.status(404).json({ message: "User doesn't exist" });
+            return res.status(401).json({ message: "User doesn't exist" });
         }
         bcrypt.compare(password, user.password)
         .then(doMatch => {
@@ -65,7 +65,7 @@ exports.postSignup = (req, res, next) => {
     // const profilePicture = req.files['profilePicture'] ? req.files['profilePicture'][0] : '';
     // const coverPicture = req.files['coverPicture'] ? req.files['coverPicture'][0] : '';
 
-    if (!email || !password || !username) {
+    if (!email || !password || !username || !name) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 
@@ -98,12 +98,24 @@ exports.postSignup = (req, res, next) => {
 };
 
 exports.postLogout = (req, res) => {
+    console.log("reached");
     req.session.destroy(err => {
         if (err) {
             return res.status(500).json({ message: 'Logout failed' });
         }
         res.clearCookie('connect.sid'); 
         console.log('Logged out successfully');
-        res.redirect('/login'); 
+        // res.redirect('/login'); 
+        return res.status(200).json({message: "Logged out successfully"});
     });
   };
+
+  exports.isLoggedIn = (req, res, next) =>{
+    const user = req.session.user;
+    console.log(user);
+    if(user){
+        res.json({isLoggedIn: true, user});
+    } else{
+        res.json({isLoggedIn : false})
+    }
+}

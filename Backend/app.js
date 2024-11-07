@@ -9,6 +9,7 @@ const cors = require('cors');
 const User = require('./models/user');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 require('dotenv').config();
 
 // Import and initialize HTTP server and Socket.IO
@@ -25,12 +26,17 @@ const io = socketIo(server, {
   },
 });
 
-const MONGODB_URI = process.env.MONGODB_URI;
+// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'uploads')));
 
-// Multer setup for file storage
+
+const MONGODB_URI = process.env.MONGODB_URI; 
+
+
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, 'uploads'),
-    filename: (req, file, cb) => cb(null, new Date().toISOString() + '-' + file.originalname)
+    filename: (req, file, cb) => cb(null,file.filename + '-' + file.originalname)
 });
 
 const fileFilter = (req, file, cb) => {
@@ -41,26 +47,16 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-app.use(multer({storage: fileStorage, fileFilter: fileFilter}).fields([
-    {name: 'profilePicture', maxCount: 1},
-    {name: 'coverPicture', maxCount: 1}
-]));
-
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 const store = new MongoDBStore({
     uri: MONGODB_URI,
     collection: 'sessions'
 });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(
     session({
         secret: process.env.SESSION_SECRET,
         resave: false,
-        saveUninitialized: false,
+        saveUninitialized: false,   
         store: store
     })
 );
@@ -82,6 +78,11 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   }));
+
+app.use(multer({storage: fileStorage, fileFilter: fileFilter }).fields([
+    { name: 'profilePicture', maxCount: 1 },
+    { name: 'coverPicture', maxCount: 1 }
+]));
 
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -125,3 +126,5 @@ mongoose.connect(MONGODB_URI)
         });
     })
     .catch(err => console.log(err));
+
+ 

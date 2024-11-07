@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Section from '../Section';
+import axios from 'axios';
 
-const Education = () => {
+
+const Education = ({userId}) => {
+
   const [educationList, setEducationList] = useState([]);
   const [isFormVisible, setFormVisible] = useState(false);
   const [formData, setFormData] = useState({
@@ -9,6 +12,21 @@ const Education = () => {
     startDate: '',
     endDate: ''
   });
+
+  useEffect(() => {
+    const fetchEducation = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/user/e/${userId}`, { withCredentials: true });
+        // Set the fetched skills data in the state
+        setEducationList([...response.data]); // Assuming the response contains skills in `response.data.skills`
+      } catch (error) {
+        console.error('Error fetching skills:', error);
+      }
+    };
+
+    fetchEducation(); // Call the function to fetch the skills
+  }, [userId]);
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,14 +39,20 @@ const Education = () => {
   const handleAddEducation = () => {
     try{
       
-      console.log( formData.schoolName.length)
+      // console.log( formData.schoolName.length)
       if (formData.schoolName.trim().length === 0) {
         throw new Error('School name is required.');
       }
-        setEducationList([...educationList, formData]);
-        setFormData({ schoolName: '', startDate: '', endDate: '' });
-        setFormVisible(false);
-        
+        console.log(formData);
+      axios.post(`http://localhost:3000/user/e/${userId}`, formData ,{withCredentials: true})
+      .then(response=>{
+        console.log(response.data);
+        setEducationList([...response.data]);
+      })
+      .catch(err=>console.log(err));
+      // setEducationList([...educationList, formData]);
+      setFormData({ schoolName: '', startDate: '', endDate: '' });
+      setFormVisible(false);       
         
     }catch(error){
       alert(error.message)
@@ -36,8 +60,19 @@ const Education = () => {
     
   };
 
+  function capitalizeFirstLetter(val) {
+    return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+  }
+
   const handleRemoveEducation = (index) => {
-    setEducationList(educationList.filter((_, i) => i !== index));
+    axios.delete(`http://localhost:3000/user/e/${userId}/${index}`,{withCredentials: true})
+    .then(newEdu=>{ 
+      console.log(newEdu);
+      setEducationList([...newEdu.data]);
+      // setSkills((prevSkills) => prevSkills.filter(skill => skill !== skillToRemove));
+    })
+    .catch(err=>console.log(err))
+    // setEducationList(educationList.filter((_, i) => i !== index));
   };
 
   return (
@@ -45,9 +80,9 @@ const Education = () => {
       {/* Display list of education entries */}
       {educationList.map((education, index) => (
         <div key={index} className="bg-slate-300 shadow-black dark:bg-slate-950  dark:shadow-white p-4 mb-6 rounded shadow-md mx-3"> {/* Increased mb-4 to mb-6 */}
-          <p><strong>School Name:</strong> {education.schoolName}</p>
-          <p><strong>Start Date:</strong> {education.startDate}</p>
-          <p><strong>End Date:</strong> {education.endDate}</p>
+          <p><strong>School Name:</strong> {capitalizeFirstLetter(education.schoolName)}</p>
+          <p><strong>Start Year:</strong> {new Date(education.startDate).getFullYear()}</p>
+          <p><strong>End Year:</strong> {new Date(education.endDate).getFullYear()}</p>
           <button
             onClick={() => handleRemoveEducation(index)}
             className="mt-2 text-red-500 hover:text-red-700"

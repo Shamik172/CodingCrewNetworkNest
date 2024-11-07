@@ -34,7 +34,11 @@ function Signup() {
         navigate("/login");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Signup failed");
+      if (err.response) {
+        alert(err.response.data.message);
+      } else {
+        alert("Something went wrong")
+      }
     }
   };
 

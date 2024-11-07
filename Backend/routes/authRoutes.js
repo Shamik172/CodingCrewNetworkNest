@@ -10,11 +10,13 @@ router.get('/login', authController.getLogin);
 
 router.post('/login', authController.postLogin);
 
+router.get('/isLogin', authController.isLoggedIn);
+
 router.post('/signup', authController.postSignup);
 
 router.get('/signup', authController.getSignup);
 
-router.post('/logout', isAuth, authController.postLogout);
+router.get('/logout', isAuth, authController.postLogout);
 
 router.get('/index', authController.getIndex);
 
