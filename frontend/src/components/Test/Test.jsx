@@ -1,19 +1,16 @@
-import React from 'react'
-import JobPostingForm from './JobPostingForm'
+import React, { useState } from 'react'
+import CreatAndShowjob from '../JobsSection/CreatAndShowJob/CreatAndShowjob'
+
 
 
 
 
 
 const Test = () => {
-  const Store = [];
-
   
-  return (
-    <div className=''>
-       <JobPostingForm/>
-    </div>
-  )
+   return(
+   <CreatAndShowjob/>
+   )
 }
 
 export default Test

@@ -54,13 +54,16 @@ function App() {
 
 
 
-
+  //  md:left-[12.5%] sm:left-[15%] md:top-[2%] sm:top-[1.2%] top-[1.9%] left-[18%] 
   return (
-    <div className="bg-slate-300 dark:bg-slate-950">
-      <button className='text-black bg-white dark:bg-black dark:text-white
-       rounded-full size-10 flex justify-center items-center  z-[100] fixed md:left-[12.5%] sm:left-[15%] md:top-[2%] sm:top-[1.2%] top-[1.9%] left-[18%] cursor-pointer  text-sm ring-offset-2 ring-2' onClick={handleThemeSwitch} >
-      {theme === 'dark'?  <MdOutlineDarkMode size={30}/>  :<MdOutlineLightMode size={30} />}
-      </button>
+    <div className="bg-slate-300 dark:bg-slate-950 ">
+     <button
+      className='text-black bg-white dark:bg-black dark:text-white
+      rounded-full p-3 flex justify-center items-center z-[100] fixed bottom-5 right-5 cursor-pointer text-sm ring-offset-2 ring-2'
+      onClick={handleThemeSwitch}
+    >
+      {theme === 'dark' ? <MdOutlineDarkMode size={25} /> : <MdOutlineLightMode size={25} />}
+    </button>
         <RouterProvider router={router} />
     </div>
   );

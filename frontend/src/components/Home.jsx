@@ -6,6 +6,7 @@ import ProfileCard from './Profile/ProfileCard/ProfileCard';
 import image from '../assets/doraemon.jpeg';
 import image1 from '../assets/cover.jpeg';
 
+
 //data find kar hu json file se 
 import data from '../components/Test/data.json'
 
