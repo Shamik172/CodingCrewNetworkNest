@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { FaHome, FaUserFriends, FaBriefcase, FaEnvelope, FaBell, FaUserCircle } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom"; // Link for client-side routing
 import Search from "./Search";
@@ -7,8 +7,13 @@ import { NavIcon } from "./NavIcon";
 import { MobileIcon } from "./MobileIcon";
 import img from "../../assets/image1.jpeg";
 import NavDropDown from "./NavDropDown";
+import CustomerData from "../../Store/CustomerDataProvider";
 
-function Navbar({ isLogin, userData, removerData }) {
+function Navbar() {
+
+  const {userData,isLogin} = useContext(CustomerData);
+ 
+  console.log("navBar",userData);
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation(); // Get the current path
@@ -52,7 +57,7 @@ function Navbar({ isLogin, userData, removerData }) {
               />
             ))}
             <div className="relative">
-               <NavDropDown userData={userData} removerData={removerData} isLogin={isLogin} />
+               <NavDropDown />
             </div>
           </div>
         ) : (

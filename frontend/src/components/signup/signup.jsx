@@ -22,6 +22,7 @@ function Signup() {
   };
 
   const handleSubmit = async (e) => {
+    // console.log(formData)
     e.preventDefault();
     setError(""); // Clear any previous error message
 
