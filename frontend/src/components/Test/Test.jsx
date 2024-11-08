@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import MessageSection from './MessageSection'
+import Connection from './Connections'
+// import MessageSection from './MessageSection'
 
 const Test = () => {
   
   return (
     <div className=''>
-       <MessageSection/>
+       {/* <MessageSection/> */}
+       <Connection/>
     </div>
   )
 }
