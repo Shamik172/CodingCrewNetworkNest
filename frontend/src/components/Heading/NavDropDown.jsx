@@ -1,13 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect,useContext } from 'react';
 import img from '../../assets/avengers.jpg';
 import axios from 'axios'; // Import axios for making HTTP requests
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import YourProfile from '../YourProfile';
+import CustomerData from '../../Store/CustomerDataProvider';
 
 
-const NavDropDown = ({userData, isLogin}) => {
+const NavDropDown = () => {
   
 
+  const {userData,userHandler, handlerLogin, isLogin} = useContext(CustomerData);
 
  
   const [isOpen, setIsOpen] = useState(false);
@@ -37,7 +39,8 @@ const NavDropDown = ({userData, isLogin}) => {
       await axios.get("http://localhost:3000/auth/logout", { withCredentials: true });
       console.log("after ");
       // Redirect to login page after successful logout
-      // removerData();
+      handlerLogin(false);
+      userHandler(null);
       navigate("/");
     } catch (err) {
       if (err.response) {
@@ -49,9 +52,9 @@ const NavDropDown = ({userData, isLogin}) => {
   };
 
   const handleProfile = async() => {
-    console.log("ik",userData);
+  
     try{
-      console.log("reached");
+      console.log("reached profile");
       await axios.get(`http://localhost:3000/user/profile/${userData.username}`, {withCredentials: true});
       // console.log(isLogin," ",userData," ",removerData);
       navigate('/profile', {
@@ -63,6 +66,7 @@ const NavDropDown = ({userData, isLogin}) => {
       // return <YourProfile userData={userData} />
     }catch(err){
       if (err.response) {
+        console.log(err)
         alert(err.response.data.message);
       } else {
         alert("Something went wrong")

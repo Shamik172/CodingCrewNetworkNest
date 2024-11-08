@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import Navbar from './Heading/Heading'
-import axios from 'axios'
+import React, { useContext } from 'react'
+
+
 import UserPost from './User/UserPost'
 import ProfileCard from './Profile/ProfileCard/ProfileCard';
 import image from '../assets/doraemon.jpeg';
 import image1 from '../assets/cover.jpeg';
+
+
+import CustomerData from '../Store/CustomerDataProvider';
 
 
 //data find kar hu json file se 
@@ -12,38 +15,15 @@ import data from '../components/Test/data.json'
 
 const Home = () => {
   
-  
-   const [isLogin, setLogin] = useState(false);
-   const [userData, setUserData] = useState(null);
+   const {userData,userHandler,isLogin, handlerLogin} = useContext(CustomerData);
    
-   const removerData = ()=> {
-      setLogin(false);
-   }
 
-
-   useEffect(() => {
-       // Fetch the login status and user data from backend
-       axios.get('http://localhost:3000/auth/isLogin', { withCredentials: true })
-           .then(response => {
-            // console.log(response);  
-               const { isLoggedIn, user } = response.data;
-               setLogin(isLoggedIn);
-              
-               setUserData(user)
-               // console.log(userData)
-               if (isLoggedIn) {
-                   setUserData(user);
-               }
-           })
-           .catch(error => {
-               console.error('Error checking login status:', error);
-           });
-   }, []);
+   
     
   return (
     <>
       
-          <Navbar isLogin={isLogin} removerData={removerData} userData = {userData}/>
+         
 
           <div className='relative top-24 flex lg:justify-around md:justify-around justify-center'>
 
