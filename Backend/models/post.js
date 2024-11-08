@@ -8,9 +8,15 @@ const postSchema = new Schema({
         ref: 'User',
         required: true
     },
-    description:{
+    description:{ 
         type: String
     }, 
+    bio:{
+        type: String
+    },
+    name:{
+        type: String
+    },
     images:[{
         type: String
     }],
@@ -36,6 +42,12 @@ const postSchema = new Schema({
         default: Date.now
        }
     }],
+    profileUrl:{
+        type: String
+    },
+    coverUrl: {
+        type: String
+    },
     createdAt: {
         type: Date,
         default: Date.now

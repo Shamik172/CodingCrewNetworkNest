@@ -1,13 +1,7 @@
-import React from 'react'
-import MessageSection from './MessageSection';
-
-
-
-
+import React, { useState } from 'react'
+import MessageSection from './MessageSection'
 
 const Test = () => {
-  const Store = [];
-
   
   return (
     <div className=''>

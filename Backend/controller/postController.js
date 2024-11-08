@@ -1,31 +1,65 @@
 const express = require('express');
 const Post = require('../models/post');
 const User = require('../models/user');
-const post = require('../models/post');
+// const post = require('../models/post');
 
 exports.postCreatePost = (req, res, next) => { 
-    // console.log(req.body);
-    // console.log(req.session.user);
+    console.log(req.body);
 
-    const {author, description, images, videos} = req.body;
-    const user = req.session.user; 
+    const { description, images, videos } = req.body;
+    const author = req.session.user;
 
-    if(author.toString() !== user.id.toString()){
-        return res.status(403).json({message: "Login First"});
+    if (!author) {
+        return res.status(403).json({ message: "Login First" });
     }
 
-    const newPost = new Post({ 
-        author: author,
-        description, images, videos
+    // Creating a new post with initial details
+    let newPost = new Post({ 
+        author: author.id,
+        description,
+        images,
+        videos
     });
-    newPost.save() 
-    .then(savedPost=>{
-        return User.findByIdAndUpdate(author, {
-            $push: { posts: savedPost._id }
-        }) 
+
+    // Fetch user details to add additional information to the post
+    User.findById(author.id)
+    .then(user => {
+        if (!user) {
+            return -1;
+        }
+        console.log(user);
+        // const newPost = new Post({
+
+        // })
+        newPost.profileUrl = user.profilePicture;
+        newPost.coverUrl = user.coverPicture;
+        newPost.name = user.name;
+        newPost.bio = user.bio;
+        // console.log(curPost);
+        newPost.save()
+        user.posts.push(newPost._id);
+        user.save();
+        return -2;
     })
-    .then(()=>{
-        return res.status(200).json({message: "done"});
+    .then(statuss=>{
+        if(statuss == -1)return res.status(404).json({message: "User not found"});
+        else if(statuss == -2)return res.status(200).json({message: "Post created successfully"});
+        else res.status(404).json({message: "Something went wrong"});
+    })
+    .catch(err => {
+        console.error(err);
+        return res.status(500).json({ message: "An error occurred" });
+    });
+};
+
+
+exports.getAllPosts = (req, res, next)=>{
+    Post.find().
+    then(allPosts=>{
+        console.log("Reached");
+        // console.log("AllPosts",allPosts);
+        // console.log(typeof(allPosts));
+        return res.status(200).json(allPosts);
     })
     .catch(err=>console.log(err));
 }
@@ -128,7 +162,7 @@ exports.postDeleteComment = (req, res, next) =>{
         return res.status(200).json({message: "comment deleted successfully"});
     })
     .catch(err=>console.log(err));
-} 
+}  
 
 exports.postSHarePost = (req, res, next)=>{
     

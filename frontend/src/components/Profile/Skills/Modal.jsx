@@ -1,13 +1,21 @@
 import React from 'react';
 
-const Modal = ({ isOpen, onClose, onAddSkill }) => {
+const Modal = ({ isOpen, onClose, onAddSkill, skills }) => {
   const [skill, setSkill] = React.useState('');
 
   const handleAddSkill = () => {
+    // console.log(typeof(skills));
+    // console.log(skills);
     if (skill.trim()) {
-      onAddSkill(skill.trim());
-      setSkill(''); // Clear input after adding
-      onClose(); // Close modal
+      // console.log(skill);
+      skill.toLowerCase();
+      if(skills.indexOf(skill) !== -1){
+        alert("Skill already exists");
+      } else{
+        onAddSkill(skill.trim());
+        setSkill(''); // Clear input after adding
+        onClose(); // Close modal
+      }
     }
   };
 

@@ -17,22 +17,23 @@ exports.getIndex = (req, res, next) => {
 
 
 exports.postLogin = (req, res, next)=>{
-    // console.log(req.body);
+    console.log(req.body);
     const password = req.body.password;
     const username = req.body.username;
-
+    // console.log(username, password);
     if (!username || !password) {
-        return res.status(400).json({ message: 'All fields are required'});
+        return res.status(401).json({ message: 'All fields are required'});
     }
 
     User.findOne({username: username})
     .then(user=>{
         if(!user){
-            return res.status(404).json({ message: "User doesn't exist" });
+            return res.status(401).json({ message: "User doesn't exist" });
         }
         bcrypt.compare(password, user.password)
         .then(doMatch => {
             if(doMatch){
+                // console.log(password, bc)
                 const token = jwt.sign(
                     {id: user._id, username: user.username},
                     process.env.JWT_SECRET,
@@ -52,6 +53,7 @@ exports.postLogin = (req, res, next)=>{
 }
 
 exports.postSignup = (req, res, next) => {
+    console.log(req.body)
     const email = req.body.email;
     const password = req.body.password;
     const username = req.body.username;
@@ -64,8 +66,8 @@ exports.postSignup = (req, res, next) => {
 
     // const profilePicture = req.files['profilePicture'] ? req.files['profilePicture'][0] : '';
     // const coverPicture = req.files['coverPicture'] ? req.files['coverPicture'][0] : '';
-
-    if (!email || !password || !username) {
+//    console.log(username,password,name,email)
+    if (!email || !password || !username || !name) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 
@@ -98,12 +100,31 @@ exports.postSignup = (req, res, next) => {
 };
 
 exports.postLogout = (req, res) => {
+    console.log("reached");
     req.session.destroy(err => {
         if (err) {
             return res.status(500).json({ message: 'Logout failed' });
         }
         res.clearCookie('connect.sid'); 
         console.log('Logged out successfully');
-        res.redirect('/login'); 
+        // res.redirect('/login'); 
+        return res.status(200).json({message: "Logged out successfully"});
     });
   };
+
+  exports.isLoggedIn = (req, res, next) =>{
+    const user = req.session.user;
+
+    // console.log("abcd ++")
+    // console.log(user);
+    User.findById(user.id)
+    .then(user=>{
+        if(user){
+            // console.log(user);
+            res.status(200).json({isLoggedIn: true, user});
+        } else{
+            res.status(404).json({isLoggedIn : false})
+        }
+    })
+    .catch(er=>comsole.log(err));
+}

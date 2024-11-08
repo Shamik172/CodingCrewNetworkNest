@@ -22,6 +22,7 @@ function Signup() {
   };
 
   const handleSubmit = async (e) => {
+    // console.log(formData)
     e.preventDefault();
     setError(""); // Clear any previous error message
 
@@ -34,7 +35,11 @@ function Signup() {
         navigate("/login");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Signup failed");
+      if (err.response) {
+        alert(err.response.data.message);
+      } else {
+        alert("Something went wrong")
+      }
     }
   };
 
