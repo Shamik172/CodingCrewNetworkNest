@@ -6,6 +6,7 @@ import ContentSection from './ContentSection';
 import UniversalModal from '../UniversalModal';
 
 function UserPost({ UserProfile, isLogin }) {
+  // console.log(UserProfile);
   const [connection, setConnection] = useState(false);
   const [isVisibleCard, setIsVisibleCard] = useState(true);
   const [CommentVisible, setCommentVisible] = useState(false);
@@ -47,13 +48,12 @@ function UserPost({ UserProfile, isLogin }) {
           isConnection={connection}
           name={UserProfile.name}
           bio={UserProfile.bio}
-          skill={UserProfile.skill}
-          img={UserProfile.ProfileUrl}
+          img={UserProfile.profileUrl}
           isLogin={isLogin}
         />
 
         {/* Content Section */}
-        <ContentSection img={UserProfile.coverUrl} desc={UserProfile.desc} />
+        <ContentSection img={UserProfile.coverUrl} desc={UserProfile.description} />
 
         {/* Footer */}
         <div className="flex justify-around text-sm font-serif border-t-2 divide-x">

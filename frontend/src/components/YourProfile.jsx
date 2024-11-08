@@ -35,6 +35,7 @@ const YourProfile = () => {
                 </div>
             )}
 
+
             {/* Profile content */}
             {userData ? (
                 <div className="flex md:justify-center md:space-x-10 justify-center">
@@ -48,11 +49,11 @@ const YourProfile = () => {
                         </div>
                     </div>
                     <div>
-                        <ProfileSection userId={userData.id} />
-                        <Skills userId={userData.id} />
-                        <Project userId={userData.id} />
-                        <Experience userId={userData.id} />
-                        <Education userId={userData.id} />
+                        <ProfileSection userId={userData._id} />
+                        <Skills userId={userData._id} />
+                        <Project userId={userData._id} />
+                        <Experience userId={userData._id} />
+                        <Education userId={userData._id} />
                     </div>
                 </div>
             ) : (
@@ -63,5 +64,6 @@ const YourProfile = () => {
         </>
     );
 };
+
 
 export default YourProfile;

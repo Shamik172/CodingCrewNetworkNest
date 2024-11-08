@@ -1,18 +1,20 @@
 const User = require('../models/user');
 
 exports.getUserProfile = (req, res, next) =>{
-    // console.log(req.params.userId);
-    User.findOne({username: req.params.username}).select('-password')
+    // console.log(req.params);
+    const username = req.params.username;
+    User.findOne({username: username}).select('-password')
     .then(user=>{
         console.log("use", user);
         return res.status(200).json(user);
     })
     .catch(err=>console.log(err));
-}
-
+} 
+ 
 exports.getUserProfilePage = (req, res, next) =>{
     // console.log(req.params.userId);
     const userId = req.params.userId;
+    // console.log(userId);
     User.findById(userId).select('-password')
     .then(user=>{
         // console.log("use", user);

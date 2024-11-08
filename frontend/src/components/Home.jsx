@@ -17,8 +17,6 @@ const Home = () => {
   
    const {userData,userHandler,isLogin, handlerLogin} = useContext(CustomerData);
    
-
-   
     
   return (
     <>
@@ -30,8 +28,8 @@ const Home = () => {
              <div className='md:w-1/5  rounded-md md:mx-4 mx-2 mt-2 max-w-56 h-96 shadow-md md:block hidden'>
                 {!isLogin ? 
                   <ProfileCard profileImage={''}  coverImage={''} isLogin={isLogin}/>
-                  :
-                   <ProfileCard profileImage={image}  coverImage={image1}  name="Sumanta sahoo" description={'MNNIT26 MCA'} isLogin={isLogin}/>
+                  :  //Loading image pending
+                   <ProfileCard profileImage={image}  coverImage={image1}  name={userData.name} description={userData.bio} isLogin={isLogin}/>
               
                 }
                

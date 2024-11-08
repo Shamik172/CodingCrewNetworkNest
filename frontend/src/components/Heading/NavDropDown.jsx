@@ -9,6 +9,7 @@ import CustomerData from '../../Store/CustomerDataProvider';
 const NavDropDown = () => {
   
 
+
   const {userData,userHandler, handlerLogin, isLogin} = useContext(CustomerData);
 
  
@@ -52,12 +53,12 @@ const NavDropDown = () => {
   };
 
   const handleProfile = async() => {
-  
+
     try{
       console.log("reached profile");
       await axios.get(`http://localhost:3000/user/profile/${userData.username}`, {withCredentials: true});
       // console.log(isLogin," ",userData," ",removerData);
-      navigate('/profile', {
+      navigate('/profile', { 
         state: {
           profileData: userData,
           isLogins: isLogin
