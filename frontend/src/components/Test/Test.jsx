@@ -1,16 +1,13 @@
 import React, { useState } from 'react'
-import CreatAndShowjob from '../JobsSection/CreatAndShowJob/CreatAndShowjob'
-
-
-
-
-
+import MessageSection from './MessageSection'
 
 const Test = () => {
   
-   return(
-   <CreatAndShowjob/>
-   )
+  return (
+    <div className=''>
+       <MessageSection/>
+    </div>
+  )
 }
 
 export default Test
