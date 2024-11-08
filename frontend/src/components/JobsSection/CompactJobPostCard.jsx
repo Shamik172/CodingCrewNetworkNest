@@ -60,7 +60,7 @@ const CompactJobPostCard = ({ job }) => {
     // Initialize AOS animation
     useEffect(() => {
       AOS.init({
-          duration: 1000, // Duration of the animation
+          duration: 500, // Duration of the animation
           easing: 'ease-in-out', // Easing function for the animation
           once: false, // Only animate once when scrolled into view
           offset:200,
@@ -69,7 +69,7 @@ const CompactJobPostCard = ({ job }) => {
 
   return (
     <>
-      <div data-aos="flip-up" data-aos-delay="200"
+      <div data-aos="flip-up" data-aos-delay="100"
         className="relative w-full bg-white dark:bg-black dark:text-orange-600 rounded-lg p-4 cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white  "
        
       >

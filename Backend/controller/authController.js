@@ -17,7 +17,7 @@ exports.getIndex = (req, res, next) => {
 
 
 exports.postLogin = (req, res, next)=>{
-    // console.log(req.body);
+    console.log(req.body);
     const password = req.body.password;
     const username = req.body.username;
 
@@ -52,6 +52,7 @@ exports.postLogin = (req, res, next)=>{
 }
 
 exports.postSignup = (req, res, next) => {
+    console.log(req.body)
     const email = req.body.email;
     const password = req.body.password;
     const username = req.body.username;
@@ -64,7 +65,7 @@ exports.postSignup = (req, res, next) => {
 
     // const profilePicture = req.files['profilePicture'] ? req.files['profilePicture'][0] : '';
     // const coverPicture = req.files['coverPicture'] ? req.files['coverPicture'][0] : '';
-
+//    console.log(username,password,name,email)
     if (!email || !password || !username || !name) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
@@ -112,10 +113,16 @@ exports.postLogout = (req, res) => {
 
   exports.isLoggedIn = (req, res, next) =>{
     const user = req.session.user;
-    console.log(user);
-    if(user){
-        res.json({isLoggedIn: true, user});
-    } else{
-        res.json({isLoggedIn : false})
-    }
+    // console.log("abcd ++")
+    // console.log(user);
+    User.findById(user.id)
+    .then(user=>{
+        if(user){
+            // console.log(user);
+            res.status(200).json({isLoggedIn: true, user});
+        } else{
+            res.status(404).json({isLoggedIn : false})
+        }
+    })
+    .catch(er=>comsole.log(err));
 }

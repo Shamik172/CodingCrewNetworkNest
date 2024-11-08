@@ -8,7 +8,7 @@ const postSchema = new Schema({
         ref: 'User',
         required: true
     },
-    description:{
+    description:{ 
         type: String
     }, 
     images:[{
