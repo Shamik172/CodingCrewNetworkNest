@@ -9,11 +9,13 @@ router.get('/profile/:username', userController.getUserProfile);
 
 router.get('/profilePage/:userId', userController.getUserProfilePage);
 
-router.get('/skills/:userId', userController.getDefaultSkills);
+router.get('/skills/:userId', userController.getDefaultSkills); 
 
 router.get('/edit/:username', isAuth, userController.getEditUser);
 
-router.get('/search', userController.searchUser);
+// router.get('/search', userController.searchUser);
+
+router.post('/searchAll', userController.searchAll); 
  
 router.get('/e/:userId', userController.getDefaultEducation);
 

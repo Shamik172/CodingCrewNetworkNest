@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-
+import React, { useContext, useEffect, useState } from 'react'
+import axios from 'axios';
 
 import UserPost from './User/UserPost'
 import ProfileCard from './Profile/ProfileCard/ProfileCard';
@@ -17,6 +17,26 @@ const Home = () => {
   
    const {userData,userHandler,isLogin, handlerLogin} = useContext(CustomerData);
    
+
+   // const [isLogin, setLogin] = useState(false);
+   // const [userData, setUserData] = useState({});
+   const [allPosts, setAllPosts] = useState([{}]);
+
+
+   useEffect(()=>{
+      axios.get('http://localhost:3000/post/getAllPosts')
+      .then(posts=>{
+         console.log("received", posts.data);
+         setAllPosts(posts.data);
+         console.log(allPosts);
+      })
+      .catch(err=>console.log(err));
+   },[]);
+
+   useEffect(() => {
+      console.log("Updated allPosts:", allPosts);
+    }, [allPosts]);
+
     
   return (
     <>
@@ -39,7 +59,7 @@ const Home = () => {
 
              <div className='md:w-3/4 w-full md:mx-0  mx-4  max-w-2xl flex flex-col items-center  '>
               
-                {data.map(item =>  <UserPost key={item.name} UserProfile={item} isLogin={isLogin}/>)}
+                {allPosts.map(item =>  <UserPost key={item._id} UserProfile={item} isLogin={isLogin}/>)}
            
              </div>
              <div className='bg-red-400 w-1/5 h-96 mx-2 rounded-md mt-2  max-w-56 hidden lg:flex'></div>

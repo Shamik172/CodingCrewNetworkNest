@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Job = require('../models/job');
 
 exports.getUserProfile = (req, res, next) =>{
     // console.log(req.params);
@@ -267,3 +268,28 @@ exports.searchUser = (req, res, next) => {
         res.status(500).json({message: "Internal server error"});
     })
 }
+
+exports.searchAll = (req, res, next) => {
+    const searchQuery = req.body.searchQuery;
+    // console.log(req.body);
+    let result = {};
+    console.log(searchQuery);
+    // Define filters with correct regex options
+    const filterUser = {
+        $or: [
+            { name: { $regex: searchQuery, $options: "i" } },
+            { username: { $regex: searchQuery, $options: "i" } }
+        ]
+    };
+
+    // Use Promise.all to run both queries concurrently
+    User.find(filterUser)
+    .then((users) => {
+        result = {users};
+        return res.status(200).json(result); // Send the combined result
+    })
+    .catch(err => {
+        console.log(err);
+        return res.status(500).json({ error: "An error occurred while searching." });
+    });
+};

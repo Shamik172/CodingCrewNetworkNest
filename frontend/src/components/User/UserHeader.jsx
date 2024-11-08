@@ -43,7 +43,7 @@ const UserHeader = ({onHandler, isConnection, name, bio, img, isLogin}) => {
           <ProfileIcon userName={name} imageUrl={img}/>
           </div>
           <div>
-            <p className="font-semibold text-2xl font-serif ">
+            <p className="font-semibold text-2xl font-serif">
               <span className='text-sky-950 shodow capitalize'>
                 {name}
               </span>

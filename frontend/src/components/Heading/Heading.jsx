@@ -7,6 +7,7 @@ import { NavIcon } from "./NavIcon";
 import { MobileIcon } from "./MobileIcon";
 import img from "../../assets/image1.jpeg";
 import NavDropDown from "./NavDropDown";
+import axios from "axios";
 import CustomerData from "../../Store/CustomerDataProvider";
 
 function Navbar() {
@@ -27,10 +28,25 @@ function Navbar() {
   ];
 
   const handleSearchChange = (e) => setSearchQuery(e.target.value);
-  const handleSearchSubmit = (e) => {
+  const handleSearchSubmit = async (e) => {
     e.preventDefault();
     console.log("Search query:", searchQuery);
     // Add search functionality here
+    try {
+      const response = await axios.post("http://localhost:3000/user/searchAll", {searchQuery}, {
+        withCredentials: true,
+      });
+      console.log(response);
+    //   if (response.status === 200) {
+    //     navigate("/login");
+    //   }
+    } catch (err) {
+      if (err.response) {
+        alert(err.response.data.message);
+      } else {
+        alert("Something went wrong")
+      }
+    }
   };
 
   return (
@@ -40,7 +56,7 @@ function Navbar() {
         <Logo logoName={img} />
 
         {/* Search Bar */}
-        <form onSubmit={handleSearchSubmit} className="flex items-center w-full max-w-md mx-4">
+        <form onSubmit={handleSearchSubmit} className="flex text-stone-950 items-center w-full max-w-md mx-4">
           <Search handleSearchChange={handleSearchChange} searchQuery={searchQuery} />
         </form>
 
