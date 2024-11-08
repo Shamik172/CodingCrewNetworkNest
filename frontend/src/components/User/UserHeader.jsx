@@ -5,8 +5,8 @@ import Modal from './Modal';
 
 
 
-const UserHeader = ({onHandler, isConnection, name, bio, skill, img, isLogin}) => {
-  
+const UserHeader = ({onHandler, isConnection, name, bio, img, isLogin}) => {
+  // console.log(name, bio);
   // const navigate = useNavigate();
   const [showModal, setModal] = useState(false);
 
@@ -51,7 +51,7 @@ const UserHeader = ({onHandler, isConnection, name, bio, skill, img, isLogin}) =
                 {!isConnection ? 'follow' : 'unfollow'}</button>
             </p>
             <p className="text-sm">{bio}</p>
-            <p className="text-xs">{skill} </p>
+            {/* <p className="text-xs">{skill} </p> */}
           </div>
         </div>
       </div>

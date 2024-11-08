@@ -51,11 +51,11 @@ const YourProfile = () => {
             </div>
             <div>
                
-                <ProfileSection userId = {profileData.id}/>
-                <Skills userId = {profileData.id}/>
-                <Project userId = {profileData.id}/>
-                <Experience userId = {profileData.id}/>
-                <Education userId = {profileData.id}/>
+                <ProfileSection userId = {profileData._id}/>
+                <Skills userId = {profileData._id}/>
+                <Project userId = {profileData._id}/>
+                <Experience userId = {profileData._id}/>
+                <Education userId = {profileData._id}/>
             </div>
         
       </div>

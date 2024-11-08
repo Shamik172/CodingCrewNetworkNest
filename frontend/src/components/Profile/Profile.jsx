@@ -7,6 +7,8 @@ import NameAndBio from './NameAndBio';
 import Modal from './EditModel';
 
 function ProfileSection({userId}) {
+// console.log(userId);
+  const [file, setFile] = useState(null);
   
   const [profile, setProfile] = useState({
     username: 'Dummy User',
@@ -57,15 +59,20 @@ function ProfileSection({userId}) {
     //   };
     //   reader.readAsDataURL(files[0]);
     // }
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append([imageType], file, file.name);
-    console.log("fike",formData);
+    const file_t = e.target.files[0];
+    setFile(file_t);
+    // const fileType = file_t.fileType;
+    // const formData = new FormData();
+    // formData.append("imageType", imageType);
+    // formData.append("fileType", fileType);
+    // formData.append("file", file);
+    // console.log(formData)
+    // console.log("fike",formData);
 
   try {
     const response = await axios.post(
       `http://localhost:3000/user/${imageType}/${userId}`, 
-      formData,
+      
       { withCredentials: true, headers: { 'Content-Type': 'multipart/form-data' } }
     );
     
@@ -166,7 +173,13 @@ function ProfileSection({userId}) {
           className="mt-2"
         />
         <button
-          onClick={() => setIsProfileModalOpen(false)}
+      onClick={() => {
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("fileType", file);
+            console.log(file)
+            console.log(formData);
+              setIsProfileModalOpen(false)}}
           className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 w-full"
         >
           Save Profile Picture
@@ -197,7 +210,9 @@ function ProfileSection({userId}) {
           />
         </div>
         <button
-          onClick={() => setIsInfoModalOpen(false)}
+          onClick={() => {
+            
+            setIsInfoModalOpen(false);}}
           className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 w-full"
         >
           Save Changes

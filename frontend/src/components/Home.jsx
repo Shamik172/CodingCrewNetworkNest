@@ -14,8 +14,9 @@ const Home = () => {
   
   
    const [isLogin, setLogin] = useState(false);
-   const [userData, setUserData] = useState(null);
-   
+   const [userData, setUserData] = useState({});
+   const [allPosts, setAllPosts] = useState([{}]);
+
    const removerData = ()=> {
       setLogin(false);
    }
@@ -25,20 +26,35 @@ const Home = () => {
        // Fetch the login status and user data from backend
        axios.get('http://localhost:3000/auth/isLogin', { withCredentials: true })
            .then(response => {
-            // console.log(response);  
-               const { isLoggedIn, user } = response.data;
+               const isLoggedIn = response.data.isLoggedIn;
                setLogin(isLoggedIn);
-              
-               setUserData(user)
-               // console.log(userData)
                if (isLoggedIn) {
-                   setUserData(user);
+                  console.log("data is" ,response.data);
+                   setUserData(response.data.user);
+                   console.log("New Data is this mf ",userData);
                }
            })
            .catch(error => {
                console.error('Error checking login status:', error);
            });
    }, []);
+   // let allPostss = [];
+
+   useEffect(()=>{
+      axios.get('http://localhost:3000/post/getAllPosts')
+      .then(posts=>{
+         console.log("received", posts.data);
+         setAllPosts(posts.data);
+         console.log(allPosts);
+      })
+      .catch(err=>console.log(err));
+   },[]);
+
+   useEffect(() => {
+      console.log("Updated allPosts:", allPosts);
+    }, [allPosts]);
+    
+   // console.log("alllll", allPostss);
     
   return (
     <>
@@ -50,8 +66,8 @@ const Home = () => {
              <div className='md:w-1/5  rounded-md md:mx-4 mx-2 mt-2 max-w-56 h-96 shadow-md md:block hidden'>
                 {!isLogin ? 
                   <ProfileCard profileImage={''}  coverImage={''} isLogin={isLogin}/>
-                  :
-                   <ProfileCard profileImage={image}  coverImage={image1}  name="Sumanta sahoo" description={'MNNIT26 MCA'} isLogin={isLogin}/>
+                  :  //Loading image pending
+                   <ProfileCard profileImage={image}  coverImage={image1}  name={userData.name} description={userData.bio} isLogin={isLogin}/>
               
                 }
                
@@ -61,7 +77,7 @@ const Home = () => {
 
              <div className='md:w-3/4 w-full md:mx-0  mx-4  max-w-2xl flex flex-col items-center  '>
               
-                {data.map(item =>  <UserPost key={item.name} UserProfile={item} isLogin={isLogin}/>)}
+                {allPosts.map(item =>  <UserPost key={item._id} UserProfile={item} isLogin={isLogin}/>)}
            
              </div>
              <div className='bg-red-400 w-1/5 h-96 mx-2 rounded-md mt-2  max-w-56 hidden lg:flex'></div>

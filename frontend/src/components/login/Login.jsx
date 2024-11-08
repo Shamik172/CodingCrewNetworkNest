@@ -14,8 +14,10 @@ function Login() {
     setError(""); // Clear any previous error message
 
     try {
-      const response = await axios.post("http://localhost:3000/auth/login", { username, password }, { withCredentials: true });
-      console.log(response);
+      console.log(username, password);
+      const response = await axios.post("http://localhost:3000/auth/login", 
+        {username, password}, { withCredentials: true });
+      console.log("Thusih",response);
       // Redirect if login is successful
       if (response.status === 200) {
         navigate("/"); // Adjust path as needed

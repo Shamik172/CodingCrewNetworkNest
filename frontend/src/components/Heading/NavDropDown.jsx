@@ -7,7 +7,9 @@ import YourProfile from '../YourProfile';
 
 const NavDropDown = ({userData, isLogin}) => {
   
-
+  // console.log(
+  //   userData.username,"this is userdata"
+  // );
 
  
   const [isOpen, setIsOpen] = useState(false);
@@ -49,12 +51,13 @@ const NavDropDown = ({userData, isLogin}) => {
   };
 
   const handleProfile = async() => {
-    console.log("ik",userData);
+    // console.log("ik",userData);
+    // console.log("ik",userData.username);
     try{
       console.log("reached");
       await axios.get(`http://localhost:3000/user/profile/${userData.username}`, {withCredentials: true});
       // console.log(isLogin," ",userData," ",removerData);
-      navigate('/profile', {
+      navigate('/profile', { 
         state: {
           profileData: userData,
           isLogins: isLogin

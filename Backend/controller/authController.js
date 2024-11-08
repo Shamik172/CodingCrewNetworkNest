@@ -20,7 +20,7 @@ exports.postLogin = (req, res, next)=>{
     // console.log(req.body);
     const password = req.body.password;
     const username = req.body.username;
-
+    // console.log(username, password);
     if (!username || !password) {
         return res.status(401).json({ message: 'All fields are required'});
     }
@@ -33,6 +33,7 @@ exports.postLogin = (req, res, next)=>{
         bcrypt.compare(password, user.password)
         .then(doMatch => {
             if(doMatch){
+                // console.log(password, bc)
                 const token = jwt.sign(
                     {id: user._id, username: user.username},
                     process.env.JWT_SECRET,
@@ -112,10 +113,15 @@ exports.postLogout = (req, res) => {
 
   exports.isLoggedIn = (req, res, next) =>{
     const user = req.session.user;
-    console.log(user);
-    if(user){
-        res.json({isLoggedIn: true, user});
-    } else{
-        res.json({isLoggedIn : false})
-    }
+    console.log("fundcnks",user);
+    User.findById(user.id)
+    .then(user=>{
+        console.log("uers if bhk",user);
+        if(user){
+            return res.status(200).json({isLoggedIn: true, user});
+        } else{
+           return res.status(404).json({isLoggedIn : false})
+        }
+    } 
+    )
 }

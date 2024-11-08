@@ -26,8 +26,9 @@ const io = socketIo(server, {
   },
 });
 
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(express.static(path.join(__dirname, 'uploads')));
 
 
@@ -45,7 +46,7 @@ const fileFilter = (req, file, cb) => {
     } else {
         cb(null, false);        
     }
-};
+}; 
 
 const store = new MongoDBStore({
     uri: MONGODB_URI,
@@ -127,4 +128,4 @@ mongoose.connect(MONGODB_URI)
     })
     .catch(err => console.log(err));
 
- 
+  

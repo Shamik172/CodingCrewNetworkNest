@@ -5,6 +5,8 @@ const isAuth = require('../middleware/isAuth');
 
 router.post('/userPost', isAuth, postController.postCreatePost);
 
+router.get('/getAllPosts', postController.getAllPosts);
+
 router.post('/:postId/like', isAuth, postController.likePost);
 
 router.post('/:postId/comment', isAuth, postController.postComment);
