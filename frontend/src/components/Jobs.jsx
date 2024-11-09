@@ -19,9 +19,9 @@ const Jobs = () => {
   useEffect(()=>{
     axios.get(`http://localhost:3000/job/alljobs`, {withCredentials : true})
     .then(jobs=>{
-      console.log(jobs);
+      // console.log(jobs);
       setAllJobs(jobs.data);
-      console.log(allJobs);
+      // console.log(allJobs);
     })
     .catch(err=>console.log(err));
   }, [])
@@ -31,10 +31,16 @@ const Jobs = () => {
   // console.log("my login",isLogin)
   
   
-
-  const handleJobClick = () => {
-    alert("Opening detailed job view...");
-    // Logic to display JobCard can be added here
+  
+  const handleJobFilterClick = (obj) => {
+    // console.log("this is obj", obj);
+    axios.post(`http://localhost:3000/job/filterjob`, obj, {withCredentials : true})
+    .then(jobs=>{
+      // console.log(jobs);
+      setAllJobs(jobs.data);
+      // console.log(allJobs);
+    })
+    .catch(err=>console.log(err));
   };
 
 
@@ -60,7 +66,7 @@ const Jobs = () => {
             <div>Save Jobs</div>
           </div>
           <div className='md:hidden'>
-          <SearchDropDown username={userData.username} />
+          <SearchDropDown username={userData.username} handleJobFilterClick={handleJobFilterClick}/>
           </div>
       </div>
       <div className="flex  relative top-20 justify-center">
@@ -86,7 +92,7 @@ const Jobs = () => {
 
 
          <div className='relative  md:w-1/5 md:mx-4  hidden  md:flex -top-1 space-y-5 text-center max-w-60'>
-          <SearchDropDown username={userData.username} />
+          <SearchDropDown username={userData.username} handleJobFilterClick={handleJobFilterClick}/>
          </div>
         
       </div>
