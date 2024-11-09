@@ -41,9 +41,9 @@ const ChatSection = ({ selectedConnection, onClose, messages, onSendMessage }) =
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-5">
-        {messages.map((message, index) => (
+        {messages.map((message) => (
           <div
-            key={index}
+            key={message.id}
             className={`flex mb-2 items-start ${
               message.sender === 'me' ? 'justify-end' : 'justify-start'
             }`}
@@ -77,7 +77,7 @@ const ChatSection = ({ selectedConnection, onClose, messages, onSendMessage }) =
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          onKeyPress={handleKeyPress}
+          onKeyUp={handleKeyPress}
           placeholder="Type a message"
           className="w-full p-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
         />

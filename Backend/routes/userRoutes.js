@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const router = express.Router();
 const isAuth = require('../middleware/isAuth');
+const {upload} = require('../middleware/multerMiddleware');
 
 const userController = require('../controller/userController');
 
@@ -13,6 +14,7 @@ router.get('/skills/:userId', userController.getDefaultSkills);
 
 router.get('/edit/:username', isAuth, userController.getEditUser);
 
+router.get('/connections/:username', userController.getAllConnections);
 // router.get('/search', userController.searchUser);
 
 router.post('/searchAll', userController.searchAll); 
@@ -29,9 +31,11 @@ router.delete('/exp/:userId/:index', userController. deleteExperience);
 
 router.post('/e/:userId', userController.addEducation);
 
-router.post('/coverPicture/:userId', userController.postCoverPicture);
+router.post('/coverPicture/:userId',upload.fields([{ name: 'profilePicture', maxCount: 1 },
+    { name: 'coverPicture', maxCount: 1 }]), userController.postCoverPicture);
 
-router.post('/profilePicture/:userId',  userController.postProfilePicture);
+router.post('/profilePicture/:userId', upload.fields([{ name: 'profilePicture', maxCount: 1 },
+    { name: 'coverPicture', maxCount: 1 }]), userController.postProfilePicture);
  
 router.post('/exp/:userId', userController.addExperience);
 //start by userId
