@@ -4,7 +4,7 @@ import React from 'react'
 import { createContext, useState } from 'react'
 const CustomerData = createContext();
 
-export const CustomerDataProvider=({children})=>{
+export const LoginUserDataProvider=({children})=>{
 
 
       //to store userData

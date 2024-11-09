@@ -5,7 +5,7 @@ import Skills from './Profile/Skills/Skills';
 import Project from './Profile/Project/Project';
 import Experience from './Profile/Experience/Experience';
 import Education from './Profile/Education/Education';
-import CustomerData from '../Store/CustomerDataProvider';
+import CustomerData from '../Store/LoginUserDataProvider';
 
 const YourProfile = () => {
     const { userData, isLogin } = useContext(CustomerData);

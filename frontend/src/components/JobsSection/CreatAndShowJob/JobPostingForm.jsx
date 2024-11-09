@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import FromComponents from './FromComponents'
+import { CreatedJobData } from '../../../Store/LoginUserCreatsJobsDataProvider';
 
-const JobPostingForm = ({returnData}) => {
+const JobPostingForm = () => {
+  const {handlerStoreData} = useContext(CreatedJobData);
+  // console.log("myobj",handlerStoreData);
+ 
+
   const [formData, setFormData] = useState({
     companyName: '',
     companyLogo: '',
@@ -32,7 +37,7 @@ const JobPostingForm = ({returnData}) => {
 
   const handleSubmit = (e) => {
     // console.log(formData);
-    returnData(formData);
+    handlerStoreData(formData);
     e.preventDefault();
     setFormData({
       companyName: '',

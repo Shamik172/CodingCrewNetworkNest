@@ -24,8 +24,8 @@ const ProfileCard = ({ profileImage, coverImage, name, description, isLogin }) =
   };
 
   return (
-    <div className={styles.profileContainer}>
-      <div className={styles.profileCard}>
+    <div className={`${styles.profileContainer}  md:mx-0 mx-4 dark:bg-black` }>
+      <div className={`${styles.profileCard} `}>
         <img
           className={`${styles.coverPhoto} bg-gray-400`}
           src={coverImage}
@@ -41,12 +41,12 @@ const ProfileCard = ({ profileImage, coverImage, name, description, isLogin }) =
       </div>
 
       {isLogin ?(
-         <div className={styles.bioSection}>
+         <div className={`${styles.bioSection} dark:bg-slate-950 dark:lg:border-2 dark:border-white`}>
          <ul>
            <li className="text-center text-2xl font-semibold">
-             <h2>{name}</h2>
+             <h2 className='dark:text-white'>{name}</h2>
            </li>
-           <li className="text-center font-semibold underline">{description}</li>
+           <li className="text-center font-semibold underline dark:text-white">{description}</li>
          </ul>
        </div>
       ): (

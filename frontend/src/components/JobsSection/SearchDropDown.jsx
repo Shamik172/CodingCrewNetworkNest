@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { IoIosAddCircleOutline, IoIosArrowDown } from "react-icons/io";
 import AOS from 'aos'; // Import AOS for initialization
 import 'aos/dist/aos.css'; // Import the AOS CSS for animations
-
+import { Link } from 'react-router-dom';
 // Sample data for jobs
 const jobTitles = ['Software Engineer', 'Product Manager', 'Data Scientist'];
 const companies = ['Company A', 'Company B', 'Company C'];
@@ -22,7 +22,7 @@ const states = {
     }
 };
 
-const SearchDropDown = () => {
+const SearchDropDown = ({username}) => {
     // Initialize AOS animation
     useEffect(() => {
         AOS.init({
@@ -77,7 +77,7 @@ const SearchDropDown = () => {
 
             {/* Mobile pop-up menu */}
             {isMobileMenuOpen && (
-                <div className="fixed inset-0 sm:w-2/3 m-auto sm:h-2/3 bg-slate-50 dark:bg-gray-900 p-6 z-50 overflow-y-auto transition-opacity duration-300 ease-in-out">
+                <div className="fixed inset-0 sm:w-2/3 m-auto sm:h-2/3 bg-slate-50 dark:bg-gray-900 p-6 z-50 overflow-y-auto transition-opacity duration-300 ease-in-out top-20">
                     <button
                         onClick={toggleMobileMenu}
                         className="text-lg font-semibold text-gray-800 dark:text-white mb-4"
@@ -171,12 +171,12 @@ const SearchDropDown = () => {
 
             {/* PC view */}
             <div data-aos="fade-in" data-aos-delay="500" className="md:flex flex-col absolute hidden space-y-3 text-center">
-                <a href='/test' className="px-6 py-2 bg-slate-50 dark:bg-sky-950 hover:bg-slate-300 dark:hover:bg-sky-800 dark:text-white rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3">
+                <Link to={`/job/createJob?user=${username}`} className="px-6 py-2 bg-slate-50 dark:bg-sky-950 hover:bg-slate-300 dark:hover:bg-sky-800 dark:text-white rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3">
                     Create Job+
-                </a> 
-                <a className="px-6 py-2 bg-slate-50 dark:bg-sky-950 dark:text-white hover:bg-slate-300 dark:hover:bg-sky-800 rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3">
+                </Link> 
+                <Link to={`/job/pastJob?user=${username}`} className="px-6 py-2 bg-slate-50 dark:bg-sky-950 dark:text-white hover:bg-slate-300 dark:hover:bg-sky-800 rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3">
                     Past Job
-                </a> 
+                </Link > 
                 <div className='p-4 bg-slate-50 dark:bg-black dark:text-black rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3'>
                     <select 
                         id="country" 

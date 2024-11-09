@@ -2,7 +2,7 @@ import React from 'react'
 import Navbar from './Heading/Heading'
 import  {useContext } from 'react'
 
-import CustomerData from '../Store/CustomerDataProvider'
+import CustomerData from '../Store/LoginUserDataProvider'
 
 const Notifications = () => {
 

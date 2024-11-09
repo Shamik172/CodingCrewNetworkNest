@@ -35,7 +35,7 @@ const UserHeader = ({onHandler, isConnection, name, bio, img, isLogin}) => {
 
     <>
       
-      <div className="flex flex-row items-center justify-between px-4 p-2 font-serif bg-slate-200">
+      <div className="flex flex-row items-center justify-between px-4 p-2 font-serif bg-slate-200 dark:bg-slate-900 ">
         {/* Profile Picture and Info */}
         <div className="flex items-center mb-4 sm:mb-0  font-mono">
           <div className="w-12 h-12 rounded-full mr-3  ">
@@ -43,14 +43,16 @@ const UserHeader = ({onHandler, isConnection, name, bio, img, isLogin}) => {
           <ProfileIcon userName={name} imageUrl={img}/>
           </div>
           <div>
-            <p className="font-semibold text-2xl font-serif">
-              <span className='text-sky-950 shodow capitalize'>
+
+            <p className="font-semibold text-2xl font-serif ">
+              <span className='text-sky-950 shodow capitalize dark:text-purple-500'>
+
                 {name}
               </span>
               <button className="text-blue-600 font-medium text-sm mx-3" onClick={handleClick}>
                 {!isConnection ? 'follow' : 'unfollow'}</button>
             </p>
-            <p className="text-sm">{bio}</p>
+            <p className="text-sm dark:text-orange-500">{bio}</p>
             {/* <p className="text-xs">{skill} </p> */}
           </div>
         </div>

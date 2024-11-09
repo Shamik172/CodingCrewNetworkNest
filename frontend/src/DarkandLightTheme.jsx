@@ -26,6 +26,7 @@ useEffect(()=>{
  }else{
    document.documentElement.classList.remove('dark');
  }
+ 
 }, [theme]);
 
 const handleThemeSwitch = ()=>{

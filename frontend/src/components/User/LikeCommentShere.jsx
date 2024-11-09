@@ -4,7 +4,7 @@ const LikeCommentShere = ({Icon, title, col, isLogin, ClickHandler}) => {
   return (
 
         
-       <button onClick={ClickHandler} className="flex w-1/3 p-3 justify-center hover:bg-blue-50 
+       <button onClick={ClickHandler} className="flex w-1/3 p-3 justify-center hover:bg-blue-50  dark:hover:bg-slate-900
      ">
           <Icon color={col}  className={`hover:${col} hover:scale-150`}/>
           {/* <span>{title}</span> */}

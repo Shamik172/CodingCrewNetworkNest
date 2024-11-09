@@ -1,8 +1,11 @@
 
 import React, { useContext } from 'react'
 import Navbar from './Heading/Heading'
-import CustomerData from '../Store/CustomerDataProvider';
+
+import CustomerData from '../Store/LoginUserDataProvider';
+
 import MessageSection from './Messages/MessageSection';
+
 const Message = () => {
 
   const {userData,isLogin} = useContext(CustomerData);

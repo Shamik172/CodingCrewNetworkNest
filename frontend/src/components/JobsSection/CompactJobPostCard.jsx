@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { MdBookmark } from "react-icons/md";
 import AOS from 'aos'; // Import AOS for initialization
 import 'aos/dist/aos.css'; // Import the AOS CSS for animations
+import { Link } from "react-router-dom";
 
 const CompactJobPostCard = ({ job }) => {
   const {
@@ -34,26 +35,8 @@ const CompactJobPostCard = ({ job }) => {
     alert(`Applied for the position: ${role} at ${companyName}`);
   };
 
-  const handleViewDetails = (e) => {
-    e.stopPropagation();
-    setIsModalOpen(true);
-  };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  // Disable background scroll when modal is open
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.classList.add("overflow-hidden");
-    } else {
-      document.body.classList.remove("overflow-hidden");
-    }
-    return () => {
-      document.body.classList.remove("overflow-hidden");
-    };
-  }, [isModalOpen]);
+  
 
 
 
@@ -74,12 +57,12 @@ const CompactJobPostCard = ({ job }) => {
        
       >
         <div className="absolute top-2 right-2">
-          <button
-            onClick={handleViewDetails}
+          <Link to={'/jobDetails'}
+            
             className="dark:bg-green-800 text-white px-3 py-1 rounded-md hover:bg-green-700 bg-green-600"
           >
             View Details
-          </button>
+          </Link>
         </div>
 
         <div className="flex items-center mb-2">
@@ -119,45 +102,6 @@ const CompactJobPostCard = ({ job }) => {
         </div>
       </div>
 
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
-          <div className="bg-white dark:bg-slate-800 dark:text-white rounded-lg p-6 w-11/12 max-w-2xl relative">
-            <button
-              onClick={closeModal}
-              className="absolute top-2 right-2 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
-            >
-              ✕
-            </button>
-            <h2 className="text-2xl font-bold mb-2">{role}</h2>
-            <p className="text-lg text-gray-800 dark:text-gray-300 font-medium">{companyName}</p>
-            <p className="text-sm text-gray-700 dark:text-gray-400">{location}, {city}</p>
-            <p className="text-sm text-gray-700 dark:text-gray-400">{jobType}</p>
-            <p className="text-sm text-gray-700 dark:text-gray-400">Salary: {salary}</p>
-            <p className="text-sm text-gray-700 dark:text-gray-400">Experience: {experience}</p>
-            <p className="text-sm text-gray-700 dark:text-gray-400">Qualification: {qualification}</p>
-            <p className="text-sm text-gray-700 dark:text-gray-400">Skills Required: {requiredSkills.join(", ")}</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Deadline: {applicationDeadline}</p>
-            <p className="mt-4 text-sm text-gray-700 dark:text-gray-400">Job Description: {jobDescription}</p>
-
-            <div className="mt-4 flex space-x-2">
-              <button
-                onClick={handleSaveForLater}
-                className="flex items-center text-gray-600 dark:text-gray-400 hover:text-blue-500"
-              >
-                <MdBookmark className={`mr-1 ${saved ? "text-blue-500" : ""} dark:text-white`} />
-                {saved ? "Saved" : "Save"}
-              </button>
-
-              <button
-                onClick={handleApply}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-              >
-                Apply
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 };
