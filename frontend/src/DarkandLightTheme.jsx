@@ -38,7 +38,7 @@ const handleThemeSwitch = ()=>{
    
     <button
     className='text-black bg-white dark:bg-black dark:text-white
-    rounded-full p-3 flex justify-center items-center z-[100] fixed bottom-5 right-5 cursor-pointer text-sm ring-offset-2 ring-2'
+    rounded-full p-3 flex justify-center items-center z-[100] fixed bottom-14 right-5 cursor-pointer text-sm ring-offset-2 ring-2'
     onClick={handleThemeSwitch}
   >
     {theme === 'dark' ? <MdOutlineDarkMode size={25} /> : <MdOutlineLightMode size={25} />}

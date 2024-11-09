@@ -14,8 +14,10 @@ const Message = () => {
    console.log("myLogin: ", isLogin)
   return (
   
-    <div className='relative top-20'>
+    <div className='w-full bg-slate-300 dark:bg-slate-950   '>
+       <div className=''>
       <MessageSection userData={userData}/>
+      </div>
    
     </div>
    
