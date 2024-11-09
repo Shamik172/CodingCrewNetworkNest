@@ -3,31 +3,30 @@ import { FaHeart, FaComment, FaShare, FaTimes } from 'react-icons/fa';
 import LikeCommentShere from './LikeCommentShere';
 import UserHeader from './UserHeader';
 import ContentSection from './ContentSection';
-import UniversalModal from '../UniversalModal';
+import Comments from './Comments';
 
 function UserPost({ UserProfile, isLogin }) {
-  // console.log(UserProfile);
   const [connection, setConnection] = useState(false);
   const [isVisibleCard, setIsVisibleCard] = useState(true);
   const [CommentVisible, setCommentVisible] = useState(false);
+  const [comments, setComments] = useState([]);
 
-  // Toggle connection state
   const connectionHandler = () => {
     setConnection(!connection);
   };
 
-  // Handle remove card
   const removeCard = () => {
-    // console.log('Removing card'); // Debug log to check if function is called
     setIsVisibleCard(false);
   };
 
-  // Handle showing comment modal
   const setCommentHandler = () => {
     setCommentVisible(true);
   };
 
-  // If card is not visible, don't render it
+  const addComment = (newComment) => {
+    setComments([...comments, newComment]);
+  };
+
   if (!isVisibleCard) {
     return null;
   }
@@ -35,14 +34,12 @@ function UserPost({ UserProfile, isLogin }) {
   return (
     <>
       <div className="relative w-full md:mx-auto shadow-blue-300 border-none rounded-lg shadow-md overflow-hidden bg-white dark:bg-black mx-1 inline-block mb-8 mt-2 text-black">
-        {/* Remove card icon */}
         <FaTimes
           className="absolute top-2 right-2 text-gray-500 hover:text-red-500 cursor-pointer"
           onClick={removeCard}
           size={18}
         />
 
-        {/* Header */}
         <UserHeader
           onHandler={connectionHandler}
           isConnection={connection}
@@ -52,10 +49,8 @@ function UserPost({ UserProfile, isLogin }) {
           isLogin={isLogin}
         />
 
-        {/* Content Section */}
         <ContentSection img={UserProfile.coverUrl} desc={UserProfile.description} />
 
-        {/* Footer */}
         <div className="flex justify-around text-sm font-serif border-t-2 dark:border-slate-900 divide-x dark:divide-slate-900">
           <LikeCommentShere
             Icon={FaHeart}
@@ -81,11 +76,12 @@ function UserPost({ UserProfile, isLogin }) {
         </div>
       </div>
 
-      {/* Comment Modal */}
       {CommentVisible && (
-        <UniversalModal unsetModalHandler={() => setCommentVisible(false)}>
-          <p>Hi! Leave a comment below.</p>
-        </UniversalModal>
+        <Comments
+          comments={comments}
+          onClose={() => setCommentVisible(false)}
+          onAddComment={addComment}
+        />
       )}
     </>
   );
