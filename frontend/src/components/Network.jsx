@@ -2,7 +2,7 @@ import React from 'react'
 import Navbar from './Heading/Heading'
 import {useContext} from 'react';
 import CustomerData from '../Store/LoginUserDataProvider';
-import Connection from '../Connections/Connections';
+import Connection from './Connections/Connections';
 
 const Network = () => {
   const {userData,userHandler,isLogin, handlerLogin} = useContext(CustomerData);

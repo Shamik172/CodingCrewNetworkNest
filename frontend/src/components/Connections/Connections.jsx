@@ -61,11 +61,11 @@ const Connection = () => {
   return (
     <div className="flex flex-col lg:flex-row justify-center mt-10">
       {/* Connection Requests Section */}
-      <div className="lg:w-1/3 w-full bg-white p-4 border rounded-md shadow-md mx-2">
-        <h2 className="text-xl font-semibold mb-4">Connection Requests</h2>
+      <div className="lg:w-1/3 w-full bg-white dark:bg-black p-4 border rounded-md shadow-md mx-2">
+        <h2 className="text-xl font-semibold mb-4 text-black dark:text-purple-500">Connection Requests</h2>
         {requests.length > 0 ? (
           requests.map((request) => (
-            <div key={request.id} className="flex justify-between items-center bg-gray-100 p-3 mb-3 rounded-md">
+            <div key={request.id} className="flex justify-between items-center bg-slate-300 dark:bg-slate-950  text-black dark:text-orange-500 p-3 mb-3 rounded-md shadow-sm dark:shadow-sky-300 shadow-blue-900">
               <div>
                 <h3
                   className="font-medium cursor-pointer hover:text-blue-500"
@@ -96,15 +96,15 @@ const Connection = () => {
       </div>
 
       {/* Current Connections Section */}
-      <div className="lg:w-1/3 w-full bg-white p-4 border rounded-md shadow-md mx-2 mt-4 lg:mt-0">
-        <h2 className="text-xl font-semibold mb-4">Your Connections</h2>
+      <div className="lg:w-1/3 w-full bg-white dark:bg-black p-4 border rounded-md shadow-md mx-2 mt-4 lg:mt-0">
+        <h2 className="text-xl font-semibold mb-4 text-black dark:text-purple-500">Your Connections</h2>
         {connections.length > 0 ? (
           connections.map((connection) => (
-            <div key={connection.id} className="flex justify-between items-center bg-gray-100 p-3 mb-3 rounded-md">
+            <div key={connection.id} className="flex justify-between items-center bg-slate-300 dark:bg-slate-950  text-black dark:text-orange-500 p-3 mb-3 rounded-md shadow-sm dark:shadow-sky-300 shadow-blue-900">
               <div className="flex items-center space-x-2">
                 {/* Online/Offline Status Dot */}
                 <span
-                  className={`h-3 w-3 rounded-full ${connection.isOnline ? "bg-green-500" : "bg-red-500"}`}
+                  className={`h-3 w-3 rounded-full ${connection.isOnline ? "bg-green-600" : "bg-red-600"}`}
                   title={connection.isOnline ? "Online" : "Offline"}
                 ></span>
                 <h3
@@ -128,11 +128,11 @@ const Connection = () => {
       </div>
 
       {/* Suggestions Section */}
-      <div className="lg:w-1/3 w-full bg-white p-4 border rounded-md shadow-md mx-2 mt-4 lg:mt-0">
-        <h2 className="text-xl font-semibold mb-4">Suggestions</h2>
+      <div className="lg:w-1/3 w-full bg-white dark:bg-black p-4 border rounded-md shadow-md mx-2 mt-4 lg:mt-0">
+        <h2 className="text-xl font-semibold mb-4 text-black dark:text-purple-500">Suggestions</h2>
         {suggestions.length > 0 ? (
           suggestions.map((suggestion) => (
-            <div key={suggestion.id} className="flex justify-between items-center bg-gray-100 p-3 mb-3 rounded-md">
+            <div key={suggestion.id} className="flex justify-between items-center bg-slate-300 dark:bg-slate-950  text-black dark:text-orange-500 p-3 mb-3 rounded-md shadow-sm dark:shadow-sky-300 shadow-blue-900">
               <h3
                 className="font-medium cursor-pointer hover:text-blue-500"
                 onClick={() => handleOpenModal(suggestion)} // Open modal with user details
