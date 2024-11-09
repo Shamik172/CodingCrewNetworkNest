@@ -5,48 +5,72 @@ const User = require('../models/user');
 
 
 exports.createJob = (req, res, next) => {
-    // if(req.session.user.toString() !== req.user)
-
-    const title = req.body.title;
-    const description = req.body.description;
-    const companyName = req.body.companyName;
-    const location = req.body.location;
-    const jobType = req.body.jobType;
-    const salary = req.body.salary;
-    const skillsRequired = req.body.skillsRequired;
+    // Log the body for debugging
+    console.log(req.body);  
+    
+    const { description, companyName, location, jobType, salary, requiredSkills, deadline, role, city, experience, qualification } = req.body;
     
     const postedBy = req.session.user.id;
+    // console.log(postedBy);
 
-    if(!title || !description || !companyName || !location || !salary || !skillsRequired || !jobType || !postedBy){
-        return res.status(403).json({message: "Complete required fields"});
+    // Check if all required fields are provided
+    if(!description || !companyName || !location || !salary || !role || !city || !qualification || !deadline || !jobType) {
+        console.log("this is the issue");
+        return res.status(403).json({ message: "Complete required fields" });
     }
 
+    // Create the new job document
     const newJob = new Job({
-        title: title,
         description: description,
         companyName: companyName,
         location: location,
         jobType: jobType,
         salary: salary,
-        skillsRequired: skillsRequired,
-        postedBy: req.session.user.id,
+        skillsRequired: requiredSkills,
+        postedBy: req.session.user.username,
+        role: role,
+        city: city,
+        experience: experience,
+        qualification: qualification,
+        deadline: deadline,
         postDate: Date.now()
     });
 
+    // Save the new job and update the user document
     newJob.save()
-    .then(()=>{
-        User.findById(postedBy)
-        .then(user=>{
-            // console.log(newJob);
-           user.createdJobs.push(newJob._id);
-           user.save();
-           next();
+        .then(() => {
+            // Find the user who posted the job and add the new job ID to their createdJobs array
+            User.findOne({ username: postedBy })
+                .then(user => {
+                    if (!user) {
+                        return res.status(404).json({ message: "User not found" });
+                    }
+
+                    // Add the new job ID to the createdJobs array
+                    user.createdJobs.push(newJob._id);
+
+                    // Save the updated user document
+                    user.save()
+                        .then(() => {
+                            // Send success response after everything is updated
+                            return res.status(200).json({ message: "Job posted successfully" });
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            return res.status(500).json({ message: "Error updating user with new job" });
+                        });
+                })
+                .catch(err => {
+                    console.log(err);
+                    return res.status(500).json({ message: "Error finding user" });
+                });
         })
-        .catch(err=>console.log(err));
-        return res.status(200).json({message: "Job posted successfully"});
-    })
-    .catch(err => console.log(err));
-}
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json({ message: "Error saving job" });
+        });
+};
+
 
 exports.deleteJob = (req, res, next) => {
     const jobId = req.params.jobId;
@@ -138,6 +162,77 @@ exports.filterJob = (req, res, next) => {
     Job.find(filter)
     .then(jobs=>{
         return res.status(200).json(jobs);
+    })
+    .catch(err=>console.log(err));
+}
+
+exports.getAllJobsByUser = (req, res, next) => {
+    const username = req.params.username;
+    console.log(username);
+    
+    User.findOne({username: username})
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({ message: "User doesn't exist" });
+            }
+
+            // Create an array of promises
+            const jobPromises = user.createdJobs.map(jobId => {
+                return Job.findById(jobId);
+            });
+
+            // Use Promise.all to wait for all promises to resolve
+            Promise.all(jobPromises)
+                .then(jobs => {
+                    console.log("All jobs:", jobs);
+                    return res.status(200).json(jobs);
+                })
+                .catch(err => {
+                    console.log(err);
+                    return res.status(500).json({ message: "Error fetching jobs" });
+                });
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json({ message: "Error finding user" });
+        });
+};
+
+exports.saveJob = (req, res, next) =>{
+    const jobId = req.params.jobId;
+    // console.log(req.session);
+    const userId = req.session.user.id;
+
+    User.findById(userId)
+    .then(user=>{
+        // console.log("fuckup");
+        if (user.savedJobs.findIndex((id) => id === jobId) === -1) {
+            user.savedJobs.push(jobId);
+        }
+        else{
+            user.savedJobs = user.savedJobs.filter(job=>job.toString() !== jobId.toString());
+        }
+       user.save();
+       return res.status(200).json({message: "Saved job successfully"});
+    })
+    .catch(err=>console.log(err));
+}
+
+exports.getAllJobs = (req, res, next) =>{
+    Job.find()
+    .then(jobs=>{
+        return res.status(200).json(jobs);
+    })
+    .catch(err=>console.log(err));
+}
+
+exports.getJob = (req, res, next) => {
+    const jobId = req.params.jobId;
+    console.log(jobId);
+    Job.findById(jobId)
+    .then(job=>{
+        console.log(job);
+        return res.status(200).json(job);
     })
     .catch(err=>console.log(err));
 }

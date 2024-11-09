@@ -3,8 +3,10 @@ import { MdBookmark } from "react-icons/md";
 import AOS from 'aos'; // Import AOS for initialization
 import 'aos/dist/aos.css'; // Import the AOS CSS for animations
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-const CompactJobPostCard = ({ job }) => {
+
+const CompactJobPostCard = ({ job, postedBy , username}) => {
   const {
     companyName,
     companyLogo,
@@ -13,12 +15,13 @@ const CompactJobPostCard = ({ job }) => {
     location,
     city,
     jobType,
-    requiredSkills,
+    skillsRequired,
     experience,
     qualification,
     createdBy,
-    applicationDeadline,
-    jobDescription,
+    deadline,
+    description,
+
   } = job;
 
   const [saved, setSaved] = useState(false);
@@ -26,13 +29,21 @@ const CompactJobPostCard = ({ job }) => {
 
   const handleSaveForLater = (e) => {
     e.stopPropagation();
-    setSaved(!saved);
-    alert(`Job ${saved ? "removed from" : "saved to"} your saved jobs.`);
+    axios.get(`http://localhost:3000/job/savejob/${job._id}`, {withCredentials: true})
+    .then(result=>{
+      setSaved(!saved);
+      alert(`Job ${saved ? "removed from" : "saved to"} your saved jobs.`);
+    })
+    .catch(err=>console.log(err));
   };
 
   const handleApply = (e) => {
     e.stopPropagation();
-    alert(`Applied for the position: ${role} at ${companyName}`);
+    axios.get(`http://localhost:3000/job/applyjob/${job._id}`, {withCredentials: true})
+    .then(result=>{
+      alert(`Applied for the position: ${role} at ${companyName}`);
+    })
+    .catch(err=>console.log(err));
   };
 
 
@@ -43,7 +54,7 @@ const CompactJobPostCard = ({ job }) => {
     // Initialize AOS animation
     useEffect(() => {
       AOS.init({
-          duration: 500, // Duration of the animation
+          duration: 200, // Duration of the animation
           easing: 'ease-in-out', // Easing function for the animation
           once: false, // Only animate once when scrolled into view
           offset:200,
@@ -57,7 +68,7 @@ const CompactJobPostCard = ({ job }) => {
        
       >
         <div className="absolute top-2 right-2">
-          <Link to={'/jobDetails'}
+          <Link to={`/jobDetails?job=${job._id}`}
             
             className="dark:bg-green-800 text-white px-3 py-1 rounded-md hover:bg-green-700 bg-green-600"
           >
@@ -73,7 +84,7 @@ const CompactJobPostCard = ({ job }) => {
           />
           <div>
             <h3 className="text-lg md:text-2xl font-bold text-blue-900 dark:text-orange-600">{companyName}</h3>
-            <p className="text-sm text-gray-500 dark:text-orange-400">Posted by: {createdBy}</p>
+            <p className="text-sm text-gray-500 dark:text-orange-400">Posted by: {postedBy}</p>
           </div>
         </div>
 
@@ -81,7 +92,7 @@ const CompactJobPostCard = ({ job }) => {
           <p className="text-lg text-gray-800 dark:text-purple-600 font-medium">{role}</p>
           <p className="text-sm text-gray-500 dark:text-white">{salary}</p>
           <p className="text-sm text-gray-500 dark:text-white">{location}, {city}</p>
-          <p className="text-xs text-gray-500 dark:text-white">Deadline: {applicationDeadline}</p>
+          <p className="text-xs text-gray-500 dark:text-white">Deadline: {new Date(deadline).getDate()+'/'+new Date(deadline).getMonth() + '/'+ new Date(deadline).getFullYear()}</p>
         </div>
 
         <div className="absolute bottom-2 right-2 flex space-x-2">

@@ -40,7 +40,8 @@ const MessageSection = ({ userData }) => {
         socketRef.current.off("receiveMessage");
       }
     };
-  });
+  }, []);
+
 
   // Open chat with selected connection
   const openChat = (connection) => {
