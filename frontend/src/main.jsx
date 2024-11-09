@@ -48,8 +48,8 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
 
   <CustomerDataProvider>
-      <StrictMode>
+    
       <RouterProvider router={router} />
-      </StrictMode>,
+     
   </CustomerDataProvider>
 )

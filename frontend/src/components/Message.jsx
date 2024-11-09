@@ -2,6 +2,7 @@
 import React, { useContext } from 'react'
 import Navbar from './Heading/Heading'
 import CustomerData from '../Store/CustomerDataProvider';
+import MessageSection from './Messages/MessageSection';
 const Message = () => {
 
   const {userData,isLogin} = useContext(CustomerData);
@@ -10,7 +11,8 @@ const Message = () => {
    console.log("myLogin: ", isLogin)
   return (
   
-    <div className='text-red-600'>Message
+    <div className='relative top-20'>
+      <MessageSection userData={userData}/>
    
     </div>
    
