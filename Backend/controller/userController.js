@@ -6,7 +6,7 @@ exports.getUserProfile = (req, res, next) =>{
     const username = req.params.username;
     User.findOne({username: username}).select('-password')
     .then(user=>{
-        console.log("use", user);
+        // console.log("use", user);
         return res.status(200).json(user);
     })
     .catch(err=>console.log(err));

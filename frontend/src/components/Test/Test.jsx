@@ -1,3 +1,8 @@
 import React, { useState } from 'react'
 
-export default Test
+const Test = ()=>{
+    return(
+        <div>guu</div>
+    )
+}
+export default Test;
