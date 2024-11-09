@@ -1,11 +1,33 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { FaTimes, FaCircle } from 'react-icons/fa';
 
 function SharePost({ availableUsers, onClose, onShare }) {
+  const modalRef = useRef(null); // Reference to the modal container
+
+  useEffect(() => {
+    // Function to handle click outside the modal
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose(); // Close the modal if clicked outside
+      }
+    };
+
+    // Add event listener for clicks outside
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [onClose]);
+
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center ">
+    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
       {/* Larger container size and padding */}
-      <div className="bg-slate-300 dark:bg-slate-950 rounded-lg p-6 w-2/5 max-w-lg shadow-md relative shadow-black dark:shadow-white">
+      <div
+        ref={modalRef} // Attach the reference to the modal container
+        className="bg-slate-100 dark:bg-slate-950 rounded-lg p-6 w-2/5 max-w-lg shadow-md relative shadow-black dark:shadow-white"
+      >
         <h2 className="text-xl font-semibold mb-4 text-black dark:text-orange-500">Share Post With:</h2>
         
         {/* Added max-h-96 for a scrollable container */}

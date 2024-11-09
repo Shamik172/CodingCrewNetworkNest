@@ -4,6 +4,7 @@ import { FaTimes, FaComment } from 'react-icons/fa';
 const Comments = ({ comments, onClose, onAddComment }) => {
   const [newComment, setNewComment] = useState('');
   const commentsEndRef = useRef(null); // Reference to the end of the comments list
+  const modalRef = useRef(null); // Reference to the modal container
 
   const handleCommentSubmit = () => {
     if (newComment.trim()) {
@@ -29,9 +30,29 @@ const Comments = ({ comments, onClose, onAddComment }) => {
     }
   }, [comments]);
 
+  // Handle clicks outside the modal to close it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose(); // Close the modal if clicked outside
+      }
+    };
+
+    // Add event listener for clicks outside
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [onClose]);
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg relative transform transition-all">
+      <div
+        ref={modalRef} // Attach the reference to the modal container
+        className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg relative transform transition-all"
+      >
         <FaTimes
           className="absolute top-3 right-3 cursor-pointer text-gray-500 dark:text-gray-300 hover:text-red-500"
           onClick={onClose}
