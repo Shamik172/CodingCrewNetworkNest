@@ -171,12 +171,7 @@ const SearchDropDown = ({username}) => {
 
             {/* PC view */}
             <div data-aos="fade-in" data-aos-delay="500" className="md:flex flex-col absolute hidden space-y-3 text-center">
-                <Link to={`/job/createJob?user=${username}`} className="px-6 py-2 bg-slate-50 dark:bg-sky-950 hover:bg-slate-300 dark:hover:bg-sky-800 dark:text-white rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3">
-                    Create Job+
-                </Link> 
-                <Link to={`/job/pastJob?user=${username}`} className="px-6 py-2 bg-slate-50 dark:bg-sky-950 dark:text-white hover:bg-slate-300 dark:hover:bg-sky-800 rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3">
-                    Past Job
-                </Link > 
+               
                 <div className='p-4 bg-slate-50 dark:bg-black dark:text-black rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3'>
                     <select 
                         id="country" 

@@ -46,7 +46,7 @@ const router = createBrowserRouter([
  
   { path: '/login', element: <Login /> },
   { path: '/signup', element: <Signup /> },
-  { path: '/test', element: <Test/> },
+  { path: '/test', element: <Test/> }
 ]);
 
 
@@ -64,7 +64,7 @@ createRoot(document.getElementById('root')).render(
     <LoginUserCreatsJobsDataProvider>
       <StrictMode>
       <RouterProvider router={router} />
-      </StrictMode>,
+      </StrictMode>
       </LoginUserCreatsJobsDataProvider>
   </LoginUserDataProvider>
 

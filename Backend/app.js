@@ -18,6 +18,8 @@ const socketIo = require('socket.io');
 
 const app = express();
 const server = http.createServer(app);
+
+
 const io = socketIo(server, {
   cors: {
     origin: "http://localhost:5173", // Allow frontend origin for CORS
@@ -99,7 +101,6 @@ app.use('/post', postRoutes);
 app.use('/job',  jobRoutes);
 app.use('/connection', connectionRoutes);
 
-// Socket.IO setup for real-time messaging
 io.on("connection", (socket) => {
     console.log("New client connected: ", socket.id);
 
@@ -107,13 +108,12 @@ io.on("connection", (socket) => {
     socket.on("joinRoom", (roomId) => {
         socket.join(roomId);
         console.log(`User joined room: ${roomId}`);
-    }); 
+    });
 
     // Handle sending a message
     socket.on("sendMessage", (data) => {
         const { roomId, message } = data;
-        console.log("message received in roomId", roomId, message);
-        io.to(roomId).emit("receiveMessage", message); // Send message to all in room
+        io.to(roomId).emit("receiveMessage", message); // Broadcast message to the room
     });
 
     socket.on("disconnect", () => {

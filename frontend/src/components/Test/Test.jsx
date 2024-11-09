@@ -6,4 +6,9 @@ const Test = () => {
   )
 }
 
-export default Test
+const Test = ()=>{
+    return(
+        <div>guu</div>
+    )
+}
+export default Test;
