@@ -4,12 +4,23 @@ import LikeCommentShere from './LikeCommentShere';
 import UserHeader from './UserHeader';
 import ContentSection from './ContentSection';
 import Comments from './Comments';
+import SharePost from './SharePost';
+
+// Dummy user data for sharing (replace with real user data from props or state)
+// availableUsers data (example)
+const availableUsers = [
+  { id: 1, name: "John Doe", profileUrl: "path/to/john-profile.jpg", isOnline: true },
+  { id: 2, name: "Jane Smith", profileUrl: "path/to/jane-profile.jpg", isOnline: false },
+  { id: 3, name: "Alice Johnson dljfladsjflasd flkadsjfladjsfjlsakdjf", profileUrl: "path/to/alice-profile.jpg", isOnline: true },
+];
+
 
 function UserPost({ UserProfile, isLogin }) {
   const [connection, setConnection] = useState(false);
   const [isVisibleCard, setIsVisibleCard] = useState(true);
   const [CommentVisible, setCommentVisible] = useState(false);
   const [comments, setComments] = useState([]);
+  const [isShareModalVisible, setIsShareModalVisible] = useState(false);
 
   const connectionHandler = () => {
     setConnection(!connection);
@@ -25,6 +36,16 @@ function UserPost({ UserProfile, isLogin }) {
 
   const addComment = (newComment) => {
     setComments([...comments, newComment]);
+  };
+
+  const toggleShareModal = () => {
+    setIsShareModalVisible(!isShareModalVisible);
+  };
+
+  const shareWithUser = (userId) => {
+    console.log(`Shared with user ID: ${userId}`);
+    // Implement actual sharing logic here
+    toggleShareModal(); // Close the modal after sharing
   };
 
   if (!isVisibleCard) {
@@ -71,7 +92,7 @@ function UserPost({ UserProfile, isLogin }) {
             title={'Share'}
             col={'blue'}
             isLogin={isLogin}
-            ClickHandler={() => console.log('Share')}
+            ClickHandler={toggleShareModal}
           />
         </div>
       </div>
@@ -81,6 +102,14 @@ function UserPost({ UserProfile, isLogin }) {
           comments={comments}
           onClose={() => setCommentVisible(false)}
           onAddComment={addComment}
+        />
+      )}
+
+      {isShareModalVisible && (
+        <SharePost
+          availableUsers={availableUsers}
+          onClose={toggleShareModal}
+          onShare={shareWithUser}
         />
       )}
     </>
