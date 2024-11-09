@@ -61,18 +61,15 @@ function ProfileSection({userId}) {
     // }
     const file_t = e.target.files[0];
     setFile(file_t);
-    // const fileType = file_t.fileType;
-    // const formData = new FormData();
-    // formData.append("imageType", imageType);
-    // formData.append("fileType", fileType);
-    // formData.append("file", file);
-    // console.log(formData)
-    // console.log("fike",formData);
+    console.log(file);
+    const formData = new FormData();
+    formData.append("file", file);
+    console.log("fike",formData);
 
   try {
     const response = await axios.post(
       `http://localhost:3000/user/${imageType}/${userId}`, 
-      
+      formData,
       { withCredentials: true, headers: { 'Content-Type': 'multipart/form-data' } }
     );
     

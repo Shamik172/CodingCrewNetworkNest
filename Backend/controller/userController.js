@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Job = require('../models/job');
 
 exports.getUserProfile = (req, res, next) =>{
     // console.log(req.params);
@@ -45,7 +46,8 @@ exports.postCoverPicture = (req, res, next)=>{
 }
 
 exports.postProfilePicture = (req, res, next)=>{
-    console.log(req.body);
+    // console.log(req.body);
+    console.log(req.file);
     const userId = req.params.userId;
     User.findById(userId)
     .then(user=>{
@@ -53,8 +55,8 @@ exports.postProfilePicture = (req, res, next)=>{
             return res.status(404).json({message: "No user found"});
         }
         console.log(req.file);
-        user.profilePicture = req.file.path;
-        user.save();
+        // user.profilePicture = req.files.path;
+        // user.save();
         return res.status(200).json({message: "updated successfully"});
     })
     .catch(err=>console.log(err));
@@ -200,7 +202,7 @@ exports.getDefaultExperience = (req, res, next) => {
         res.status(200).json(user.experience);
     })
     .catch(err=>console.log(err));
-}
+} 
 
 exports.addEducation = (req, res, next) => {
     const userId = req.params.userId;
@@ -266,4 +268,41 @@ exports.searchUser = (req, res, next) => {
         console.log(err);
         res.status(500).json({message: "Internal server error"});
     })
+}
+
+exports.searchAll = (req, res, next) => {
+    const searchQuery = req.body.searchQuery;
+    // console.log(req.body);
+    let result = {};
+    console.log(searchQuery);
+    // Define filters with correct regex options
+    const filterUser = {
+        $or: [
+            { name: { $regex: searchQuery, $options: "i" } },
+            { username: { $regex: searchQuery, $options: "i" } }
+        ]
+    };
+
+    // Use Promise.all to run both queries concurrently
+    User.find(filterUser)
+    .then((users) => {
+        result = {users};
+        return res.status(200).json(result); // Send the combined result
+    })
+    .catch(err => {
+        console.log(err);
+        return res.status(500).json({ error: "An error occurred while searching." });
+    });
+};
+
+exports.getAllConnections = (req, res, next)=>{
+    const username = req.params.username;
+    console.log("Fuckup");
+    User.findOne({username: username})
+    .then(user=>{
+        if(!user)return res.status(404).json({message: "User doesnot exists"});
+        console.log(user.connections);
+        return res.status(200).json(user.connections);
+    })
+    .catch(err=>console.log(err));
 }

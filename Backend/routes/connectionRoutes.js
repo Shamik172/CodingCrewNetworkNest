@@ -5,8 +5,8 @@ const isAuth = require('../middleware/isAuth');
 
 router.post('/sendRequest/:username', isAuth, connectionController.sendConnectionRequest);
 
-router.post('/acceptRequest/:userId', isAuth, connectionController.acceptRequest);
+router.post('/acceptRequest/:username', isAuth, connectionController.acceptRequest);
 
-router.post('/rejectRequest/:userId', isAuth, connectionController.rejectRequest);
+router.post('/rejectRequest/:username', isAuth, connectionController.rejectRequest);
 
 module.exports = router;

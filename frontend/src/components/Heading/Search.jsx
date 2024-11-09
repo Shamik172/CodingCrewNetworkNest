@@ -1,5 +1,4 @@
 import { CiSearch } from "react-icons/ci";
-
 const Search = (props) =>{
     {/* Search Bar */}
    return <>

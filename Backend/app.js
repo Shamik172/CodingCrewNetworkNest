@@ -26,6 +26,7 @@ const io = socketIo(server, {
   },
 });
 
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -35,18 +36,18 @@ app.use(express.static(path.join(__dirname, 'uploads')));
 const MONGODB_URI = process.env.MONGODB_URI; 
 
 
-const fileStorage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, 'uploads'),
-    filename: (req, file, cb) => cb(null,file.filename + '-' + file.originalname)
-});
+// const fileStorage = multer.diskStorage({
+//     destination: (req, file, cb) => cb(null, 'uploads'),
+//     filename: (req, file, cb) => cb(null,file.filename + '-' + file.originalname)
+// });
 
-const fileFilter = (req, file, cb) => {
-    if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg'){
-        cb(null, true);
-    } else {
-        cb(null, false);        
-    }
-}; 
+// const fileFilter = (req, file, cb) => {
+//     if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg'){
+//         cb(null, true);
+//     } else {
+//         cb(null, false);        
+//     }
+// }; 
 
 const store = new MongoDBStore({
     uri: MONGODB_URI,
@@ -80,10 +81,10 @@ app.use(cors({
     credentials: true,
   }));
 
-app.use(multer({storage: fileStorage, fileFilter: fileFilter }).fields([
-    { name: 'profilePicture', maxCount: 1 },
-    { name: 'coverPicture', maxCount: 1 }
-]));
+// app.use(multer({storage: fileStorage, fileFilter: fileFilter }).fields([
+//     { name: 'profilePicture', maxCount: 1 },
+//     { name: 'coverPicture', maxCount: 1 }
+// ]));
 
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -106,11 +107,12 @@ io.on("connection", (socket) => {
     socket.on("joinRoom", (roomId) => {
         socket.join(roomId);
         console.log(`User joined room: ${roomId}`);
-    });
+    }); 
 
     // Handle sending a message
     socket.on("sendMessage", (data) => {
         const { roomId, message } = data;
+        console.log("message received in roomId", roomId, message);
         io.to(roomId).emit("receiveMessage", message); // Send message to all in room
     });
 

@@ -43,8 +43,10 @@ const UserHeader = ({onHandler, isConnection, name, bio, img, isLogin}) => {
           <ProfileIcon userName={name} imageUrl={img}/>
           </div>
           <div>
+
             <p className="font-semibold text-2xl font-serif ">
               <span className='text-sky-950 shodow capitalize dark:text-purple-500'>
+
                 {name}
               </span>
               <button className="text-blue-600 font-medium text-sm mx-3" onClick={handleClick}>
