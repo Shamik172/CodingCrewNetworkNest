@@ -47,12 +47,14 @@ const JobPostingForm = () => {
     <div className="p-6 min-h-screen">
       <h1 className="text-2xl font-bold text-center text-black dark:text-white mb-6">Create Job Posting</h1>
       
+
       <form onSubmit={handleSubmit} className="max-w-3xl mx-auto bg-white p-6 shadow-md rounded-lg">
         <FormComponents title="Company Name" name="companyName" data={formData.companyName} type="text" handleChange={handleChange} isRequired={true} />
         <FormComponents title="Role" name="role" data={formData.role} type="text" handleChange={handleChange} isRequired={true} />
         <FormComponents title="Salary" name="salary" data={formData.salary} type="number" handleChange={handleChange} isRequired={true} />
         <FormComponents title="Location" name="location" data={formData.location} type="text" handleChange={handleChange} isRequired={true} />
         <FormComponents title="City" name="city" data={formData.city} type="text" handleChange={handleChange} isRequired={true} />
+
         
         <FormComponents title="Job Type" name="jobType" data={formData.jobType} type="select" handleChange={handleChange} isRequired={true} options={['Full-time', 'Part-time', 'Internship']} />
         

@@ -9,12 +9,13 @@ import img from "../../assets/image1.jpeg";
 import NavDropDown from "./NavDropDown";
 import CustomerData from "../../Store/LoginUserDataProvider";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 
 
 function Navbar() {
 
-  const {userData,isLogin} = useContext(CustomerData);
- 
+  const {userData,userHandler, handlerLogin, isLogin} = useContext(CustomerData);
+  const navigate = useNavigate();
   console.log("navBar",userData);
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -41,6 +42,27 @@ function Navbar() {
     //   if (response.status === 200) {
     //     navigate("/login");
     //   }
+    } catch (err) {
+      if (err.response) {
+        alert(err.response.data.message);
+      } else {
+        alert("Something went wrong")
+      }
+    }
+  };
+  
+
+  //handlelogout option copied by NabDropDown
+  const handleLogout = async () => {
+    try {
+      console.log("before ");
+      await axios.get("http://localhost:3000/auth/logout", { withCredentials: true });
+      console.log("after ");
+      // Redirect to login page after successful logout
+      setIsOpen(false)
+      handlerLogin(false);
+      userHandler(null);
+      navigate("/");
     } catch (err) {
       if (err.response) {
         alert(err.response.data.message);
@@ -123,15 +145,20 @@ function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden mt-2 space-y-2 text-Light-Beige">
+        
           {TitleIconObject.map((item) => (
+            
             <MobileIcon
               key={item.IconTitle}
               Icon={item.Icon}
               IconTitle={item.IconTitle}
               url={item.url}
               isActive={location.pathname === item.url} // Check for active path in mobile view
-            />
+              closeOn={()=>{setIsOpen(false)}}
+              />
+         
           ))}
+       
 
           <MobileIcon
             key={"profile"}
@@ -139,7 +166,15 @@ function Navbar() {
             IconTitle={"Profile"}
             url={"/profile"}
             isActive={location.pathname === "/profile"}
+            closeOn={()=>{setIsOpen(false)}}
           />
+           
+
+          {/*  */}
+           <div>Settings</div>
+           <div className="" onClick={handleLogout}>logout</div>
+
+           
         </div>
       )}
     </nav>

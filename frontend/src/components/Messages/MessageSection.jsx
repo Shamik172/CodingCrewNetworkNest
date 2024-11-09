@@ -42,6 +42,7 @@ const MessageSection = ({ userData }) => {
     };
   }, []);
 
+
   // Open chat with selected connection
   const openChat = (connection) => {
     setSelectedConnection(connection);
