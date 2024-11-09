@@ -9,7 +9,6 @@ const JobPostingForm = () => {
 
   const [formData, setFormData] = useState({
     companyName: '',
-    companyLogo: '',
     role: '',
     salary: '',
     location: '',
@@ -18,9 +17,8 @@ const JobPostingForm = () => {
     requiredSkills: '',
     experience: '',
     qualification: '',
-    createdBy: '',
-    applicationDeadline: '',
-    jobDescription: ''
+    deadline: '',
+    description: ''
   });
 
   const [showJobPosting, setShowJobPosting] = useState(false);
@@ -41,7 +39,6 @@ const JobPostingForm = () => {
     e.preventDefault();
     setFormData({
       companyName: '',
-      companyLogo: '',
       role: '',
       salary: '',
       location: '',
@@ -50,9 +47,8 @@ const JobPostingForm = () => {
       requiredSkills: '',
       experience: '',
       qualification: '',
-      createdBy: '',
-      applicationDeadline: '',
-      jobDescription: ''
+      deadline: '',
+      description: ''
     })
     
   };
@@ -63,7 +59,7 @@ const JobPostingForm = () => {
       
       <form onSubmit={handleSubmit} className="max-w-3xl mx-auto bg-white  p-6 shadow-md rounded-lg">
         <FromComponents title={'Company Name'} name={'companyName'} data={formData.companyName} type={'text'} handleChange={handleChange} isRequired={true}/>
-        <FromComponents title={'Company Logo URL'} name={'companyLogo'} data={formData.companyLogo} type={'text'} handleChange={handleChange} isRequired={false} />
+        
         <FromComponents title={'Role'} name={'role'} data={formData.role} type={'text'} handleChange={handleChange} isRequired={true}/>
         <FromComponents title={'Salary'} name={'salary'} data={formData.salary} type={'text'} handleChange={handleChange} isRequired={false}/>
         <FromComponents title={'Location'} name={'location'} data={formData.location} type={'text'} handleChange={handleChange} isRequired={true}/>
@@ -72,15 +68,15 @@ const JobPostingForm = () => {
         <FromComponents title={'Required Skills (comma separated)'} name={'requiredSkills'} data={formData.requiredSkills} type={'text'} handleChange={handleChange} isRequired={false}/>
         <FromComponents title={'Experience'} name={'experience'} data={formData.experience} type={'text'} handleChange={handleChange} isRequired={false}/>
         <FromComponents title={'Qualification'} name={'qualification'} data={formData.qualification} type={'text'} handleChange={handleChange} isRequired={false}/>
-        <FromComponents title={'Created By'} name={'createdBy'} data={formData.createdBy} type={'text'} handleChange={handleChange} isRequired={false}/>
+      
        
-        <FromComponents title={'Application Deadline'} name={'applicationDeadline'} data={formData.applicationDeadline} type={'date'} handleChange={handleChange} isRequired={false}/>
+        <FromComponents title={'Application Deadline'} name={'deadline'} data={formData.deadline} type={'date'} handleChange={handleChange} isRequired={false}/>
         
         <div className="mb-4">
           <label className="block text-gray-700">Job Description <sub className='text-red-600'>*</sub></label>
           <textarea
-            name="jobDescription"
-            value={formData.jobDescription}
+            name="description"
+            value={formData.description}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded"
             required

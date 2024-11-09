@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom"; // Import Link and useLocation for routing
 
-export const MobileIcon = ({ Icon, IconTitle, url }) => {
+export const MobileIcon = ({ Icon, IconTitle, url, closeOn }) => {
   const location = useLocation(); // Get the current path
 
   // Conditional class for active icon
@@ -9,6 +9,7 @@ export const MobileIcon = ({ Icon, IconTitle, url }) => {
 
   return (
     <Link
+      onClick={closeOn}
       to={url}
       className={`flex items-center text-sm font-serif hover:text-white p-1 ${isActive}`}
     >

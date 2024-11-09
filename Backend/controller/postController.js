@@ -56,7 +56,7 @@ exports.postCreatePost = (req, res, next) => {
 exports.getAllPosts = (req, res, next)=>{
     Post.find().
     then(allPosts=>{
-        console.log("Reached");
+        // console.log("Reached");
         // console.log("AllPosts",allPosts);
         // console.log(typeof(allPosts));
         return res.status(200).json(allPosts);

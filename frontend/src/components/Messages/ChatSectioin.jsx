@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { IoSend } from 'react-icons/io5'; // Using react-icons for the send icon
-import { FiUser } from 'react-icons/fi'; // Using react-icons for the profile icon
+import { IoSend } from 'react-icons/io5';
+import { FiUser } from 'react-icons/fi';
 
 const ChatSection = ({ selectedConnection, onClose, messages, onSendMessage }) => {
   const [newMessage, setNewMessage] = useState('');
-  const messagesEndRef = useRef(null); // Reference to the last message
+  const messagesEndRef = useRef(null);
 
   const handleSendMessage = () => {
     if (newMessage.trim()) {
@@ -14,17 +14,15 @@ const ChatSection = ({ selectedConnection, onClose, messages, onSendMessage }) =
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleSendMessage();
-    }
+    if (e.key === 'Enter') handleSendMessage();
   };
 
-  // Scroll to the bottom when the messages change or when the chat is opened for the first time
+  // Scroll to the bottom when messages change
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [messages, selectedConnection]); // Also trigger scroll when the selectedConnection changes
+  }, [messages]);
 
   return (
     <div className="flex flex-col h-full">
@@ -41,33 +39,25 @@ const ChatSection = ({ selectedConnection, onClose, messages, onSendMessage }) =
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-5">
-        {messages.map((message) => (
+        {messages.map((message, index) => (
           <div
-            key={message.id}
+            key={index}
             className={`flex mb-2 items-start ${
-              message.sender === 'me' ? 'justify-end' : 'justify-start'
+              message.sender === selectedConnection.username ? 'justify-start' : 'justify-end'
             }`}
           >
-            {/* Profile icon beside each message */}
-            {message.sender === 'them' && (
+            {message.sender === selectedConnection.username && (
               <FiUser className="mr-2 text-gray-500" size={20} />
             )}
             <div
               className={`p-2 rounded-lg ${
-                message.sender === 'me'
-                  ? 'bg-green-100 text-right self-end'
-                  : 'bg-gray-100 text-left self-start'
+                message.sender === selectedConnection.username ? 'bg-gray-100' : 'bg-green-100'
               } max-w-xs break-words`}
             >
               {message.text}
             </div>
-            {/* Profile icon for 'me' on the right */}
-            {message.sender === 'me' && (
-              <FiUser className="ml-2 text-gray-500" size={20} />
-            )}
           </div>
         ))}
-        {/* Scroll to the last message */}
         <div ref={messagesEndRef} />
       </div>
 
@@ -77,9 +67,9 @@ const ChatSection = ({ selectedConnection, onClose, messages, onSendMessage }) =
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          onKeyUp={handleKeyPress}
+          onKeyPress={handleKeyPress}
           placeholder="Type a message"
-          className="w-full p-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+          className="w-full p-2 border rounded focus:outline-none"
         />
         <button onClick={handleSendMessage} className="ml-2 text-blue-500 hover:text-blue-700">
           <IoSend size={24} />

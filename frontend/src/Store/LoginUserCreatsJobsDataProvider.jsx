@@ -11,6 +11,7 @@ export const LoginUserCreatsJobsDataProvider = ({ children }) => {
     applicationDeadline : "03-10-2003"
 
   }
+  
   const [createdJob, setCreatedJob] = useState([obj]); // Fixed typo here
 
   // console.log(Array.isArray(createdJob));
