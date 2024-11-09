@@ -34,6 +34,7 @@ function App() {
 
     return (
         <>
+        
             {loading ? ( // Show loading screen if still loading
                 <div className="flex items-center justify-center min-h-screen bg-slate-300 dark:bg-slate-950">
                     <p className="text-xl text-gray-600 dark:text-gray-300">Loading...</p>
