@@ -34,7 +34,7 @@ function UserPost({ UserProfile, isLogin }) {
 
   return (
     <>
-      <div className="relative w-full md:mx-auto shadow-blue-300 border-none rounded-lg shadow-md overflow-hidden bg-slate-50 mx-1 inline-block mb-8 mt-2 text-black">
+      <div className="relative w-full md:mx-auto shadow-blue-300 border-none rounded-lg shadow-md overflow-hidden bg-white dark:bg-black mx-1 inline-block mb-8 mt-2 text-black">
         {/* Remove card icon */}
         <FaTimes
           className="absolute top-2 right-2 text-gray-500 hover:text-red-500 cursor-pointer"
@@ -56,7 +56,7 @@ function UserPost({ UserProfile, isLogin }) {
         <ContentSection img={UserProfile.coverUrl} desc={UserProfile.description} />
 
         {/* Footer */}
-        <div className="flex justify-around text-sm font-serif border-t-2 divide-x">
+        <div className="flex justify-around text-sm font-serif border-t-2 dark:border-slate-900 divide-x dark:divide-slate-900">
           <LikeCommentShere
             Icon={FaHeart}
             title={'Like'}

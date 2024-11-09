@@ -7,7 +7,7 @@ import { NavIcon } from "./NavIcon";
 import { MobileIcon } from "./MobileIcon";
 import img from "../../assets/image1.jpeg";
 import NavDropDown from "./NavDropDown";
-import CustomerData from "../../Store/CustomerDataProvider";
+import CustomerData from "../../Store/LoginUserDataProvider";
 
 function Navbar() {
 

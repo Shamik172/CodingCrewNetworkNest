@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-import { CustomerDataProvider } from './Store/CustomerDataProvider.jsx'
+import { LoginUserDataProvider } from './Store/LoginUserDataProvider.jsx'
 import {createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import Login from './components/login/Login';
@@ -15,6 +15,11 @@ import Message from './components/Message';
 import YourProfile from './components/YourProfile';
 import Test from './components/Test/Test';
 import { Error } from './Error.jsx'
+import CreatAndShowjob from './components/JobsSection/CreatAndShowJob/CreatAndShowjob.jsx'
+import CreateJob from './components/JobsSection/CreatAndShowJob/CreateJob.jsx'
+import PastJob from './components/JobsSection/CreatAndShowJob/PastJob.jsx'
+import { LoginUserCreatsJobsDataProvider } from './Store/LoginUserCreatsJobsDataProvider.jsx'
+import JobDescription from './components/JobsSection/JobDescription.jsx'
 
 
 const router = createBrowserRouter([
@@ -24,9 +29,17 @@ const router = createBrowserRouter([
       { path: '/', element: <Home /> },
       { path: '/networks', element: <Network /> },
       { path: '/jobs', element: <Jobs /> },
+      { path: '/jobDetails', element: <JobDescription /> },
       { path: '/message', element: <Message /> },
       { path: '/notifications', element: <Notifications /> },
       { path: '/profile', element: <YourProfile/> },
+      { path: '/job', element: <CreatAndShowjob/>,
+          children :[
+             {path: 'createJob',  element: <CreateJob/>},
+             {path: 'pastJob', element: <PastJob/>},
+          ]
+       },
+      
     ]
    },
   
@@ -47,9 +60,11 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
 
-  <CustomerDataProvider>
+  <LoginUserDataProvider>
+    <LoginUserCreatsJobsDataProvider>
       <StrictMode>
       <RouterProvider router={router} />
       </StrictMode>,
-  </CustomerDataProvider>
+      </LoginUserCreatsJobsDataProvider>
+  </LoginUserDataProvider>
 )

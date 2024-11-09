@@ -1,6 +1,6 @@
 import './App.css';
 import { Outlet } from 'react-router-dom';
-import CustomerData from './Store/CustomerDataProvider';
+import CustomerData from './Store/LoginUserDataProvider';
 import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
 import Navbar from './components/Heading/Heading';
@@ -43,6 +43,7 @@ function App() {
                     <DarkandLightTheme />
                     <Navbar />
                     <Outlet />
+                    
                 </div>
             )}
         </>

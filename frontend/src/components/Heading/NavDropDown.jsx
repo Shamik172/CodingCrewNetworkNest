@@ -3,7 +3,7 @@ import img from '../../assets/avengers.jpg';
 import axios from 'axios'; // Import axios for making HTTP requests
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import YourProfile from '../YourProfile';
-import CustomerData from '../../Store/CustomerDataProvider';
+import CustomerData from '../../Store/LoginUserDataProvider';
 
 
 const NavDropDown = () => {
