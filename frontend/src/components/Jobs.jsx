@@ -8,13 +8,33 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react'
 import CustomerData from '../Store/LoginUserDataProvider';
 import axios from 'axios';
+import AppliedJobs from './JobsSection/AppliedJobs/AppliedJobs';
 
 
 
 const Jobs = () => {
+  const [showAppliedJobs, setAppliedJobs] = useState(false);
+  const ToggleShowJobs = (set)=>{
+       setAppliedJobs(set);
+  }
+
+// Inside the useEffect to toggle scroll state
+useEffect(() => {
+  if (showAppliedJobs) {
+    document.body.classList.add('overflow-hidden'); // Add no-scroll class
+  } else {
+    document.body.classList.remove('overflow-hidden'); // Remove it
+  }
+  return () => document.body.classList.remove('overflow-hidden'); // Cleanup on unmount
+}, [showAppliedJobs]);
+
+  
+
+
 
   const [allJobs, setAllJobs] = useState([{}]);
   const {userData,isLogin} = useContext(CustomerData);
+
 
   useEffect(()=>{
     axios.get(`http://localhost:3000/job/alljobs`, {withCredentials : true})
@@ -45,6 +65,10 @@ const Jobs = () => {
 
 
 
+
+
+
+
   return (
     <div className='w-full min-h-screen bg-slate-300 dark:bg-slate-950'>
      
@@ -52,18 +76,21 @@ const Jobs = () => {
       <Link to={'/'} className=' absolute bg-purple-300 dark:bg-purple-500 text-black dark:text-white text-sm md:text-base right-3/4 px-2 rounded-full py-1 md:top-1.5 top-2'>go Home</Link>Job Post</div> */}
      
       <div className='relative  mx-5   top-20 space-y-2'>
-          <div className="space-y-3 sm:w-2/3 m-auto lg:hidden">
+          <div className=" sm:w-2/3 m-auto lg:hidden grid grid-cols-2 gap-2">
 
-            <Link to={`/job/createJob?user=${userData.username}`} className="block w-full px-4 py-2 bg-blue-600 text-white text-center rounded-lg hover:bg-blue-700">
+            <Link to={`/job/createJob?user=${userData.username}`} className="block w-full px-4 py-2 bg-blue-600 text-white text-center rounded-lg hover:bg-blue-700 ">
              
                   Create Job+
             
             </Link>
-            <Link to={`/job/pastjob?user=${userData.username}`}className="block w-full px-4 py-2 bg-gray-200 dark:bg-sky-950 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-sky-800 text-gray-800 dark:text-white">
+
+            <button onClick={()=>{ToggleShowJobs(true)}} className='block w-full px-4 py-2 bg-blue-600 text-white text-center rounded-lg hover:bg-blue-700 '>Applied Jobs </button>
+
+            <Link to={`/job/pastjob?user=${userData.username}`}className="block w-full px-4 py-2 bg-gray-200 dark:bg-sky-950 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-sky-800 text-gray-800 dark:text-white ">
                   Past  Job
             </Link>
-            <div>Applied Jobs </div>
-            <div>Save Jobs</div>
+            
+            <div className='block w-full px-4 py-2 bg-gray-200 dark:bg-sky-950 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-sky-800 text-gray-800 dark:text-white '>Save Jobs</div>
           </div>
           <div className='md:hidden'>
           <SearchDropDown username={userData.username} handleJobFilterClick={handleJobFilterClick}/>
@@ -78,13 +105,13 @@ const Jobs = () => {
                 <Link to={`/job/pastJob?user=${userData.username}`} className="px-6 py-2 bg-slate-50 dark:bg-sky-950 dark:text-white hover:bg-slate-300 dark:hover:bg-sky-800 rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3">
                     Past Job
                 </Link > 
-                <div>Applied Jobs </div>
-                <div>Save Jobs</div>
+                <div onClick={()=>{ToggleShowJobs(true)}} className="px-6 py-2 bg-slate-50 dark:bg-sky-950 dark:text-white hover:bg-slate-300 dark:hover:bg-sky-800 rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3">Applied Jobs </div>
+                <div className="px-6 py-2 bg-slate-50 dark:bg-sky-950 dark:text-white hover:bg-slate-300 dark:hover:bg-sky-800 rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3">Save Jobs</div>
           </div>
           
          <div className='flex flex-col items-center space-y-10 p-4 sm:w-2/3 w-full max-w-3xl'>
          {allJobs.map((job)=> 
-            <CompactJobPostCard job={job} postedBy={userData.name} username = {userData.username}/>
+            <CompactJobPostCard  job={job} postedBy={userData.name} username = {userData.username}/>
           )}
          </div>
         
@@ -97,7 +124,12 @@ const Jobs = () => {
         
       </div>
       <div className='relative -top-20 h-32 -z-50'></div>
-     
+       
+
+       {showAppliedJobs &&  <div className="z-10 fixed top-0 right-0 bottom-0 left-0 bg-slate-300 w-full h-full flex  pt-16 dark:bg-slate-950  justify-center">
+           
+           <AppliedJobs ToggleShowJobs={ToggleShowJobs}/>
+        </div>}
     </div>
   );
 };

@@ -25,7 +25,7 @@ const CompactJobPostCard = ({ job, postedBy , username}) => {
   } = job;
 
   const [saved, setSaved] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSaveForLater = (e) => {
     e.stopPropagation();
