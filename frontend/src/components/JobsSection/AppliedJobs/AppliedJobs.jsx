@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AplliedCard from './AppliedCard';
+import { FcSearch } from "react-icons/fc";
 const AppliedJobs = ({ ToggleShowJobs }) => {
  
 
@@ -14,12 +15,13 @@ const AppliedJobs = ({ ToggleShowJobs }) => {
          Back
        </button>
         
-        <div>
+       <div className="flex items-center border-b-2 border-gray-300 focus-within:border-blue-500">
+        <FcSearch className="text-gray-500 mr-2" />
         <input 
             type="search" 
-            placeholder="Searching..."
-            className="border-b-2 border-gray-300 px-4 focus:outline-none focus:border-blue-500 dark:focus:bg-gray-800 dark:bg-gray-800"
-         />search
+            placeholder="Search...." 
+            className="w-full pr-10 py-2 focus:outline-none dark:focus:bg-gray-800 dark:bg-gray-800 text-sm dark:text-white"
+        />
         </div>
 
         <button
@@ -30,10 +32,10 @@ const AppliedJobs = ({ ToggleShowJobs }) => {
           Next
         </button>
       </div>
-      <div className='flex justify-evenly'>
-        <button>Accepted</button>
-        <button>Pending</button>
-        <button>Rejected</button>
+      <div className='flex justify-evenly '>
+        <button className='sm:px-2.5 px-1.5 bg-green-500 rounded-md py-1 mt-1'>Accepted</button>
+        <button className='sm:px-2.5 px-1.5 bg-yellow-500 rounded-md py-1 mt-1'>Pending</button>
+        <button className='sm:px-2.5 px-1.5 bg-red-500 rounded-md py-1 mt-1'>Rejected</button>
      
       </div>
 

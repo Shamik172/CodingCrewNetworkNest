@@ -10,10 +10,12 @@ const PastJob = () => {
   return (
     <div className='w-full min-h-screen bg-slate-300 dark:bg-slate-950'>
         <div className='text-center text-black dark:text-purple-700 md:text-2xl sm:text-xl text-xl fixed top-20 left-10  '>Past Jobs</div>
-        <div className='relative flex flex-col items-center  top-36 space-y-4 mx-3 '>
-     
-          {createdJob.map((it,index)=><JobCard key={index} {...it}/>)}
+        <div className="relative flex flex-col md:grid md:grid-cols-2 place-items-center top-36 gap-10 mx-3">
+          {createdJob.map((it, index) => (
+            <JobCard key={index} {...it} />
+          ))}
         </div>
+
    </div>
   
   )
