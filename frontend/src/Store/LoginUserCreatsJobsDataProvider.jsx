@@ -8,13 +8,13 @@ export const LoginUserCreatsJobsDataProvider = ({ children }) => {
 
   const {userData} = useContext(CustomerData);
 
-   console.log("jbvjhasbkhabskbas",userData);
+  //  console.log("jbvjhasbkhabskbas",userData);
 
   const [createdJob, setCreatedJob] = useState([]); // Fixed typo here
 
   useEffect(() => {
     if (!userData) return; // If userData is not yet available, don't run the effect
-    console.log("goibg");
+    // console.log("goibg");
     axios.get(`http://localhost:3000/job/getJobs/${userData.username}`, { withCredentials: true })
       .then(jobs => {
         console.log(jobs);

@@ -5,10 +5,13 @@ import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
 import Navbar from './components/Heading/Heading';
 import { DarkandLightTheme } from './DarkandLightTheme';
-
+import ConnectionLocal from './Store/ConnectionProvide';
 function App() {
     const { userData, userHandler, isLogin, handlerLogin } = useContext(CustomerData);
+
     const [loading, setLoading] = useState(true); // Loading state
+    
+  const {setconnectionList,setRequestList,setSendList, connectionList, setSuggestions} = useContext(ConnectionLocal);
 
     useEffect(() => {
         // Fetch the login status and user data from the backend
@@ -31,6 +34,53 @@ function App() {
                 setLoading(false); // Ensure loading is false even if there's an error
             });
     }, []);
+
+   // getting all connections of current user
+
+   useEffect(() => {
+    const fetchConnections = () => {
+      if (!userData) return;
+      axios.get(`http://localhost:3000/connection/getConnections/${userData.username}`, { withCredentials: true })
+        .then(result => {
+          console.log("Reached to find the result", result);
+          const connections = result.data[0]?.connections || [];
+          const pendingRequests = result.data[1]?.pendingRequests || [];
+          const receivedRequests = result.data[2]?.receivedRequests || [];
+          
+          console.log("The data from result", connections, pendingRequests, receivedRequests);
+          setconnectionList(connections);
+          setSendList(pendingRequests);
+          setRequestList(receivedRequests);
+        });
+    };
+    fetchConnections(); // Initial fetch when component mounts
+    
+    const interval = setInterval(fetchConnections, 5 * 60 * 1000); // Refresh every 5 minutes
+    
+    return () => clearInterval(interval); // Cleanup on component unmount
+}, [userData]);
+
+
+// const username = userData.username;
+// console.log("abhjavfjsva");
+useEffect(() => {
+    if (!userData) return;
+    const fetchConnections = async () => {
+      try {
+        // console.log("Fetching connection suggestions...");
+        const users = await axios.get(`http://localhost:3000/connection/getallConnections/${userData.username}`, { withCredentials: true });
+        console.log(users.data);
+        setSuggestions(users.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+  
+    fetchConnections();
+  }, [userData]);
+  
+
+
 
     return (
         <>

@@ -6,11 +6,13 @@ import Project from './Profile/Project/Project';
 import Experience from './Profile/Experience/Experience';
 import Education from './Profile/Education/Education';
 import CustomerData from '../Store/LoginUserDataProvider';
+import axios from 'axios';
 
 const YourProfile = () => {
     const { userData, isLogin } = useContext(CustomerData);
     const navigate = useNavigate();
     const [showPopup, setShowPopup] = useState(false);
+    const [connections, setConnections] = useState([]);
 
     useEffect(() => {
         console.log("isLogin status:", isLogin); // Debug check for isLogin status
@@ -22,6 +24,20 @@ const YourProfile = () => {
             return () => clearTimeout(timer);
         }
     }, [isLogin, navigate]);
+
+    useEffect(()=>{
+        axios.get(`http://localhost:3000/user/connections/${userData.username}`, {withCredentials: true})
+        .then(result=>{
+            // console.log(result);
+            setConnections(result.data);
+        })
+        .catch()
+    }, [])
+
+    function capitalizeFirstLetter(str) {
+        if (!str) return str; // Return an empty string or undefined if the input is falsy
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
 
     return (
         <>
@@ -41,13 +57,25 @@ const YourProfile = () => {
                 <div className="flex md:justify-center md:space-x-10 justify-center">
                     <div className="relative top-20 h-96 w-60 hidden md:flex flex-col rounded-lg p-5 bg-white dark:bg-black text-black dark:text-white">
                         <div className="text-xl font-semibold border-b-2 dark:border-blue-950 pb-2">
-                            Connection:
-                            <span className="ml-2 font-light relative top-0.5">3<sup>+</sup></span>
+                            Connections:
+                            <span className="ml-2 font-light relative top-0.5">
+                                {connections.length > 0 ? `${connections.length}`: ''}
+                            </span>
                         </div>
-                        <div className="space-y-2">
-                            <div>Sumanta</div>
+                        <div 
+                            className="space-y-2 overflow-y-auto"
+                            style={{ maxHeight: '50vh' }}  // Set max height to half the screen height
+                        >
+                            {connections.length > 0 ? (
+                                connections.map((connection, index) => (
+                                    <div key={index}>{capitalizeFirstLetter(connection.name)}</div>
+                                ))
+                            ) : (
+                                <div>No connections available</div>
+                            )}
                         </div>
                     </div>
+
                     <div>
                         <ProfileSection userId={userData._id} />
                         <Skills userId={userData._id} />

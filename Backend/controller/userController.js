@@ -21,7 +21,8 @@ exports.getUserProfilePage = (req, res, next) =>{
         // console.log("use", user);
         const returnObject = {username : user.username, 
                                 name: user.name, 
-                                email: user.email, 
+                                email: user.email,
+                                gender: user.gender, 
                                 bio: user.bio, 
                                 profilePicture: user.profilePicture,
                             coverPicture: user.coverPicture
@@ -63,35 +64,21 @@ exports.postProfilePicture = (req, res, next)=>{
 }
 
 exports.getEditUser = (req, res, next) => {
-
-    // console.log(req.params.username);
-    // console.log(req.session.user.username);
-    if(req.params.username !== req.session.user.username){
+    if(req.params.userId.toString() !== req.session.user.id.toString()){
         return res.status(403).json({message: "Login First"});
     }
     const newName = req.body.name;
-    // console.log(newName);
-    // console.log(req.body.name);
-    const newProfilePicture = req.body.profilePicture;
-    const newCoverPicture = req.body.coverePicture;
     const newBio = req.body.bio;
-    const newSkills = req.body.skills;
-    const newInterest = req.body.interests;
 
     if(!newName){
         return res.status(400).json({message: 'Required Name'});
     }
-    User.findOne({name: req.params.username}).select('-password')
+    User.findById(req.params.userId)
     .then(user=>{
         user.name = newName;
-        user.profilePicture = newProfilePicture;
-        user.coverPicture = newCoverPicture;
         user.bio = newBio;
-        user.skills = newSkills;
-        user.interests = newInterest;
-        res.status(200).json(user);
         user.save();
-        return user;
+        return res.status(200).json({message: "Updated successfully"});
     })
     .catch(err=>console.log(err));
 }
@@ -297,12 +284,33 @@ exports.searchAll = (req, res, next) => {
 
 exports.getAllConnections = (req, res, next)=>{
     const username = req.params.username;
-    console.log("Fuckup");
+    // console.log("Fuckup");
     User.findOne({username: username})
     .then(user=>{
         if(!user)return res.status(404).json({message: "User doesnot exists"});
-        console.log(user.connections);
+        // console.log(user.connections);
         return res.status(200).json(user.connections);
+    })
+    .catch(err=>console.log(err));
+}
+
+exports.postProject = (req, res, next) => {
+    const newProject = req.body;
+    User.findById(req.session.user.id)
+    .then(user=>{
+        user.projects.push(newProject);
+        user.save();
+        return res.status(200).json(user.projects);
+    })
+    .catch(err=>console.log(err));
+}
+
+exports.getProject = (req, res,next) => {
+    let result = [];
+    User.findById(req.session.user.id)
+    .then(user=>{
+        result = user.projects;
+        return res.status(200).json(result);
     })
     .catch(err=>console.log(err));
 }

@@ -9,4 +9,8 @@ router.post('/acceptRequest/:username', isAuth, connectionController.acceptReque
 
 router.post('/rejectRequest/:username', isAuth, connectionController.rejectRequest);
 
-module.exports = router;
+router.get('/getConnections/:username', connectionController.getConnections);
+
+router.get('/getallConnections/:username', connectionController.getallConnections); 
+
+module.exports = router; 
