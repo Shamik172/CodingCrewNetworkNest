@@ -1,105 +1,124 @@
+/* Main container */
 .login_container {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end; /* Aligns the login box to the right */
-  width: 100vw;
   height: 100vh;
-  /* background-image: url("./assets/marvel-avengers-logo-red-desktop-wallpaper-4k.jpg") no-repeat center center fixed; */
-  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('/src/assets/loginbg.jpg') no-repeat center center/cover; /* Replace with the correct background image */
 }
 
+/* Background overlay */
 .background_overlay {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7); /* dark overlay */
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+  z-index: -1; /* Place behind the login box */
 }
 
+/* Login box */
 .login_box {
-  position: relative;
-  z-index: 1;
-  background-color: rgba(127, 61, 61, 0.447); /* semi-transparent */
-  padding: 2rem;
-  border-radius: 10px;
-  width: 320px;
-  margin-right: 2.5%; /* Adds spacing from the right edge */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   text-align: center;
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center the content */
+  align-items: center; /* Horizontally center the content */
 }
 
+/* Logo styling */
 .logo {
-  height: 120px;
-  /* width: 160px; */
+  width: 150px;
+  margin-bottom: 20px;
+  object-fit: contain;
+  align-self: center; /* Ensure the logo is centered horizontally */
 }
 
+/* Header */
 .header {
-  color: #f9c900;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
   font-family: 'Roboto', sans-serif;
-  font-size: 26px;
-  margin-bottom: 1.5rem;
+  color: #ffcb00; /* Avengers yellow */
 }
 
+/* Input group styling */
 .input_group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 20px;
   text-align: left;
+  width: 100%; /* Ensure input fields stretch across the form */
 }
 
+/* Label styling */
 .label {
-  color: #f9c900;
-  font-size: 14px;
-}
-
-.input {
-  width: 95%;
-  padding: 0.6rem;
-  margin-top: 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.5); /* Light, semi-transparent border */
-  border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.2); /* Light transparent background */
-  color: #b9abab; /* Dark text color for contrast */
-  font-size: 14px;
-}
-
-.input::placeholder {
-  color: rgba(250, 245, 245, 0.6); /* Semi-transparent placeholder text */
-}
-
-.login_button {
-  width: 95%;
-  padding: 0.8rem;
-  background-color: #d81e5b;
-  border: none;
-  color: white;
-  font-size: 17px;
-  border-radius: 5px;
-  cursor: pointer;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 5px;
   font-family: 'Roboto', sans-serif;
-  transition: background 0.3s;
-  margin-left: 7px;
+}
+
+/* Input fields */
+.input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  transition: border-color 0.3s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #ffcb00; /* Avengers yellow on focus */
+}
+
+/* Login button */
+.login_button {
+  background-color: #ffcb00; /* Avengers yellow */
+  color: white;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .login_button:hover {
-  background-color: #29d329;
+  background-color: #e0a800; /* Slightly darker yellow for hover effect */
 }
 
+/* Error message styling */
+.error {
+  color: red;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+/* Sign up link */
 .not_member {
-  margin-top: 1rem;
-  font-size: 14px;
-  color: #ce9c9f; /* Dark text for contrast */
-  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  margin-top: 20px;
 }
 
 .signup_link {
-  color: #29cf45; /* Avengers red for emphasis */
+  color: #007bff;
   text-decoration: none;
-  font-weight: bold;
-  margin-left: 0.3rem;
-  transition: color 0.3s;
 }
 
 .signup_link:hover {
-  color: #13b3b0; /* Darker shade on hover */
+  text-decoration: underline;
 }
