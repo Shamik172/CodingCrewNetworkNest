@@ -20,6 +20,7 @@ import CreateJob from './components/JobsSection/CreatAndShowJob/CreateJob.jsx'
 import PastJob from './components/JobsSection/CreatAndShowJob/PastJob.jsx'
 import { LoginUserCreatsJobsDataProvider } from './Store/LoginUserCreatsJobsDataProvider.jsx'
 import JobDescription from './components/JobsSection/JobDescription.jsx'
+import { ConnectionProvide } from './Store/ConnectionProvide.jsx'
 
 
 const router = createBrowserRouter([
@@ -62,9 +63,11 @@ createRoot(document.getElementById('root')).render(
 
   <LoginUserDataProvider>
     <LoginUserCreatsJobsDataProvider>
+      <ConnectionProvide>
       <StrictMode>
       <RouterProvider router={router} />
       </StrictMode>
+      </ConnectionProvide>
       </LoginUserCreatsJobsDataProvider>
   </LoginUserDataProvider>
 

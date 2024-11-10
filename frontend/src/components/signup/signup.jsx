@@ -43,6 +43,11 @@ function Signup() {
     }
   };
 
+  function capitalizeFirstLetter(str) {
+    if (!str) return str; // Return an empty string or undefined if the input is falsy
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
   return (
     <div className={styles.signup_container}>
       <div className={styles.background_overlay}></div>
@@ -57,7 +62,7 @@ function Signup() {
               name="name"
               placeholder="Enter your name"
               className={styles.input}
-              value={formData.name}
+              value={capitalizeFirstLetter(formData.name)}
               onChange={handleChange}
               required
             />

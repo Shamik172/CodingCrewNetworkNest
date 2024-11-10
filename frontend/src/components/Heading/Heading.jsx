@@ -20,6 +20,9 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation(); // Get the current path
+  const [searchResults, setSearchResults] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+
 
   const TitleIconObject = [
     { IconTitle: "Home", Icon: FaHome, url: "/" },
@@ -29,28 +32,36 @@ function Navbar() {
     { IconTitle: "Notifications", Icon: FaBell, url: "/notifications" },
   ];
 
-  const handleSearchChange = (e) => setSearchQuery(e.target.value);
-  const handleSearchSubmit = async (e) => {
-    e.preventDefault();
-    console.log("Search query:", searchQuery);
-    // Add search functionality here
-    try {
-      const response = await axios.post("http://localhost:3000/user/searchAll", {searchQuery}, {
-        withCredentials: true,
-      });
-      console.log(response);
-    //   if (response.status === 200) {
-    //     navigate("/login");
-    //   }
-    } catch (err) {
-      if (err.response) {
-        alert(err.response.data.message);
-      } else {
-        alert("Something went wrong")
-      }
+  const handleSearchChange = (event) => {
+    const value = event.target.value;
+    setSearchQuery(value);
+
+    if (value) {
+      fetchSearchResults(value);
+    } else {
+      // Clear previous search results if query is empty
+      setSearchResults([]);
+      setShowDropdown(false);
     }
   };
-  
+
+  const fetchSearchResults = async (query) => {
+    try {
+      const response = await axios.post("http://localhost:3000/user/searchAll", {
+        searchQuery: query,
+      });
+      setSearchResults(response.data.users || []);
+      setShowDropdown(true);
+    } catch (err) {
+      console.error("Error fetching search results:", err);
+      setShowDropdown(false);
+    }
+  };
+
+  const handleResultClick = (user) => {
+    console.log("Selected user:", user);
+    setShowDropdown(false);
+  }; 
 
   //handlelogout option copied by NabDropDown
   const handleLogout = async () => {
@@ -79,9 +90,34 @@ function Navbar() {
         <Logo logoName={img} />
 
         {/* Search Bar */}
-        <form onSubmit={handleSearchSubmit} className="flex text-stone-950 items-center w-full max-w-md mx-4">
-          <Search handleSearchChange={handleSearchChange} searchQuery={searchQuery} />
-        </form>
+        <div className="relative w-full max-w-md mx-4">
+      <form onSubmit={(e) => e.preventDefault()} className="flex items-center">
+        <Search handleSearchChange={handleSearchChange} searchQuery={searchQuery} />
+      </form>
+
+      {showDropdown && searchResults.length > 0 && (
+        <ul className="absolute left-5 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-48 overflow-y-auto mt-1 z-10">
+          {searchResults.map((user) => (
+            <li
+              key={user._id}
+              className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
+              onClick={() => handleResultClick(user)}
+            >
+              <span className="font-semibold text-black">{user.name}</span>
+              {/* <span className="text-gray-600"> ({user.username})</span> */}
+            </li>
+          ))}
+        </ul>
+      )}
+
+{searchQuery && searchResults.length === 0 && (
+  <p className="absolute left-5 w-full mt-1 bg-gray-100 text-gray-600 border border-gray-300 rounded-md py-2 px-4 shadow-lg z-10">
+    No results found for {searchQuery}
+  </p>
+)}
+
+      </div>
+
 
         {/* Icons with Tooltips Below for Desktop */}
         {isLogin ? (

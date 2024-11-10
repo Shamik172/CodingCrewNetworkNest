@@ -173,7 +173,7 @@ exports.filterJob = (req, res, next) => {
 
 exports.getAllJobsByUser = (req, res, next) => {
     const username = req.params.username;
-    console.log(username);
+    // console.log(username);
     
     User.findOne({username: username})
         .then(user => {
@@ -189,7 +189,7 @@ exports.getAllJobsByUser = (req, res, next) => {
             // Use Promise.all to wait for all promises to resolve
             Promise.all(jobPromises)
                 .then(jobs => {
-                    console.log("All jobs:", jobs);
+                    // console.log("All jobs:", jobs);
                     return res.status(200).json(jobs);
                 })
                 .catch(err => {
@@ -237,10 +237,10 @@ exports.getAllJobs = (req, res, next) =>{
 
 exports.getJob = (req, res, next) => {
     const jobId = req.params.jobId;
-    console.log(jobId);
+    // console.log(jobId);
     Job.findById(jobId)
     .then(job=>{
-        console.log(job);
+        // console.log(job);
         return res.status(200).json(job);
     })
     .catch(err=>console.log(err));

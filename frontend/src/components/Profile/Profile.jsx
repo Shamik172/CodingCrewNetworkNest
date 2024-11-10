@@ -14,6 +14,7 @@ function ProfileSection({userId}) {
     username: 'Dummy User',
     name: 'Dummy User',
     bio: 'In love with you',
+    gender: 'male',
     profilePicture: 'https://via.placeholder.com/150',
     coverPicture: 'https://via.placeholder.com/600x200',
     email: 'johndoe@example.com'
@@ -88,6 +89,19 @@ function ProfileSection({userId}) {
     setProfile((prev) => ({ ...prev, [name]: value }));
   };
 
+  const setChangeProfileInfo = () => {
+      axios.post(`http://localhost:3000/user/edit/${userId}`, profile, {withCredentials: true})
+      .then(result=>{
+        alert(result.data.message);
+      })
+      .catch(err=>console.log(err));
+  }
+
+  function capitalizeFirstLetter(str) {
+    if (!str) return str; // Return an empty string or undefined if the input is falsy
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
   return (
     <div className="max-w-2xl md:mx-auto p-6 bg-white dark:bg-black  shadow-sky-700 shadow-md  rounded-lg relative top-20 mx-2">
       <div className="relative">
@@ -119,7 +133,7 @@ function ProfileSection({userId}) {
       <div className="mt-16 text-center">
         {/*  Name and Bio */}
         <NameAndBio
-          name={profile.name}
+          name={capitalizeFirstLetter(profile.name)}
           bio={profile.bio}
         />
 
@@ -132,13 +146,21 @@ function ProfileSection({userId}) {
       </div>
 
       {/* Profile Content */}
-      <div className="mt-6 px-10">
-        <h2 className="text-lg font-semibold text-gray-800 dark:text-purple-500">Username:</h2>
-        <p className="text-sm text-gray-500 mb-4 relative left-10 dark:text-white">{profile.username}</p>
+      <div className="mt-6 px-10 flex justify-between items-center">
+        <div className="w-1/2">
+            <h2 className="text-lg font-semibold text-gray-800 dark:text-purple-500">Username:</h2>
+            <p className="text-md text-gray-500 mb-4 relative left-10 dark:text-white">{profile.username}</p>
 
-        <h2 className="text-lg font-semibold text-gray-800  dark:text-purple-500">Email:</h2>
-        <p className="text-sm text-gray-500 mb-4 relative left-10 dark:text-white">{profile.email}</p>
+            <h2 className="text-lg font-semibold text-gray-800 dark:text-purple-500">Email:</h2>
+            <p className="text-md text-gray-500 mb-4 relative left-10 dark:text-white">{profile.email}</p>
+        </div>
+
+        <div className="w-1/2 top-0">
+            <h2 className="text-lg font-semibold text-gray-800 dark:text-purple-500">Gender:</h2>
+            <p className="text-md text-gray-500 mb-4 relative left-10 dark:text-white">{capitalizeFirstLetter(profile.gender)}</p>
+        </div>
       </div>
+
 
 
 
@@ -208,7 +230,7 @@ function ProfileSection({userId}) {
         </div>
         <button
           onClick={() => {
-            
+            setChangeProfileInfo(),
             setIsInfoModalOpen(false);}}
           className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 w-full"
         >

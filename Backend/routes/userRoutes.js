@@ -12,7 +12,11 @@ router.get('/profilePage/:userId', userController.getUserProfilePage);
 
 router.get('/skills/:userId', userController.getDefaultSkills); 
 
-router.get('/edit/:username', isAuth, userController.getEditUser);
+router.post('/edit/:userId', isAuth, userController.getEditUser);
+
+router.post('/addProject', userController.postProject);
+
+router.get('/getProject', userController.getProject);
 
 router.get('/connections/:username', userController.getAllConnections);
 // router.get('/search', userController.searchUser);

@@ -4,10 +4,10 @@ const Search = (props) =>{
    return <>
        <input
       type="text"
-      placeholder="Search..."
+      placeholder="Search Users..."
       value={props.searchQuery}
       onChange={props.handleSearchChange}
-      className="w-full py-2 px-4 border border-gray-300 rounded-l-md focus:outline-none focus:ring focus:border-blue-300 ml-10"
+      className="w-full py-2 px-4 border border-gray-300 text-black rounded-l-md focus:outline-none focus:ring focus:border-blue-300 ml-10"
     />
     <button
       type="submit"
