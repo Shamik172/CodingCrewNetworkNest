@@ -9,7 +9,7 @@ import AppliedJobDetails from "./AppliedJobDetails";
 
 const AplliedCard = ({ job, postedBy , username}) => {
     job={companyName:'MicroSoft',role:'mern Stack',salary:6898,city:'adfa',deadline:'12-10-2000', 
-        location:'adfasd'}
+        location:'adfasd', companyLogo:'sdf'}
   const {
     companyName,
     companyLogo,
@@ -33,6 +33,7 @@ const AplliedCard = ({ job, postedBy , username}) => {
 
   
   const hadlerModal = (set)=>{
+    console.log('ooo')
     setIsModalOpen(set)
   }
 
@@ -41,18 +42,18 @@ const AplliedCard = ({ job, postedBy , username}) => {
   return (
     <>
       <div 
-        className="relative max-w-sm  bg-white dark:bg-slate-800 dark:text-orange-600 rounded-lg p-4 shadow-md shadow-black dark:shadow-md dark:shadow-white md:w-full w-2/3 "
+        className="relative max-w-sm  bg-white dark:bg-slate-800 dark:text-orange-600 rounded-lg p-4 shadow-md shadow-black dark:shadow-sm dark:shadow-white md:w-full w-2/3 "
        
       >
         <div className="absolute top-2 right-2">
           <button 
               onClick={()=>hadlerModal(true)}
-            className="dark:bg-green-800 text-white px-3 py-1 rounded-md hover:bg-green-700 bg-green-600"
+            className="dark:bg-green-800 text-white px-2.5 py-0.5 rounded-md hover:bg-green-700 bg-green-600"
           >
            Details
           </button>
         </div>
-        {isModalOpen && <AppliedJobDetails hadlerModal={hadlerModal}/>}
+        {isModalOpen && <AppliedJobDetails hadlerModal={hadlerModal} job={job}/>}
         <div className="flex items-center mb-2">
        
           <div>
@@ -66,9 +67,9 @@ const AplliedCard = ({ job, postedBy , username}) => {
           <p className="text-gray-500 dark:text-white">{location}, {city}</p>
         </div>
 
-        <div>
+        <div className="flex space-x-10">
             <p className="dark:text-white text-black ">Status:</p>
-            
+            <p>Pending</p>
         </div>
 
         
