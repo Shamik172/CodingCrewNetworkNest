@@ -74,9 +74,9 @@ const MessageSection = ({ userData }) => {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen pt-16">
       {/* Connections List on the Left */}
-      <div className="w-1/3 p-4 bg-gray-100">
+      <div className="md:w-1/3 w-2/5 p-4 bg-sky-100 dark:bg-slate-800">
         <h2 className="text-2xl font-bold mb-4">Connections</h2>
         <div className="space-y-2">
           {connections.map((connection) => (
@@ -93,7 +93,7 @@ const MessageSection = ({ userData }) => {
 
       {/* Chat Section on the Right */}
       {selectedConnection && (
-        <div className="w-2/3">
+        <div className=" md:w-2/3 w-3/5">
           <ChatSection
             selectedConnection={selectedConnection}
             messages={messages[selectedConnection.username] || []}

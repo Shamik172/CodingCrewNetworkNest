@@ -10,7 +10,7 @@ exports.createJob = (req, res, next) => {
     
     const { description, companyName, location, jobType, salary, requiredSkills, deadline, role, city, experience, qualification } = req.body;
     
-    const postedBy = req.session.user.id;
+    const postedBy = req.session.user.username;
     // console.log(postedBy);
 
     // Check if all required fields are provided
@@ -71,7 +71,6 @@ exports.createJob = (req, res, next) => {
         });
 };
 
-
 exports.deleteJob = (req, res, next) => {
     const jobId = req.params.jobId;
     if(!mongoose.Types.ObjectId.isValid(jobId)){
@@ -97,7 +96,7 @@ exports.deleteJob = (req, res, next) => {
 
 exports.applyJob = (req, res, next) => {
     const curUser = req.session.user.id;
-    console.log(typeof(curUser));
+    // console.log(typeof(curUser));
     const jobId = req.params.jobId;
 
     if(!mongoose.Types.ObjectId.isValid(jobId)){
@@ -109,7 +108,7 @@ exports.applyJob = (req, res, next) => {
         if(!job){
             return -1;
         }
-        if(job.postedBy.toString() === curUser.toString()){
+        if(job.postedBy.toString() === req.session.user.username.toString()){
             return -2;
         }
         const alreadyApplied = job.applications.some(obj=>obj.applicantId.toString() === curUser.toString());
@@ -127,44 +126,50 @@ exports.applyJob = (req, res, next) => {
         })
     })
     .then(result=>{
-        if(result === -1)return res.status(403).json("Job not found");
-        if(result === -2)return res.status(403).json("You cannot apply for this job");
-        if(result === -3)return res.status(403).json("You have already applied");
+        if(result === -1)return res.status(404).json("Job not found");
+        if(result === -2)return res.status(404).json("You cannot apply for this job");
+        if(result === -3)return res.status(200).json("You have already applied");
         return res.status(200).json({message: "applied for job successfully"});
     })
 }
 
 exports.filterJob = (req, res, next) => {
-    const {title, location, companyName, skillsRequired, jobType} = req.query;
+    const requestFilter = req.body;
     const filter = {};
 
-    if(title){
-        filter.title = {$regex: title, $options: "i"}
+    // Add conditions to filter object based on provided fields
+    if (requestFilter.selectedCity) {
+        filter.city = { $regex: requestFilter.selectedCity, $options: "i" };
     }
 
-    if(location){
-        filter.location = {$regex: location, $options: "i"}
+    if (requestFilter.selectedState) {
+        filter.city = { $regex: requestFilter.selectedState, $options: "i" };
     }
 
-    if(skillsRequired){
-        filter.skillsRequired = {$regex: skillsRequired, $options: "i"}
+    if (requestFilter.selectedJobTitle) {
+        filter.role = { $regex: requestFilter.selectedJobTitle, $options: "i" };
     }
 
-    if(companyName){
-        filter.companyName = {$regex: companyName, $options: "i"}
+    if (requestFilter.selectedCompany) {
+        filter.companyName = { $regex: requestFilter.selectedCompany, $options: "i" };
     }
 
-    if(jobType){
-        filter.jobType = {$regex: jobType, $options: "i"}
+    if (requestFilter.selectedRole) {
+        filter.jobType = { $regex: requestFilter.selectedRole, $options: "i" };
     }
 
 
+    // Find jobs that match all included filters
     Job.find(filter)
-    .then(jobs=>{
-        return res.status(200).json(jobs);
-    })
-    .catch(err=>console.log(err));
-}
+        .then(jobs => {
+            res.status(200).json(jobs);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: "An error occurred while fetching jobs." });
+        });
+};
+
 
 exports.getAllJobsByUser = (req, res, next) => {
     const username = req.params.username;
@@ -206,8 +211,8 @@ exports.saveJob = (req, res, next) =>{
     User.findById(userId)
     .then(user=>{
         // console.log("fuckup");
-        if (user.savedJobs.findIndex((id) => id === jobId) === -1) {
-            user.savedJobs.push(jobId);
+        if (user.savedJobs.findIndex(job => job.id.toString() === jobId.toString()) === -1) {
+            user.savedJobs.push(new mongoose.Types.ObjectId(jobId));
         }
         else{
             user.savedJobs = user.savedJobs.filter(job=>job.toString() !== jobId.toString());
@@ -219,8 +224,12 @@ exports.saveJob = (req, res, next) =>{
 }
 
 exports.getAllJobs = (req, res, next) =>{
+    const result = [];
     Job.find()
     .then(jobs=>{
+        // console.log(jobs);
+        jobs = jobs.filter(job => job.postedBy !== req.session.user.username);
+        // console.log(jobs);
         return res.status(200).json(jobs);
     })
     .catch(err=>console.log(err));

@@ -25,7 +25,7 @@ const ChatSection = ({ selectedConnection, onClose, messages, onSendMessage }) =
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full dark:bg-slate-600 bg-sky-50 ">
       {/* Header with Profile Icon */}
       <div className="flex items-center justify-between p-4 bg-gray-200 border-b border-gray-300">
         <div className="flex items-center">
@@ -62,16 +62,16 @@ const ChatSection = ({ selectedConnection, onClose, messages, onSendMessage }) =
       </div>
 
       {/* Input for New Message */}
-      <div className="p-4 border-t border-gray-300 flex items-center">
+      <div className=" border-t border-gray-300 flex items-center">
         <input
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder="Type a message"
-          className="w-full p-2 border rounded focus:outline-none"
+          className="w-full mr-10 p-2 border  focus:outline-none"
         />
-        <button onClick={handleSendMessage} className="ml-2 text-blue-500 hover:text-blue-700">
+        <button onClick={handleSendMessage} className="  text-blue-500 mr-2 hover:text-blue-700 absolute  right-0">
           <IoSend size={24} />
         </button>
       </div>

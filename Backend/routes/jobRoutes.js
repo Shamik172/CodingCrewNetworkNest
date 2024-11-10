@@ -10,7 +10,7 @@ router.get('/applyjob/:jobId', isAuth, jobController.applyJob);
 
 router.get('/getJobs/:username', isAuth, jobController.getAllJobsByUser);
 
-router.get('/filterjob', jobController.filterJob);
+router.post('/filterjob', jobController.filterJob);
 
 router.get('/alljobs', jobController.getAllJobs);
 

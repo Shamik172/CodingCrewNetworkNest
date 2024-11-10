@@ -25,7 +25,7 @@ const CompactJobPostCard = ({ job, postedBy , username}) => {
   } = job;
 
   const [saved, setSaved] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSaveForLater = (e) => {
     e.stopPropagation();
@@ -41,7 +41,8 @@ const CompactJobPostCard = ({ job, postedBy , username}) => {
     e.stopPropagation();
     axios.get(`http://localhost:3000/job/applyjob/${job._id}`, {withCredentials: true})
     .then(result=>{
-      alert(`Applied for the position: ${role} at ${companyName}`);
+      console.log(result);
+      alert(result.data);
     })
     .catch(err=>console.log(err));
   };
