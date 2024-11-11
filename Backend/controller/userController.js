@@ -1,6 +1,46 @@
 const User = require('../models/user');
 const Job = require('../models/job');
+const { uploadOnCloudinary } = require('../cloudaniary.js'); 
 
+exports.uploadProfilePicture = async (req, res) => {
+    try {
+        console.log("m functioh m aagya")
+        console.log(req.body);
+        const userId = req.params.userId;
+
+        console.log("User ID:", userId);
+        console.log("Uploaded File:", req.file);
+
+        if (!req.file) {
+            return res.status(400).json({ message: "No file uploaded" });
+        }
+
+        // Use the helper function to upload the file to Cloudinary
+        const cloudinaryResult = await uploadOnCloudinary(req.file.path);
+
+        // If Cloudinary upload fails, respond with an error
+        if (!cloudinaryResult) {
+            return res.status(500).json({ message: "Error uploading file to Cloudinary" });
+        }
+
+        // Find the user and update their profile picture URL
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        user.profilePicture = cloudinaryResult.secure_url; // Use Cloudinary URL
+        await user.save();
+
+        return res.status(200).json({
+            message: "Profile picture uploaded successfully",
+            profilePicture: user.profilePicture
+        });
+    } catch (error) {
+        console.error("Error uploading profile picture:", error);
+        res.status(500).json({ message: "An error occurred while uploading profile picture", error: error.message });
+    }
+};
 exports.getUserProfile = (req, res, next) =>{
     // console.log(req.params);
     const username = req.params.username;
@@ -32,36 +72,48 @@ exports.getUserProfilePage = (req, res, next) =>{
     .catch(err=>console.log(err));
 }
 
-exports.postCoverPicture = (req, res, next)=>{
-    const userId = req.params.userId;
-    User.findById(userId)
-    .then(user=>{
-        if(!user){
-            return res.status(404).json({message: "No user found"});
-        }
-        user.coverPicture = req.file.path;
-        user.save();
-        return res.status(200).json({message: "updated successfully"});
-    })
-    .catch(err=>console.log(err));
-}
+exports.uploadCoverPicture = async (req, res) => {
+    try {
+        console.log("m functioh m aagya")
+        // console.log(req.body);
+        const userId = req.params.userId;
 
-exports.postProfilePicture = (req, res, next)=>{
-    // console.log(req.body);
-    console.log(req.file);
-    const userId = req.params.userId;
-    User.findById(userId)
-    .then(user=>{
-        if(!user){
-            return res.status(404).json({message: "No user found"});
+        console.log("User ID:", userId);
+        console.log("Uploaded File:", req.file);
+
+        if (!req.file) {
+            return res.status(400).json({ message: "No file uploaded" });
         }
-        console.log(req.file);
-        // user.profilePicture = req.files.path;
-        // user.save();
-        return res.status(200).json({message: "updated successfully"});
-    })
-    .catch(err=>console.log(err));
-}
+
+        // Use the helper function to upload the file to Cloudinary
+        const cloudinaryResult = await uploadOnCloudinary(req.file.path);
+
+        // If Cloudinary upload fails, respond with an error
+        if (!cloudinaryResult) {
+            return res.status(500).json({ message: "Error uploading file to Cloudinary" });
+        }
+
+        // Find the user and update their profile picture URL
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        user.coverPicture = cloudinaryResult.secure_url; // Use Cloudinary URL
+        await user.save();
+
+        return res.status(200).json({
+            message: "Profile picture uploaded successfully",
+            coverPicture: user.coverPicture
+        });
+    } catch (error) {
+        console.error("Error uploading profile picture:", error);
+        res.status(500).json({ message: "An error occurred while uploading profile picture", error: error.message });
+    }
+};
+
+
+
 
 exports.getEditUser = (req, res, next) => {
     if(req.params.userId.toString() !== req.session.user.id.toString()){

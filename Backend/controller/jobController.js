@@ -203,6 +203,27 @@ exports.getAllJobsByUser = (req, res, next) => {
         });
 };
 
+exports.getAppliedJobsByUser = (req, res, next) => {
+    const userId = req.session.user.id;
+    console.log("this is")
+    User.findById(userId)
+        .then(async (user) => {
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+
+            const appliedJobIds = user.appliedJobs;
+            console.log(appliedJobIds);
+            const appliedJobsDetails = await Job.find({ _id: { $in: appliedJobIds } });
+            console.log(appliedJobsDetails);
+            res.status(200).json(appliedJobsDetails);
+        })
+        .catch((err) => {
+            console.error('Error fetching applied jobs:', err);
+            res.status(500).json({ message: 'An error occurred while fetching applied jobs' });
+        });
+};
+
 exports.saveJob = (req, res, next) =>{
     const jobId = req.params.jobId;
     // console.log(req.session);

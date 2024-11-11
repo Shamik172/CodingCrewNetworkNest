@@ -3,8 +3,8 @@ import axios from 'axios';
 
 import UserPost from './User/UserPost'
 import ProfileCard from './Profile/ProfileCard/ProfileCard';
-import image from '../assets/doraemon.jpeg';
-import image1 from '../assets/cover.jpeg';
+// import image from '../assets/doraemon.jpeg';
+// import image1 from '../assets/cover.jpeg';
 
 import PostButton from './Profile/ProfileCard/PostButton';
 import CustomerData from '../Store/LoginUserDataProvider';
@@ -15,8 +15,10 @@ import vd from '../assets/video1.mp4'
 
 const Home = () => {
   
+
    const {userData,userHandler,isLogin, handlerLogin} = useContext(CustomerData);
    const [showSendPost, setShowSendPost] = useState(false);
+
 
    
 
@@ -43,7 +45,10 @@ const Home = () => {
   return (
     <>
       
+
           <div className='relative top-24 flex lg:justify-around md:justify-around justify-center '>
+
+            
 
 
             {/* to show min-width  */}
@@ -52,7 +57,7 @@ const Home = () => {
                 {!isLogin ? 
                   <ProfileCard profileImage={''}  coverImage={''} isLogin={isLogin}/>
                   :  //Loading image pending
-                   <ProfileCard profileImage={image}  coverImage={image1}  name={userData.name} description={userData.bio} isLogin={isLogin}/>
+                  <ProfileCard profileImage={userData.profilePicture}  coverImage={userData.coverPicture}  name={userData.name} description={userData.bio} isLogin={isLogin}/>
               
                 }
 

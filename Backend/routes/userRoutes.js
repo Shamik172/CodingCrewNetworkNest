@@ -35,11 +35,9 @@ router.delete('/exp/:userId/:index', userController. deleteExperience);
 
 router.post('/e/:userId', userController.addEducation);
 
-router.post('/coverPicture/:userId',upload.fields([{ name: 'profilePicture', maxCount: 1 },
-    { name: 'coverPicture', maxCount: 1 }]), userController.postCoverPicture);
-
-router.post('/profilePicture/:userId', upload.fields([{ name: 'profilePicture', maxCount: 1 },
-    { name: 'coverPicture', maxCount: 1 }]), userController.postProfilePicture);
+router.post('/coverPicture/:userId', upload.single('coverPicture'), userController.uploadCoverPicture);
+ 
+router.post('/profilePicture/:userId', upload.single('profilePicture'), userController.uploadProfilePicture);
  
 router.post('/exp/:userId', userController.addExperience);
 //start by userId

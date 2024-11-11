@@ -114,7 +114,9 @@ exports.postLogout = (req, res) => {
 
   exports.isLoggedIn = (req, res, next) =>{
     const user = req.session.user;
-
+    if(!req.session.user){
+        return res.status(404).json({isLoggedIn : false});
+    }
     // console.log("abcd ++")
     // console.log(user);
 

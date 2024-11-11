@@ -8,8 +8,8 @@ import AppliedJobDetails from "./AppliedJobDetails";
 
 
 const AplliedCard = ({ job, postedBy , username}) => {
-    job={companyName:'MicroSoft',role:'mern Stack',salary:6898,city:'adfa',deadline:'12-10-2000', 
-        location:'adfasd', companyLogo:'sdf'}
+    // job={companyName:'MicroSoft',role:'mern Stack',salary:6898,city:'adfa',deadline:'12-10-2000', 
+        // location:'adfasd', companyLogo:'sdf'}
   const {
     companyName,
     companyLogo,
