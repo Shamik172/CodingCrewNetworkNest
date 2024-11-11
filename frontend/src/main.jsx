@@ -21,7 +21,9 @@ import PastJob from './components/JobsSection/CreatAndShowJob/PastJob.jsx'
 import { LoginUserCreatsJobsDataProvider } from './Store/LoginUserCreatsJobsDataProvider.jsx'
 import JobDescription from './components/JobsSection/JobDescription.jsx'
 import { ConnectionProvide } from './Store/ConnectionProvide.jsx'
+import ConnectionDetails from './components/Connections/ConnectionDetails.jsx'
 
+import MissingUserId from './MissingUserId.jsx'
 
 const router = createBrowserRouter([
   { path: '/', element: <App />,
@@ -44,7 +46,11 @@ const router = createBrowserRouter([
     ]
    },
   
- 
+   {path:'/u',
+    children:[
+      {path:':userid', element: <ConnectionDetails/>}
+    ]
+   },
   { path: '/login', element: <Login /> },
   { path: '/signup', element: <Signup /> },
   { path: '/test', element: <Test/> }

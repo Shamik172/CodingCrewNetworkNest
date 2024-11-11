@@ -105,9 +105,22 @@
 }
 
 /* Responsive styling for screens below 768px */
+@media screen and (min-width: 708px) and (max-width: 765px) {
+  .profileContainer {
+     /* background: #eb1010; */
+     position: relative;
+     left:13px;
+     width: 670px;
+     
+  }
+}
+
 @media screen and (max-width: 1020px) {
   .profileContainer {
     height: 200px; /* Adjust container height */
+    /* width: auto; */
+    /* margin: auto; */
+   
   }
 
   .coverPhoto {
