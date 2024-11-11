@@ -4,6 +4,7 @@ import ConnectionDetails from "./ConnectionDetails"; // Importing the new compon
 import ConnectionLocal from "../../Store/ConnectionProvide";
 import CustomerData from "../../Store/LoginUserDataProvider";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Connection = () => {
 
@@ -25,15 +26,15 @@ const Connection = () => {
       <div className="lg:w-1/3 w-full bg-white dark:bg-black p-4 border rounded-md shadow-md mx-2">
         <h2 className="text-xl font-semibold mb-4 text-black dark:text-purple-500">Connection Requests</h2>
         {requestList.length > 0 ? (
-          requestList.map((request) => (
-            <div key={request.id} className="flex justify-between items-center bg-slate-300 dark:bg-slate-950  text-black dark:text-orange-500 p-3 mb-3 rounded-md shadow-sm dark:shadow-sky-300 shadow-blue-900">
+          requestList.map((request,index) => (
+            <div key={index} className="flex justify-between items-center bg-slate-300 dark:bg-slate-950  text-black dark:text-orange-500 p-3 mb-3 rounded-md shadow-sm dark:shadow-sky-300 shadow-blue-900">
               <div>
-                <h3
+                <Link to={`/u/${request.username}`}
                   className="font-medium cursor-pointer hover:text-blue-500"
-                  onClick={() => handleOpenModal(request)} // Open modal with user details
+                 
                 >
                   {request.name}
-                </h3>
+                </Link>
               </div>
               <div className="flex space-x-2">
                 <button
@@ -60,20 +61,20 @@ const Connection = () => {
       <div className="lg:w-1/3 w-full bg-white dark:bg-black p-4 border rounded-md shadow-md mx-2 mt-4 lg:mt-0">
         <h2 className="text-xl font-semibold mb-4 text-black dark:text-purple-500">Your Connections</h2>
         {connectionList.length > 0 ? (
-          connectionList.map((connection) => (
-            <div key={connection.id} className="flex justify-between items-center bg-slate-300 dark:bg-slate-950  text-black dark:text-orange-500 p-3 mb-3 rounded-md shadow-sm dark:shadow-sky-300 shadow-blue-900">
+          connectionList.map((connection, index) => (
+            <div key={index} className="flex justify-between items-center bg-slate-300 dark:bg-slate-950  text-black dark:text-orange-500 p-3 mb-3 rounded-md shadow-sm dark:shadow-sky-300 shadow-blue-900">
               <div className="flex items-center space-x-2">
                 {/* Online/Offline Status Dot */}
                 <span
                   className={`h-3 w-3 rounded-full ${connection.isOnline ? "bg-green-600" : "bg-red-600"}`}
                   title={connection.isOnline ? "Online" : "Offline"}
                 ></span>
-                <h3
+                <Link to={`/u/${connection.username}`}
                   className="font-medium cursor-pointer hover:text-blue-500"
-                  onClick={() => handleOpenModal(connection)} // Open modal with user details
+                  
                 >
                   {connection.name}
-                </h3>
+                </Link>
               </div>
               <button
                 // onClick={() => handleMessage(connection)}
@@ -94,12 +95,12 @@ const Connection = () => {
         {suggestions.length > 0 ? (
           suggestions.map((suggestion) => (
             <div key={suggestion.id} className="flex justify-between items-center bg-slate-300 dark:bg-slate-950  text-black dark:text-orange-500 p-3 mb-3 rounded-md shadow-sm dark:shadow-sky-300 shadow-blue-900">
-              <h3
+              <Link to={`/u/${suggestion.username}`}
                 className="font-medium cursor-pointer hover:text-blue-500"
-                onClick={() => handleOpenModal(suggestion)} // Open modal with user details
+               
               >
                 {suggestion.name}
-              </h3>
+              </Link>
               <button
                 onClick={() => sendConnectionHandler(suggestion.username)}
                 className="text-green-500 hover:text-green-600"

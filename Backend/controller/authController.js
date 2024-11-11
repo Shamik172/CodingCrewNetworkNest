@@ -119,6 +119,7 @@ exports.postLogout = (req, res) => {
     }
     // console.log("abcd ++")
     // console.log(user);
+
     User.findById(user.id)
     .then(user=>{
         if(user){
