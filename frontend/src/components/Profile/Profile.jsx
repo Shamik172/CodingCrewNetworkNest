@@ -8,7 +8,7 @@ import Modal from './EditModel';
 
 function ProfileSection({userId}) {
 // console.log(userId);
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState("");
   
   const [profile, setProfile] = useState({
     username: 'Dummy User',
@@ -51,38 +51,49 @@ function ProfileSection({userId}) {
     fetchProfile(); // Call the function to fetch the skills
   }, [userId]);
 
-  const handleImageChange = async (e, imageType) => {
-    // const { files } = e.target;
-    // if (files && files[0]) {
-    //   const reader = new FileReader();
-    //   reader.onload = (event) => {
-    //     setProfile((prev) => ({ ...prev, [type]: event.target.result }));
-    //   };
-    //   reader.readAsDataURL(files[0]);
-    // }
-    const file_t = e.target.files[0];
-    setFile(file_t);
-    console.log(file);
-    const formData = new FormData();
-    formData.append("file", file);
-    console.log("fike",formData);
 
-  try {
-    const response = await axios.post(
-      `http://localhost:3000/user/${imageType}/${userId}`, 
-      formData,
-      { withCredentials: true, headers: { 'Content-Type': 'multipart/form-data' } }
-    );
-    
-    // Update the profile state with the new image URL
-    setProfile((prevProfile) => ({
-      ...prevProfile,
-      [imageType]: response.data[imageType],
-    }));
-  } catch (error) {
-    console.error('Error uploading image:', error);
-  }
-  };
+  // handleImageChange Function
+  const handleImageChange = async (e, imageType) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Create a FormData object and append the file
+    const formData = new FormData();
+    formData.append(imageType.toString(), file); // Change key based on backend expectation
+
+    // Optional: Preview the image before upload
+    const reader = new FileReader();
+    reader.onload = () => {
+        setFile((prevFile) => ({
+            ...prevFile,
+            [imageType]: reader.result,
+        }));
+    };
+    reader.readAsDataURL(file);
+
+    try {
+        const response = await axios.post(
+            `http://localhost:3000/user/${imageType}/${userId}`,
+            formData,
+            {
+                withCredentials: true,
+                headers: { 'Content-Type': 'multipart/form-data' },
+            }
+        );
+
+        console.log(response);
+
+        // Update the profile state with the new image URL from response
+        setProfile((prevProfile) => ({
+            ...prevProfile,
+            [imageType]: response.data.profilePicture, // Adjust key as per your response structure
+        }));
+    } catch (error) {
+        console.error('Error uploading image:', error);
+    }
+};
+
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -182,8 +193,28 @@ function ProfileSection({userId}) {
         </button>
       </Modal>
 
+
+
+
+        <Modal isOpen={isProfileModalOpen} onClose={() => setIsProfileModalOpen(false)}>
+            <h3 className="text-xl font-semibold mb-4">Edit Profile Picture</h3>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleImageChange(e, 'profilePicture')}
+              className="mt-2"
+            />
+            <button
+              onClick={() => setIsProfileModalOpen(false)}
+              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 w-full"
+            >
+              Save Profile Picture
+            </button>
+        </Modal>
+
+
       {/* Edit Profile Picture Modal */}
-      <Modal isOpen={isProfileModalOpen} onClose={() => setIsProfileModalOpen(false)}>
+      {/* <Modal isOpen={isProfileModalOpen} onClose={() => setIsProfileModalOpen(false)}>
         <h3 className="text-xl font-semibold mb-4">Edit Profile Picture</h3>
         <input
           type="file"
@@ -193,17 +224,18 @@ function ProfileSection({userId}) {
         />
         <button
       onClick={() => {
-            const formData = new FormData();
-            formData.append("file", file);
-            formData.append("fileType", file);
-            console.log(file)
-            console.log(formData);
+            // const formData = new FormData();
+            // formData.append("file", file);
+            // formData.append("fileType", file);
+            // console.log(file)
+            // console.log(formData);
+
               setIsProfileModalOpen(false)}}
           className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 w-full"
         >
           Save Profile Picture
         </button>
-      </Modal>
+      </Modal> */}
 
       {/* Edit Profile Info Modal */}
       <Modal isOpen={isInfoModalOpen} onClose={() => setIsInfoModalOpen(false)}>

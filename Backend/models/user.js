@@ -18,7 +18,7 @@ const userSchema = new Schema({
         unique: true
     },
     name: { type: String, required: true },
-    profilePicture: { type: String, default: '' },
+    profilePicture: { type: String },
     coverPicture: { type: String, default: '' },
     bio: { type: String, default: '' },
     location: { type: String },

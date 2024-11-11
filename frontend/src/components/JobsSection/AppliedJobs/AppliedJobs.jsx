@@ -1,8 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AplliedCard from './AppliedCard';
 import { FcSearch } from "react-icons/fc";
+import axios from 'axios';
+import { useContext } from 'react';
+import CustomerData from "../../../Store/LoginUserDataProvider";
+
+
 const AppliedJobs = ({ ToggleShowJobs }) => {
- 
+
+  const {userData} = useContext(CustomerData);
+  const [job, setJob] = useState([]);
+
+  useEffect(()=>{
+      axios.get(`http://localhost:3000/job/getAppliedJobs`, {withCredentials: true})
+      .then(jobs=>{
+        console.log(jobs);
+          setJob(jobs.data);
+          // console.log(job);
+      })
+      .catch(err=>console.log(err));
+  },[])
 
   return (
     <div className="flex  w-full flex-col max-h-screen bg-white dark:bg-gray-800 shadow-lg max-w-3xl">
@@ -42,17 +59,15 @@ const AppliedJobs = ({ ToggleShowJobs }) => {
       {/* Content area */}
       
       <div className="overflow-y-auto p-4 md:grid  gap-10 text-black dark:text-white h-full md:grid-cols-2 flex flex-col items-center">
-        <AplliedCard />
-        <AplliedCard />
-        <AplliedCard />
-        <AplliedCard />
-        <AplliedCard />
-        <AplliedCard />
-        <AplliedCard />
-        <AplliedCard />
-        <AplliedCard />
-        <AplliedCard />
-        <AplliedCard />
+      {job.length > 0 ? (
+          // console.log(job),
+          job.map((singleJob, index) => (
+              <AplliedCard key={index} job={singleJob} postedBy ={singleJob.postedBy} username = {userData.username} />
+            ))
+            ) : (
+          <p>No jobs applied</p>
+        )}
+
       </div>
 
     </div>
