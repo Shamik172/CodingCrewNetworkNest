@@ -111,7 +111,7 @@ useEffect(() => {
           
          <div className='flex flex-col items-center space-y-10 p-4 sm:w-2/3 w-full max-w-3xl'>
          {allJobs.map((job)=> 
-            <CompactJobPostCard  job={job} postedBy={userData.name} username = {userData.username}/>
+            <CompactJobPostCard  job={job} postedBy={job.postedBy} username = {userData.username}/>
           )}
          </div>
         

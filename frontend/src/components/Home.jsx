@@ -3,8 +3,8 @@ import axios from 'axios';
 
 import UserPost from './User/UserPost'
 import ProfileCard from './Profile/ProfileCard/ProfileCard';
-import image from '../assets/doraemon.jpeg';
-import image1 from '../assets/cover.jpeg';
+// import image from '../assets/doraemon.jpeg';
+// import image1 from '../assets/cover.jpeg';
 
 
 import CustomerData from '../Store/LoginUserDataProvider';
@@ -15,7 +15,7 @@ import data from '../components/Test/data.json'
 
 const Home = () => {
   
-   const {userData,userHandler,isLogin, handlerLogin} = useContext(CustomerData);
+   const {userData, userHandler, isLogin, handlerLogin} = useContext(CustomerData);
    
 
    // const [isLogin, setLogin] = useState(false);
@@ -45,7 +45,7 @@ const Home = () => {
                 {!isLogin ? 
                   <ProfileCard profileImage={''}  coverImage={''} isLogin={isLogin}/>
                   :  //Loading image pending
-                   <ProfileCard profileImage={image}  coverImage={image1}  name={userData.name} description={userData.bio} isLogin={isLogin}/>
+                   <ProfileCard profileImage={userData.profilePicture}  coverImage={userData.coverPicture}  name={userData.name} description={userData.bio} isLogin={isLogin}/>
               
                 }
                
@@ -61,7 +61,7 @@ const Home = () => {
                 {!isLogin ? 
                   <ProfileCard profileImage={''}  coverImage={''} isLogin={isLogin}/>
                   :  //Loading image pending
-                   <ProfileCard profileImage={image}  coverImage={image1}  name={userData.name} description={userData.bio} isLogin={isLogin}/>
+                  <ProfileCard profileImage={userData.profilePicture}  coverImage={userData.coverPicture}  name={userData.name} description={userData.bio} isLogin={isLogin}/>
               
                 }
 

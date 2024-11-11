@@ -17,9 +17,9 @@ function App() {
         // Fetch the login status and user data from the backend
         axios.get('http://localhost:3000/auth/isLogin', { withCredentials: true })
             .then(response => {
-                console.log(response);
+                // console.log(response);
                 const { isLoggedIn, user } = response.data;
-                console.log(isLoggedIn);
+                // console.log(isLoggedIn);
 
                 handlerLogin(isLoggedIn);
                 
@@ -42,12 +42,12 @@ function App() {
       if (!userData) return;
       axios.get(`http://localhost:3000/connection/getConnections/${userData.username}`, { withCredentials: true })
         .then(result => {
-          console.log("Reached to find the result", result);
+          // console.log("Reached to find the result", result);
           const connections = result.data[0]?.connections || [];
           const pendingRequests = result.data[1]?.pendingRequests || [];
           const receivedRequests = result.data[2]?.receivedRequests || [];
           
-          console.log("The data from result", connections, pendingRequests, receivedRequests);
+          // console.log("The data from result", connections, pendingRequests, receivedRequests);
           setconnectionList(connections);
           setSendList(pendingRequests);
           setRequestList(receivedRequests);
@@ -69,7 +69,7 @@ useEffect(() => {
       try {
         // console.log("Fetching connection suggestions...");
         const users = await axios.get(`http://localhost:3000/connection/getallConnections/${userData.username}`, { withCredentials: true });
-        console.log(users.data);
+        // console.log(users.data);
         setSuggestions(users.data);
       } catch (err) {
         console.log(err);
