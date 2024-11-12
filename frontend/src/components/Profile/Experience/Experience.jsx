@@ -44,6 +44,12 @@ const Experience = ({userId}) => {
         throw new Error('You did not fill Job Title');
       } else if (formData.companyName.trim().length === 0) {
         throw new Error('You did not fill Company Name');
+      } else if(formData.startDate.length === 0) {
+        throw new Error('You  did not fill startDate')
+      } else if( formData.endDate.length === 0){
+        throw new Error('You did not fill endDate')
+      } else if(formData.startDate >formData.endDate){
+        throw new Error('You set endDate before startDate')
       }
       
       axios.post(`http://localhost:3000/user/exp/${userId}`, formData ,{withCredentials: true})
@@ -84,7 +90,7 @@ const Experience = ({userId}) => {
     <Section title={'Work Experience'} onAddClick={() => setFormVisible(true)}>
       {/* Display list of job entries */}
       {experienceList.map((experience, index) => (
-        <div key={index} className="bg-slate-300 shadow-black dark:bg-slate-950 dark:shadow-white p-4 mb-6 rounded shadow-sm">
+        <div key={index} className="bg-slate-300 shadow-black dark:bg-slate-950 dark:shadow-white p-4 mb-6 mx-3 rounded shadow-sm">
           <p><strong>Job Title:</strong> {capitalizeFirstLetter(experience.jobTitle)}</p>
           <p><strong>Company Name:</strong> {capitalizeFirstLetter(experience.companyName)}</p>
           <p><strong>Start Date:</strong> {new Date(experience.startDate).getFullYear()|| 'No start date'}</p>
@@ -136,6 +142,7 @@ const Experience = ({userId}) => {
                 value={formData.startDate}
                 onChange={handleInputChange}
                 className="mt-1 p-2 block w-full border rounded"
+                required
               />
             </label>
             <label className="block mb-4">
@@ -146,6 +153,7 @@ const Experience = ({userId}) => {
                 value={formData.endDate}
                 onChange={handleInputChange}
                 className="mt-1 p-2 block w-full border rounded"
+                required
               />
             </label>
             <div className="flex justify-end">

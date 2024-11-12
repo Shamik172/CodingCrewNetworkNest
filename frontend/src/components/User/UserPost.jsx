@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { FaHeart, FaComment, FaShare, FaTimes } from 'react-icons/fa';
 import LikeCommentShere from './LikeCommentShere';
 import UserHeader from './UserHeader';
 import ContentSection from './ContentSection';
 import Comments from './Comments';
 import SharePost from './SharePost';
+
+import AOS from 'aos'; // Import AOS for initialization
+
+
 import axios from 'axios';
+
 // Dummy user data for sharing (replace with real user data from props or state)
 const availableUsers = [
   { id: 1, name: "John Doe", profileUrl: "path/to/john-profile.jpg", isOnline: true },
@@ -51,6 +56,17 @@ function UserPost({ UserProfile, isLogin, myconnect }) {
     toggleShareModal(); // Close the modal after sharing
   };
 
+
+   // Initialize AOS animation
+   useEffect(() => {
+    AOS.init({
+        duration: 800, // Duration of the animation
+        easing: 'ease-in-out', // Easing function for the animation
+        once: false, // Only animate once when scrolled into view
+        offset:200,
+    });
+}, []);
+
   // Like, Comment, Share handlers
   const handleLike = () =>{ 
     axios.post(`http://localhost:3000/post/like/${UserProfile._id}`)
@@ -82,13 +98,14 @@ function UserPost({ UserProfile, isLogin, myconnect }) {
     }
   };
 
+
   if (!isVisibleCard) {
     return null;
   }
 
   return (
     <>
-      <div className="relative w-full md:mx-auto shadow-blue-300 border-none rounded-lg shadow-md overflow-hidden bg-white dark:bg-black mx-1 inline-block mb-8 mt-2 text-black">
+      <div  data-aos="zoom-in" data-aos-delay="100" className=" relative w-full md:mx-auto shadow-blue-300 border-none rounded-lg shadow-md overflow-hidden bg-white dark:bg-black inline-block mb-8 mt-2 text-black ">
         <FaTimes
           className="absolute top-2 right-2 text-gray-500 hover:text-red-500 cursor-pointer"
           onClick={removeCard}

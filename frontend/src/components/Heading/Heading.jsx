@@ -10,6 +10,7 @@ import NavDropDown from "./NavDropDown";
 import CustomerData from "../../Store/LoginUserDataProvider";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { MdOutlineLogout } from "react-icons/md";
 
 
 function Navbar() {
@@ -207,8 +208,8 @@ function Navbar() {
            
 
           {/*  */}
-           <div>Settings</div>
-           <div className="" onClick={handleLogout}>logout</div>
+          
+           <div className="flex items-center cursor-pointer text-sm font-serif hover:text-white p-1" onClick={handleLogout}><MdOutlineLogout className="mr-1 " size={20}/>logout</div>
 
            
         </div>

@@ -77,14 +77,44 @@ exports.postCreatePost = async (req, res, next) => {
     }
 };
 
+
+//+++++++++++++++++++++++++++++++++++++++
+//my code
+/*
+
 exports.getAllPosts = (req, res, next)=>{
     // const username = req.session.user.username;
     Post.find().
     then(allPosts=>{
         return res.status(200).json(allPosts);
     })
-    .catch(err=>console.log(err));
-}
+    .catch(err=>console.log(err)); 
+}*/
+//+++++++++++++++++++++++++++++++++++++
+//------------------------------------
+    //check code
+    exports.getAllPosts = (req, res, next) => {
+        const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
+        const limit = parseInt(req.query.limit) || 10; // Default to 10 posts per page
+        console.log("Fetching posts... Page:", page, "Limit:", limit); // Debugging log
+        // Calculate the number of posts to skip for pagination
+        const skip = (page - 1) * limit;
+    
+        Post.aggregate([{$sample: {size : 10}}])
+            .skip(skip) // Skip the documents for previous pages
+            .limit(limit) // Limit the number of documents returned to the specified limit
+            .then(allPosts => {
+                res.status(200).json(allPosts);
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).json({ error: 'Failed to fetch posts' });
+            });
+    };
+    
+
+    
+//------------------------------------
 
 exports.getUserPosts = async (req, res, next) => {
     try {

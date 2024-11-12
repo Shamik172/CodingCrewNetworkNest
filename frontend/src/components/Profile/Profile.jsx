@@ -117,9 +117,11 @@ function ProfileSection({userId}) {
     <div className="max-w-2xl md:mx-auto p-6 bg-white dark:bg-black  shadow-sky-700 shadow-md  rounded-lg relative top-20 mx-2">
       <div className="relative">
         {/* Cover Picture */}
+        <div className='w-full h-64 border-4 dark:border-gray-500 rounded-lg overflow-hidden'>
         <CoverPic
           coverPicture={profile.coverPicture}
           />
+        </div>
         <button
           onClick={() => setIsCoverModalOpen(true)}
           className="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white rounded-md"
@@ -128,16 +130,19 @@ function ProfileSection({userId}) {
         </button>
 
         {/* Profile Picture */}
-        <div className="absolute top-24 left-6">
-          <button
-            onClick={() => setIsProfileModalOpen(true)}
-            className=" relative top-12 size-28 rounded-full border-4 px-2 py-1 bg-gray-700 text-white  text-sm "
-          >
-            <img src={profile.profilePicture} alt="" className='rounded-full bg-no-repeat bg-center bg-cover ' />     {/* size-24 */}
-        
-          </button>
+        <div className="absolute top-48 left-6 z-20">
+        <button
+          onClick={() => setIsProfileModalOpen(true)}
+          className="relative w-28 h-28 rounded-full border-4 p-1 bg-gray-700 text-white text-sm"
+        >
+          <img 
+            src={profile.profilePicture} 
+            alt="Profile"
+            className="rounded-full w-full h-full object-cover bg-center" 
+          />
+        </button>
         </div>
-      </div>
+
 
 
 
@@ -269,6 +274,7 @@ function ProfileSection({userId}) {
           Save Changes
         </button>
       </Modal>
+    </div>
     </div>
   );
 }

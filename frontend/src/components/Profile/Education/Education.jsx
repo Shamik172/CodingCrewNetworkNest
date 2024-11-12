@@ -42,11 +42,15 @@ const Education = ({userId}) => {
       // console.log( formData.schoolName.length)
       if (formData.schoolName.trim().length === 0) {
         throw new Error('School name is required.');
-      }
-        console.log(formData);
+      }else if(formData.startDate.length === 0){
+        throw new Error('you did not fill start date')
+      }else if(formData.endDate.length === 0){
+        throw new Error('You did not fill end date');
+      } 
+        // console.log(formData);
       axios.post(`http://localhost:3000/user/e/${userId}`, formData ,{withCredentials: true})
       .then(response=>{
-        console.log(response.data);
+        // console.log(response.data);
         setEducationList([...response.data]);
       })
       .catch(err=>console.log(err));
