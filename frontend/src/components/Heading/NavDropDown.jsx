@@ -93,22 +93,22 @@ const NavDropDown = () => {
 
           <button
               onClick={handleProfile}
-              className="w-full rounded-b-md block px-4 py-2 text-sm text-gray-700 dark:text-purple-100 hover:bg-gray-100 dark:hover:bg-slate-800 text-left"
+              className="w-full rounded-t-md block px-4 py-2 text-sm text-gray-700 dark:text-purple-100 hover:bg-gray-100 dark:hover:bg-slate-800 text-left"
               role="menuitem"
             >
               Profile
             </button>  
 
 
-            <a href="#" className="block px-4 py-2 text-sm text-gray-700 dark:text-purple-100 hover:bg-gray-100 dark:hover:bg-slate-800" role="menuitem">
+            {/* <a href="#" className="block px-4 py-2 text-sm text-gray-700 dark:text-purple-100 hover:bg-gray-100 dark:hover:bg-slate-800" role="menuitem">
               Settings
             </a>
             <a href="#" className="block px-4 py-2 text-sm text-gray-700 dark:text-purple-100 hover:bg-gray-100 dark:hover:bg-slate-800" role="menuitem">
               Add Cart
-            </a>
+            </a> */}
             <button
               onClick={handleLogout}
-              className="w-full rounded-b-md block px-4 py-2 text-sm text-gray-700 dark:text-purple-100 hover:bg-gray-100 dark:hover:bg-slate-800 text-left"
+              className="w-full rounded-b-md block px-4 py-2 text-sm text-gray-700 dark:text-purple-100 hover:bg-gray-100 dark:hover:bg-slate-800    text-left"
               role="menuitem"
             >
               Logout

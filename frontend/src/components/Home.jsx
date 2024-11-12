@@ -10,6 +10,7 @@ import PostButton from './Profile/ProfileCard/PostButton';
 import CustomerData from '../Store/LoginUserDataProvider';
 import Post from './Profile/ProfileCard/Post';
 import vd from '../assets/video1.mp4'
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 
 
@@ -20,11 +21,11 @@ const Home = () => {
    const [showSendPost, setShowSendPost] = useState(false);
 
 
-   
+  
+  // (this my main code)
 
-   // const [isLogin, setLogin] = useState(false);
-   // const [userData, setUserData] = useState({});
-   const [allPosts, setAllPosts] = useState([{}]);
+  //++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*  const [allPosts, setAllPosts] = useState([{}]);
 
 
    useEffect(()=>{
@@ -39,9 +40,50 @@ const Home = () => {
 
    useEffect(() => {
       console.log("Updated allPosts:", allPosts);
-    }, [allPosts]);
+    }, [allPosts]);*/
+  //++++++++++++++++++++++++++++++++++++++++++++++
 
-    
+
+  //----------------------------------------------------
+   
+ 
+  const [allPosts, setAllPosts] = useState([]); // Stores all loaded posts
+  const [pageParam, setPageParam] = useState(1); // Page counter
+  const [hasMore, setHasMore] = useState(true); // Indicates if more posts are available
+  const limit = 2; // Number of posts per page
+
+  // Function to fetch posts based on the current page
+  const fetchPosts = async () => {
+    try {
+        const response = await axios.get('http://localhost:3000/post/getAllPosts', {
+            params: { page: pageParam, limit }
+        });
+        const newPosts = response.data;
+        console.log('Fetched Posts:', newPosts); // Debugging output
+
+        console.log('Page:', pageParam, 'Data received:', newPosts);
+ 
+        if (newPosts.length < limit) {
+            setHasMore(false);
+        }
+ 
+        setAllPosts(prevPosts => [...prevPosts, ...newPosts]);
+        setPageParam(prevPage => prevPage + 1);
+    } catch (error) {
+        console.error("Error fetching posts:", error);
+        setHasMore(false);
+    } finally {
+      setIsFetching(false); // Reset fetching flag
+    }
+ };
+ 
+
+  // Initial load
+  useEffect(() => {
+    fetchPosts();
+  }, []); 
+
+  //----------------------------------------------------
   return (
     <>
       
@@ -64,7 +106,8 @@ const Home = () => {
              </div>
 
 
-             <div className='md:w-3/4 w-full md:mx-0  mx-4  max-w-2xl flex flex-col items-center  '>
+             <div className='md:w-3/4 w-full md:mx-0  mx-1  max-w-2xl flex flex-col items-center  '>
+             
 
 
                     {/* below lg part */}
@@ -72,10 +115,24 @@ const Home = () => {
                   
                   <PostButton view={'mobile'} setShowSendPost={setShowSendPost}/>
                   </div>
-  
-                  {allPosts.map(item =>  <UserPost key={item._id} UserProfile={item} isLogin={isLogin}/>)}
 
-           
+
+
+                  <InfiniteScroll
+                     className='h-screen'
+                      dataLength={allPosts.length} // This is the length of the data loaded so far
+                      next={fetchPosts} // Function to load more posts
+                      hasMore={hasMore} // Continue loading until `hasMore` is false
+                      loader={<h4>Loading more posts...</h4>} // Loading indicator
+                      endMessage={<p>No more posts to show.</p>} // Message when all posts are loaded
+    >
+                  {allPosts.map((item,index) =>  <UserPost key={index} UserProfile={item} isLogin={isLogin}/>)}
+                  </InfiniteScroll>
+
+          {/* -------------------------------------------------------- */}
+                  {/* {isLoading && <p>Loading more posts...</p>} */}
+          {/* --------------------------------------------------------- */}
+
              </div>
 
 

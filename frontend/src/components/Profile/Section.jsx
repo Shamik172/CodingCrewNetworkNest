@@ -3,7 +3,7 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 
 const Section = (props) => {
   return (
-    <div className="max-w-2xl md:mx-auto my-4 p-6 bg-white text-black dark:bg-black dark:text-white  shadow-lg shadow-sky-700 rounded-lg relative top-20 mx-2">
+    <div className="max-w-2xl md:mx-auto my-4 mx-2 p-6 bg-white text-black dark:bg-black dark:text-white  shadow-lg shadow-sky-700 rounded-lg relative top-20 ">
       <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center bg-slate-400 py-2 rounded-xl">
         {props.title}
       </h2>

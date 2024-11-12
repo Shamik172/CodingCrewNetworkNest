@@ -35,7 +35,7 @@ const UserHeader = ({onHandler, isConnection, name, bio, img, isLogin}) => {
 
     <>
       
-      <div className="flex flex-row items-center justify-between px-4 p-2 font-serif bg-slate-200 dark:bg-slate-900 ">
+      <div className="flex flex-row items-center justify-between px-4 p-2 font-serif bg-slate-200 dark:bg-slate-800 ">
         {/* Profile Picture and Info */}
         <div className="flex items-center mb-4 sm:mb-0  font-mono">
           <div className="w-12 h-12 rounded-full mr-3  ">

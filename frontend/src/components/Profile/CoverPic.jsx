@@ -6,11 +6,11 @@ const CoverPic = ({coverPicture,handleImageChange,editField,setEditField}) => {
   return (
      <> 
         
-         <img
-          src={coverPicture}
-          alt="Cover"
-          className="w-full h-56 object-cover rounded-lg"
-        />
+             <img
+        src={coverPicture}
+        alt="Cover"
+        className="w-fit h-fit  object-contain rounded-lg mx-auto"
+      />
        
      </>
   )
