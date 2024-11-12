@@ -22,6 +22,8 @@ router.get('/getAcceptedJobs', jobController.getAcceptedJobsByUser);
 
 router.get('/getRejectedJobs', jobController.getRejectedJobsByUser);
 
+router.get('/getSavedJobs/:username', jobController.getSavedJobs);
+
 router.post('/filterjob', jobController.filterJob);
 
 router.get('/alljobs', jobController.getAllJobs);

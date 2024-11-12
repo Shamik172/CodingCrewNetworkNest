@@ -288,7 +288,7 @@ exports.getAllJobs = async (req, res, next) => {
     try {
       const username = req.session.user.username; // Assuming the username is available in the session.
       const jobs = await Job.find(); // Fetch all jobs
-      console.log(jobs);
+    //   console.log(jobs);
       const filteredJobs = jobs.filter(job => {
         // Ensure job.applications exists and is an array
         if (Array.isArray(job.applications)) {
@@ -393,3 +393,28 @@ exports.rejectAll = async (req, res, next) => {
       return res.status(500).json({ message: "An error occurred while rejecting applications", error: err.message });
     }
   };
+
+  exports.getSavedJobs = (req, res, next) => {
+    const username = req.params.username;
+    let savedJobIds = [];
+    let result = [];
+    // console.log("reached backend");
+    User.findOne({ username: username })
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }
+
+            savedJobIds = user.savedJobs;
+
+            return Job.find({ _id: { $in: savedJobIds } });
+        })
+        .then(posts => {
+            result = posts; // Store found posts in the result array
+            res.json(result); // Send the result array as a response
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ message: "An error occurred", error: err });
+        });
+};

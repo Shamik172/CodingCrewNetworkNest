@@ -118,10 +118,12 @@ function ProfileSection({userId}) {
       <div className="relative">
         {/* Cover Picture */}
         <div className='w-full h-64 border-4 dark:border-gray-500 rounded-lg overflow-hidden'>
-        <CoverPic
+        <CoverPic 
           coverPicture={profile.coverPicture}
-          />
-        </div>
+          className="object-fit w-full h-full"
+        />
+      </div>
+
         <button
           onClick={() => setIsCoverModalOpen(true)}
           className="absolute top-2 right-2 px-2 py-1 bg-gray-700 text-white rounded-md"

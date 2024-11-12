@@ -27,7 +27,7 @@ const ChatSection = ({ selectedConnection, onClose, messages, onSendMessage }) =
   return (
     <div className="flex flex-col h-full dark:bg-slate-600 bg-sky-50 ">
       {/* Header with Profile Icon */}
-      <div className="flex items-center justify-between p-4 bg-gray-200 border-b border-gray-300">
+      <div className="flex items-center justify-between p-4 py-5 bg-gray-200 border-b border-gray-300 shadow-sm  shadow-black">
         <div className="flex items-center">
           <FiUser className="mr-2 text-gray-500" size={24} />
           <h2 className="text-xl font-bold">{selectedConnection.name}</h2>

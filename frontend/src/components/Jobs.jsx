@@ -86,6 +86,9 @@ useEffect(() => {
   const handleSavedJobsClick = () => {
     navigate('/savedJobs');
   };
+  const handleApplyJobClick = ()=>{
+    navigate('/appliedJobs');
+  }
   
   
   const handleJobFilterClick = (obj) => {
@@ -139,13 +142,13 @@ useEffect(() => {
             
             </Link>
 
-            <button onClick={()=>{ToggleShowJobs(true)}} className='block w-full px-4 py-2 bg-blue-600 text-white text-center rounded-lg hover:bg-blue-700 '>Applied Jobs </button>
+            <button onClick={handleApplyJobClick} className='block w-full px-4 py-2 bg-blue-600 text-white text-center rounded-lg hover:bg-blue-700 '>Applied Jobs </button>
 
             <Link to={`/job/pastjob?user=${userData.username}`}className="block w-full px-4 py-2 bg-gray-200 dark:bg-sky-950 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-sky-800 text-gray-800 dark:text-white ">
                   Past  Job
             </Link>
             
-            <div className='block w-full px-4 py-2 bg-gray-200 dark:bg-sky-950 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-sky-800 text-gray-800 dark:text-white '>Save Jobs</div>
+            <button onClick={handleSavedJobsClick} className='block w-full px-4 py-2 bg-gray-200 dark:bg-sky-950 text-center rounded-lg hover:bg-gray-100 dark:hover:bg-sky-800 text-gray-800 dark:text-white '>Save Jobs</button>
           </div>
           <div className='md:hidden'>
           <SearchDropDown username={userData.username} handleJobFilterClick={handleJobFilterClick}/>
@@ -160,8 +163,10 @@ useEffect(() => {
                 <Link to={`/job/pastJob?user=${userData.username}`} className="px-6 py-2 bg-slate-50 dark:bg-sky-950 dark:text-white hover:bg-slate-300 dark:hover:bg-sky-800 rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3">
                     Past Job
                 </Link > 
-                <div onClick={()=>{ToggleShowJobs(true)}} className="px-6 py-2 bg-slate-50 dark:bg-sky-950 dark:text-white hover:bg-slate-300 dark:hover:bg-sky-800 rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3">Applied Jobs </div>
-                <div onClick={()=>{handleSavedJobsClick}} className="px-6 py-2 bg-slate-50 dark:bg-sky-950 dark:text-white hover:bg-slate-300 dark:hover:bg-sky-800 rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3">Saved Jobs</div>
+                <div onClick={handleApplyJobClick} className="px-6 py-2 bg-slate-50 dark:bg-sky-950 dark:text-white hover:bg-slate-300 dark:hover:bg-sky-800 rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3">Applied Jobs </div>
+
+
+                <div onClick={handleSavedJobsClick} className="px-6 py-2 bg-slate-50 dark:bg-sky-950 dark:text-white hover:bg-slate-300 dark:hover:bg-sky-800 rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3">Saved Jobs</div>
           </div>
           
          <div className='flex flex-col items-center space-y-10 p-4 sm:w-2/3 w-full max-w-3xl'>
@@ -181,10 +186,10 @@ useEffect(() => {
       <div className='relative -top-20 h-32 -z-50'></div>
        
 
-       {showAppliedJobs &&  <div className="z-10 fixed top-0 right-0 bottom-0 left-0 bg-slate-300 w-full h-full flex  pt-16 dark:bg-slate-950  justify-center">
+       {/* {showAppliedJobs &&  <div className="z-10 fixed top-0 right-0 bottom-0 left-0 bg-slate-300 w-full h-full flex  pt-16 dark:bg-slate-950  justify-center">
            
            <AppliedJobs ToggleShowJobs={ToggleShowJobs}/>
-        </div>}
+        </div>} */}
     </div>
    </>
   );
