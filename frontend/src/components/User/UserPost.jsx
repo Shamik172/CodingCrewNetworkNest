@@ -12,11 +12,6 @@ import AOS from 'aos'; // Import AOS for initialization
 import axios from 'axios';
 
 // Dummy user data for sharing (replace with real user data from props or state)
-const availableUsers = [
-  { id: 1, name: "John Doe", profileUrl: "path/to/john-profile.jpg", isOnline: true },
-  { id: 2, name: "Jane Smith", profileUrl: "path/to/jane-profile.jpg", isOnline: false },
-  { id: 3, name: "Alice Johnson", profileUrl: "path/to/alice-profile.jpg", isOnline: true },
-];
 
 function UserPost({ UserProfile, isLogin, myconnect }) {
   const [connection, setConnection] = useState(false);
@@ -27,6 +22,7 @@ function UserPost({ UserProfile, isLogin, myconnect }) {
 
   // States for tracking Like, Comment, Share actions
   const [isLiked, setIsLiked] = useState(false);
+  const [likeCounnt, setLikeCount] = useState(0);
   const [isCommented, setIsCommented] = useState(false);
   const [isShared, setIsShared] = useState(false);
 
@@ -68,18 +64,21 @@ function UserPost({ UserProfile, isLogin, myconnect }) {
 }, []);
 
   // Like, Comment, Share handlers
-  const handleLike = () =>{
-    
-     
-    axios.post(`http://localhost:3000/post/like/${UserProfile._id}`)
-    .then(result=>{
-        if (isLogin) {
+
+  const handleLike = () => { 
+    if (isLogin) {
+      axios.get(`http://localhost:3000/post/like/${UserProfile._id}`, {withCredentials: true})
+        .then(result => {
+          setLikeCount(result.data.likesCount);
+          if(result.data.result == -1)setIsLiked(false);
+          else setIsLiked(true);
+
           setIsLiked(!isLiked); // Toggle the like state
-        } else {
-          console.log('Please log in to like');
-        }
-    })
-    .catch(err=>console.log(err));
+        })
+        .catch(err => console.log(err));
+    } else {
+      console.log('Please log in to like');
+    }
   };
 
   const handleComment = () => {

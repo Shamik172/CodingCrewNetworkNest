@@ -94,23 +94,24 @@ exports.getAllPosts = (req, res, next)=>{
 //------------------------------------
     //check code
     exports.getAllPosts = (req, res, next) => {
-        const page = parseInt(req.query.page) || 1; // Default to page 1 if not provided
-        const limit = parseInt(req.query.limit) || 10; // Default to 10 posts per page
-        console.log("Fetching posts... Page:", page, "Limit:", limit); // Debugging log
-        // Calculate the number of posts to skip for pagination
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
         const skip = (page - 1) * limit;
     
-        Post.aggregate([{$sample: {size : 10}}])
-            .skip(skip) // Skip the documents for previous pages
-            .limit(limit) // Limit the number of documents returned to the specified limit
-            .then(allPosts => {
-                res.status(200).json(allPosts);
-            })
-            .catch(err => {
-                console.error(err);
-                res.status(500).json({ error: 'Failed to fetch posts' });
-            });
+        Post.aggregate([
+            { $skip: skip },          // Apply pagination first
+            { $limit: limit },        // Limit documents to the specified limit
+            { $sample: { size: limit } } // Randomly sample from the paginated subset
+        ])
+        .then(allPosts => {
+            res.status(200).json(allPosts);
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ error: 'Failed to fetch posts' });
+        });
     };
+    
     
 
     
@@ -130,48 +131,39 @@ exports.getUserPosts = async (req, res, next) => {
     }
   };
   
-
-exports.likePost = (req, res, next) => {
-    const postId = req.params.postId;
-    if(!req.session){
-        return res.status(404).json({message: "Login First"});
-    }
-    const userId = req.session.user.id; 
-    // console.log(typeof(userId));
+exports.likePost = async (req, res) => {
+    const { postId } = req.params;
+    if(!req.session)return res.status(400).json({message: "Login first"});
+    const userId = req.session.user.id;
     let postFound;
-    Post.findById(postId)
-    .then(post=> {
-        if(!post){
-            return res.status(404).json({message: "No post found"});
-        }
-        // console.log("found this post: " + post);
-        postFound = post;
-        const isLiked = post.likes.includes(userId);
-        // console.log(isLiked);
-        let result = 0;
-
-        if(!isLiked){
-            post.likes.push(userId);
-            result = 1;
-            // console.log("not liked");
-            return User.findByIdAndUpdate(userId, {
-                $addToSet: {likedPosts : postId}
-            })
-        } else {
-            result = -1;
-            post.likes = post.likes.filter(id => {
-                id && id.toString() !== userId
-        });
-            return User.findByIdAndUpdate(userId, {
-                $pull : {likedPosts: postId}
-            })
-
-        }
-    })
-    .then(() => { console.log(postFound); postFound.save();})
-    .then( () => res.status(200).json(result))
-    .catch(err => console.log(err));
-}
+  
+    try {
+      postFound = await Post.findById(postId);
+      if (!postFound) {
+        return res.status(404).json({ message: "No post found" });
+      }
+  
+      const isLiked = postFound.likes.includes(userId);
+      let result = 0;
+  
+      if (!isLiked) {
+        postFound.likes.push(userId);
+        result = 1;
+        await User.findByIdAndUpdate(userId, { $addToSet: { likedPosts: postId } });
+      } else {
+        postFound.likes = postFound.likes.filter(id => id.toString() !== userId.toString());
+        result = -1;
+        await User.findByIdAndUpdate(userId, { $pull: { likedPosts: postId } });
+      }
+  
+      await postFound.save();
+  
+      res.status(200).json({ result, likesCount: postFound.likes.length });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Server error" });
+    }
+  };
 
 exports.postComment = (req, res, next) => {
     const postId = req.params.postId;

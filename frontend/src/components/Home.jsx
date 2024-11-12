@@ -87,9 +87,7 @@ const Home = () => {
     } catch (error) {
         console.error("Error fetching posts:", error);
         setHasMore(false);
-    } finally {
-      setIsFetching(false); // Reset fetching flag
-    }
+    } 
  };
  
 
