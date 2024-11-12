@@ -23,7 +23,11 @@ const CompactJobPostCard = ({ job, postedBy , username}) => {
     description,
 
   } = job;
+  let firstChar=''
+  if(typeof(companyName) !== 'undefined')
+  firstChar = companyName.toString().charAt(0).toUpperCase();
 
+  // console.log('fist',firstChar);
   const [saved, setSaved] = useState(false);
   // const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -80,11 +84,13 @@ const CompactJobPostCard = ({ job, postedBy , username}) => {
         </div>
 
         <div className="flex items-center mb-2">
-          <img
+          {!(typeof(companyLogo) === 'undefined') ?<img 
             src={companyLogo}
             alt={`${companyName} logo`}
             className="h-12 w-12 rounded-full bg-gray-400 mr-2"
-          />
+          />:<div className="h-12 w-12 rounded-full bg-amber-950 mr-2 flex justify-center items-center font-bold text-3xl dark:text-slate-950 text-black"> 
+          {firstChar}
+          </div>}
           <div>
             <h3 className="text-lg md:text-2xl font-bold text-blue-900 dark:text-orange-600">{companyName}</h3>
             <p className="text-sm text-gray-500 dark:text-orange-400">Posted by: {postedBy}</p>

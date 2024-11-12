@@ -9,14 +9,50 @@ import { useContext } from 'react'
 import CustomerData from '../Store/LoginUserDataProvider';
 import axios from 'axios';
 import AppliedJobs from './JobsSection/AppliedJobs/AppliedJobs';
-
+import { useNavigate } from 'react-router-dom';
+import Loading from './Loading';
 
 
 const Jobs = () => {
   const [showAppliedJobs, setAppliedJobs] = useState(false);
+  
+  const [allJobs, setAllJobs] = useState([{}]);
+  const {userData,isLogin} = useContext(CustomerData);
+  
+
+  const navigate = useNavigate();
+  const [showPopup, setShowPopup] = useState(false);
+
+  //loading
+  const [loading, setLoading] = useState(true); // State to track loading
+   const placeholderCount = 6; // Number of placeholders 
+   useEffect(() => {
+     // Set an interval to simulate loading
+     const interval = setInterval(() => {
+       setLoading(false); // Set loading to false after 3 seconds
+     }, 1000); // 3 seconds (3000ms)
+ 
+     // Clear the interval when the component is unmounted
+     return () => clearInterval(interval);
+   }, []);
+
   const ToggleShowJobs = (set)=>{
-       setAppliedJobs(set);
-  }
+    setAppliedJobs(set);
+}
+
+  useEffect(() => {
+   
+    if (!isLogin) {
+        setShowPopup(true);
+        const timer = setTimeout(() => {
+            navigate('/');
+        }, 2000);
+        return () => clearTimeout(timer);
+    }
+}, [isLogin, navigate]);
+
+
+
 
 // Inside the useEffect to toggle scroll state
 useEffect(() => {
@@ -32,8 +68,6 @@ useEffect(() => {
 
 
 
-  const [allJobs, setAllJobs] = useState([{}]);
-  const {userData,isLogin} = useContext(CustomerData);
 
 
   useEffect(()=>{
@@ -67,9 +101,28 @@ useEffect(() => {
 
 
 
+  if(showPopup){
+    return(
+      <>
+         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+                        <p className="text-lg font-semibold mb-4">You are not logged in</p>
+                        <p className="text-gray-600">Redirecting to home page...</p>
+                    </div>
+           </div>
+      </>
+    )
+  }
 
+  if(!isLogin){
+    return <Loading/>
+  }else if(loading){
+    return <Loading/>
+  }
 
   return (
+   <>
+  
     <div className='w-full min-h-screen bg-slate-300 dark:bg-slate-950'>
      
       {/* <div className='dark:text-white text-center relative top-6 bg-slate-100 dark:bg-slate-600 md:w-1/3 sm:w-1/2 w-4/5  m-auto rounded-full py-1 text-3xl'>
@@ -131,6 +184,7 @@ useEffect(() => {
            <AppliedJobs ToggleShowJobs={ToggleShowJobs}/>
         </div>}
     </div>
+   </>
   );
 };
 

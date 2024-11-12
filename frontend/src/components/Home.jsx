@@ -9,8 +9,9 @@ import ProfileCard from './Profile/ProfileCard/ProfileCard';
 import PostButton from './Profile/ProfileCard/PostButton';
 import CustomerData from '../Store/LoginUserDataProvider';
 import Post from './Profile/ProfileCard/Post';
-import vd from '../assets/video1.mp4'
+import vd from '../assets/video2.mp4'
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Loading from './Loading';
 
 
 
@@ -21,6 +22,20 @@ const Home = () => {
    const [showSendPost, setShowSendPost] = useState(false);
 
 
+   //loading page 
+   const [loading, setLoading] = useState(true); // State to track loading
+   const placeholderCount = 6; // Number of placeholders 
+   useEffect(() => {
+     // Set an interval to simulate loading
+     const interval = setInterval(() => {
+       setLoading(false); // Set loading to false after 3 seconds
+     }, 1000); // 3 seconds (3000ms)
+ 
+     // Clear the interval when the component is unmounted
+     return () => clearInterval(interval);
+   }, []);
+
+  
   
   // (this my main code)
 
@@ -50,7 +65,7 @@ const Home = () => {
   const [allPosts, setAllPosts] = useState([]); // Stores all loaded posts
   const [pageParam, setPageParam] = useState(1); // Page counter
   const [hasMore, setHasMore] = useState(true); // Indicates if more posts are available
-  const limit = 2; // Number of posts per page
+  const limit = 10; // Number of posts per page
 
   // Function to fetch posts based on the current page
   const fetchPosts = async () => {
@@ -83,12 +98,16 @@ const Home = () => {
     fetchPosts();
   }, []); 
 
+
+  if(loading){
+    return <Loading/>
+  }
   //----------------------------------------------------
   return (
     <>
-      
-
-          <div className='relative top-24 flex lg:justify-around md:justify-around justify-center '>
+         <div className='fixed top-0 left-0 right-0 bottom-0 h-screen bg-slate-300 dark:bg-slate-950'></div>
+        
+          <div className='relative top-24 flex lg:justify-around md:justify-around justify-center w-full h-full'>
 
             
 
@@ -123,8 +142,8 @@ const Home = () => {
                       dataLength={allPosts.length} // This is the length of the data loaded so far
                       next={fetchPosts} // Function to load more posts
                       hasMore={hasMore} // Continue loading until `hasMore` is false
-                      loader={<h4>Loading more posts...</h4>} // Loading indicator
-                      endMessage={<p>No more posts to show.</p>} // Message when all posts are loaded
+                      loader={<h4 className='dark:text-white'>Loading more posts...</h4>} // Loading indicator
+                      endMessage={<p className='dark:text-white'>No more posts to show.</p>} // Message when all posts are loaded
     >
                   {allPosts.map((item,index) =>  <UserPost key={index} UserProfile={item} isLogin={isLogin}/>)}
                   </InfiniteScroll>
@@ -137,14 +156,25 @@ const Home = () => {
 
 
              {/* third part lg part */}
-             <div className='dark:bg-black bg-white dark:text-white w-1/5  h-96 mx-2 rounded-md mt-2  max-w-56 hidden lg:flex border-2 lg:flex-col'>
+             <div className=' dark:text-white w-1/5  h-96 mx-2 rounded-md mt-2  max-w-56 hidden lg:flex  lg:flex-col space-y-4'>
                <PostButton view={'pc'} setShowSendPost={setShowSendPost}/>
-               <video src={vd} className=' h-full'></video>
+               <div className="h-full w-full relative overflow-hidden rounded-md  shadow shadow-blue-500">
+                  <video
+                    className="absolute top-0 left-0 w-full h-full object-cover rounded-md "
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                  >
+                    <source src={vd} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
              </div>
           </div>
       
        
-          <div className='relative -top-20 h-32'></div>
+          
           {showSendPost && 
                  <Post setShowSendPost={setShowSendPost}/>
         }

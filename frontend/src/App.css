@@ -16,7 +16,9 @@
   /* to define a body */
 }
 
-
+.my-video{
+  background-image: url('./assets/video1.mp4');
+}
 
 
 

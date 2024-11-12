@@ -43,6 +43,7 @@ const JobDescription = () => {
   };
 
   const handleSaveForLater = () => {
+    
     setSaved(!saved);
     alert(`Job ${saved ? "removed from" : "saved to"} saved jobs.`);
   };
@@ -88,36 +89,39 @@ const JobDescription = () => {
 
         {/* Bottom Action Toolbar */}
         {/* <div className="fixed bottom-0  bg-white max-w-3xl dark:bg-slate-800 border-t dark:border-gray-700 py-2 flex justify-around items-center text-gray-600 dark:text-gray-300"> */}
-          <button
-            onClick={handleSaveForLater}
-            className="flex items-center space-x-1 hover:text-blue-500 dark:hover:text-blue-400"
-          >
-            <MdBookmark className={saved ? "text-blue-500 dark:text-blue-400" : ""} />
-            <span>{saved ? "Saved" : "Save"}</span>
-          </button>
+          <div className="flex justify-between">
+            <button disabled={true}
+              onClick={handleSaveForLater}
+              className="flex items-center space-x-1 hover:text-blue-500 dark:hover:text-blue-400"
+            >
+              <MdBookmark className={saved ? "text-blue-500 dark:text-blue-400" : ""} />
+              <span>{saved ? "Saved" : "Save"}</span>
+            </button>
 
-          <button
+          {/* <button
             onClick={handleShare ? handleShare : () => alert("Share feature not implemented")}
             className="flex items-center space-x-1 hover:text-blue-500 dark:hover:text-blue-400"
           >
             <MdShare />
             <span>Share</span>
-          </button>
+          </button> */}
 
-          <button
+          {/* <button
             onClick={handlePrint ? handlePrint : () => alert("Print feature not implemented")}
             className="flex items-center space-x-1 hover:text-blue-500 dark:hover:text-blue-400"
           >
             <MdPrint />
             <span>Print</span>
-          </button>
+          </button> */}
 
-          <button
-            onClick={handleApply}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-600"
-          >
-            Apply
-          </button>
+            <button
+              disabled={true}
+              onClick={handleApply}
+              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 dark:bg-blue-500 dark:hover:bg-blue-600"
+            >
+              Apply
+            </button>
+          </div>
         </div>
       {/* </div> */}
     </div>

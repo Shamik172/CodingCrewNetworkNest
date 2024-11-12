@@ -1,8 +1,12 @@
 import React from 'react'
+import vd from '../../assets/video1.mp4'
 
 const Test = () => {
   return (
-    <div>Test</div>
+    <div>
+    
+    
+    </div>
   )
 }
 
