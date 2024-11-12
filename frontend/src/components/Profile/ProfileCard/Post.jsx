@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const Post = ({setShowSendPost}) => {
   const [text, setText] = useState('');
@@ -18,12 +19,37 @@ const Post = ({setShowSendPost}) => {
     setText(event.target.value);
   };
 
-  const handleSubmit = () => {
-    // Post submission logic (e.g., upload to server)
-    setText('');
-    setSelectedFiles([]);
-    setPreviewUrls([]);
-    setShowSendPost(false); // Close SendPost after submission
+  const handleSubmit = async () => {
+    // Create FormData to send files and text content
+    const formData = new FormData();
+    
+    // Append text content
+    formData.append('description', text);
+  
+    // Append each selected file to FormData
+    selectedFiles.forEach((file) => {
+      formData.append('images', file); // 'images' can be the field name for files in the backend
+    });
+    console.log(formData);
+    try {
+      // Make the POST request to backend endpoint to create a new post
+      const response = await axios.post('http://localhost:3000/post/createPost', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Important for sending files
+        },
+        withCredentials: true, // Include cookies if needed for session handling
+      });
+  
+      console.log('Post created successfully:', response.data);
+  
+      // Clear the form after successful submission
+      setText('');
+      setSelectedFiles([]);
+      setPreviewUrls([]);
+      setShowSendPost(false); // Close SendPost modal after submission
+    } catch (error) {
+      console.error('Error creating post:', error);
+    }
   };
 
   return (

@@ -5,8 +5,25 @@ const ContentSection = ({img,desc}) => {
   return (
     <>
       <TextToggle desc={desc}/>
-      <div className="my-3 flex justify-center items-center  dark:bg-black text-gray-600 text-center  ">
-         <img src={img} alt=""  className='bg-center bg-cover bg-no-repeat max-h-80 rounded-md ring-2 ring-slate-500 dark:ring-sky-900 '/>
+
+
+      <div className="flex justify-center items-center  bg-black text-gray-600 text-center">
+      <div className="flex flex-wrap">
+  {img && img.length > 0 ? (
+    img.map((image, index) => (
+      <img 
+        key={index}
+        src={image} 
+        alt={`image-${index}`} 
+        className="bg-center bg-cover bg-no-repeat max-h-80 m-2" 
+      />
+    ))
+  ) : (
+    <p>No images available</p> // Display this if no images are available
+  )}
+</div>
+
+
           
         </div>
     </>

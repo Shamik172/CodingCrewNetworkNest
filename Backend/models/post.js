@@ -14,6 +14,9 @@ const postSchema = new Schema({
     bio:{
         type: String
     },
+    username:{
+        type: String
+    },
     name:{
         type: String
     },

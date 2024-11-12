@@ -37,20 +37,6 @@ app.use(express.static(path.join(__dirname, 'uploads')));
 
 const MONGODB_URI = process.env.MONGODB_URI; 
 
-
-// const fileStorage = multer.diskStorage({
-//     destination: (req, file, cb) => cb(null, 'uploads'),
-//     filename: (req, file, cb) => cb(null,file.filename + '-' + file.originalname)
-// });
-
-// const fileFilter = (req, file, cb) => {
-//     if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg'){
-//         cb(null, true);
-//     } else {
-//         cb(null, false);        
-//     }
-// }; 
-
 const store = new MongoDBStore({
     uri: MONGODB_URI,
     collection: 'sessions'
@@ -83,10 +69,6 @@ app.use(cors({
     credentials: true,
   }));
 
-// app.use(multer({storage: fileStorage, fileFilter: fileFilter }).fields([
-//     { name: 'profilePicture', maxCount: 1 },
-//     { name: 'coverPicture', maxCount: 1 }
-// ]));
 
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');

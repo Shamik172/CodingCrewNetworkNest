@@ -12,6 +12,10 @@ router.get('/getJobs/:username', isAuth, jobController.getAllJobsByUser);
 
 router.get('/getAppliedJobs', jobController.getAppliedJobsByUser);
 
+router.get('/getAcceptedJobs', jobController.getAcceptedJobsByUser);
+
+router.get('/getRejectedJobs', jobController.getRejectedJobsByUser);
+
 router.post('/filterjob', jobController.filterJob);
 
 router.get('/alljobs', jobController.getAllJobs);
