@@ -37,6 +37,8 @@ const userSchema = new Schema({
     likedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     createdJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }],
     appliedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }],
+    acceptedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }],
+    rejectedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }],
     savedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }],
     isVerified: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true },

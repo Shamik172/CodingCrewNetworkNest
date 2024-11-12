@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import ProfileIcon from './loadProfileIcon'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Modal from './Modal';
 
 
 
-const UserHeader = ({onHandler, isConnection, name, bio, img, isLogin}) => {
+const UserHeader = ({onHandler, isConnection, name, bio, img, isLogin, username}) => {
   // console.log(name, bio);
   // const navigate = useNavigate();
   const [showModal, setModal] = useState(false);
@@ -45,10 +45,9 @@ const UserHeader = ({onHandler, isConnection, name, bio, img, isLogin}) => {
           <div>
 
             <p className="font-semibold text-2xl font-serif ">
-              <span className='text-sky-950 shodow capitalize dark:text-purple-500'>
-
+              <Link to={`/u/${username}`} className='text-sky-950 shodow capitalize dark:text-purple-500'>
                 {name}
-              </span>
+              </Link>
               <button className="text-blue-600 font-medium text-sm mx-3" onClick={handleClick}>
                 {!isConnection ? 'follow' : 'unfollow'}</button>
             </p>
