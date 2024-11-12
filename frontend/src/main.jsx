@@ -69,9 +69,9 @@ createRoot(document.getElementById('root')).render(
   <LoginUserDataProvider>
     <LoginUserCreatsJobsDataProvider>
       <ConnectionProvide>
-      <StrictMode>
+      {/* <StrictMode> */}
       <RouterProvider router={router} />
-      </StrictMode>
+      {/* </StrictMode> */}
       </ConnectionProvide>
       </LoginUserCreatsJobsDataProvider>
   </LoginUserDataProvider>

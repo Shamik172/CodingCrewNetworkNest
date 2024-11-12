@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 import styles from './ProfileCard.module.css'
 
@@ -46,7 +47,10 @@ const ProfileCard = ({ profileImage, coverImage, name, description, isLogin }) =
            <li className="text-center text-2xl font-semibold">
              <h2 className='dark:text-white'>{name}</h2>
            </li>
-           <li className="text-center font-semibold dark:text-white">{description}</li>
+           <li className="text-center font-semibold dark:text-white">
+  {description.length > 40 ? `${description.slice(0, 40)}...` : description}
+</li>
+
          </ul>
        </div>
       ): (

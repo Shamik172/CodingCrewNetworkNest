@@ -8,8 +8,8 @@ const Notifications = () => {
 
   const {userData,userHandler,isLogin, handlerLogin} = useContext(CustomerData);
 
-    console.log("not::",userData);
-    console.log("mylogin:",isLogin)
+    // console.log("not::",userData);
+    // console.log("mylogin:",isLogin)
   return (
     <div className='text-red-600'>Notific
     </div>

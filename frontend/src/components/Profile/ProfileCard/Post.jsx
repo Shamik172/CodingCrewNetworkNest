@@ -30,7 +30,7 @@ const Post = ({setShowSendPost}) => {
     selectedFiles.forEach((file) => {
       formData.append('images', file); // 'images' can be the field name for files in the backend
     });
-    console.log(formData);
+    // console.log(formData);
     try {
       // Make the POST request to backend endpoint to create a new post
       const response = await axios.post('http://localhost:3000/post/createPost', formData, {
@@ -40,7 +40,7 @@ const Post = ({setShowSendPost}) => {
         withCredentials: true, // Include cookies if needed for session handling
       });
   
-      console.log('Post created successfully:', response.data);
+      // console.log('Post created successfully:', response.data);
   
       // Clear the form after successful submission
       setText('');

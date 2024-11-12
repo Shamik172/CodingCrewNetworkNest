@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import Section from '../Section';
 import axios from 'axios';
@@ -71,7 +72,7 @@ const Education = ({userId}) => {
   const handleRemoveEducation = (index) => {
     axios.delete(`http://localhost:3000/user/e/${userId}/${index}`,{withCredentials: true})
     .then(newEdu=>{ 
-      console.log(newEdu);
+      // console.log(newEdu);
       setEducationList([...newEdu.data]);
       // setSkills((prevSkills) => prevSkills.filter(skill => skill !== skillToRemove));
     })

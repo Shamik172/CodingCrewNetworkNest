@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const ApplicantsList = ({ data, setShow ,Completed, SelectedStudent, jobId}) => {
   const [applicantStatus, setApplicantStatus] = useState({});
-  console.log(data);
+  // console.log(data);
 
   const handleSelect = (index) => {
     axios.post(`http://localhost:3000/job/acceptJob/${data[index].applicantUsername}/${jobId}`)
@@ -30,11 +30,11 @@ const ApplicantsList = ({ data, setShow ,Completed, SelectedStudent, jobId}) => 
   };
   
   const completed = () => {
-    console.log("This is the item",data);
+    // console.log("This is the item",data);
     // console.log(jobId);
         axios.get(`http://localhost:3000/job/rejectAll/${jobId}`, {withCredentials: true})
         .then(result=>{
-          console.log(result);
+          // console.log(result);
             data = result.data;
         })
         .catch(err=>console.log(err));

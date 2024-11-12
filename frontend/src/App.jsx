@@ -30,7 +30,7 @@ function App() {
                 setLoading(false); // Set loading to false once data is fetched
             })
             .catch(error => {
-                console.log('Error checking login status:', error);
+                // console.log('Error checking login status:', error);
                 setLoading(false); // Ensure loading is false even if there's an error
             });
     }, []);

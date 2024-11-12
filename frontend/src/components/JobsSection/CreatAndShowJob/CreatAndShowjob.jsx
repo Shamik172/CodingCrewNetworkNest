@@ -14,7 +14,7 @@ const CreatAndShowjob = () => {
 
   const [toggleButton, setToggleButton] = useState(true);
   const {userData} = useContext(CustomerData);
-  console.log("Patent ,",userData)
+  // console.log("Patent ,",userData)
   
 
   return (

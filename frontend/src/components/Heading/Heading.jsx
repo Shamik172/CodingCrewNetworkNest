@@ -17,7 +17,7 @@ function Navbar() {
 
   const {userData,userHandler, handlerLogin, isLogin} = useContext(CustomerData);
   const navigate = useNavigate();
-  console.log("navBar",userData);
+  // console.log("navBar",userData);
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation(); // Get the current path
@@ -61,16 +61,16 @@ function Navbar() {
 
   const handleResultClick = (user) => {
     <Link to={`/u/${user.username}`}>a</Link>
-    console.log("Selected user:", user);
+    // console.log("Selected user:", user);
     setShowDropdown(false);
   }; 
 
   //handlelogout option copied by NabDropDown
   const handleLogout = async () => {
     try {
-      console.log("before ");
+      // console.log("before ");
       await axios.get("http://localhost:3000/auth/logout", { withCredentials: true });
-      console.log("after ");
+      // console.log("after ");
       // Redirect to login page after successful logout
       setIsOpen(false)
       handlerLogin(false);

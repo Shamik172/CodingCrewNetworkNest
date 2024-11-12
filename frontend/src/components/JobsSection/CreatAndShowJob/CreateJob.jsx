@@ -5,7 +5,7 @@ import JobPostingForm from './JobPostingForm'
 const CreateJob = () => {
   
 
-  console.log('hello')
+  // console.log('hello')
   return (
     <div className='relative top-28'>
     <JobPostingForm />

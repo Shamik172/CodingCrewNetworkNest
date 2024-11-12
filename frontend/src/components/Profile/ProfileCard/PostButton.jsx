@@ -10,7 +10,7 @@ const PostButton =({view, setShowSendPost}) => {
         {isLogin === true ?(
             <div   onClick={view === 'pc' ? () => setShowSendPost(true) : undefined} className={`flex  flex-wrap items-center  ${view === 'pc'? 'flex-col dark:bg-black bg-white rounded-md shadow shadow-blue-500 text-xl  w-full   py-10 ':'flex-row justify-between  h-full '}`}>
                 {view !=='pc' && <>
-                      <img src="#" alt="pic" className='bg-gray-600 size-16  rounded-full ring-2 ring-offset-2 relative  left-2 my-2'  />
+                      <img src={userData.profilePicture} alt="pic" className='bg-gray-600 size-16  rounded-full ring-2 ring-offset-2 relative  left-2 my-2'  />
                       <div className='flex flex-col flex-wrap max-w-96 my-2'>
                         <div className='text-center text-xl sm:text-3xl dark:text-orange-600 font-semibold'>{userData.name}</div>
                         <div className="text-center text-sm mt-1 my-2">

@@ -28,7 +28,7 @@ export const LoginUserCreatsJobsDataProvider = ({ children }) => {
   // console.log(Array.isArray(createdJob));
 
   const handlerStoreData = (newJobCreateData) => {
-    console.log(newJobCreateData);
+    // console.log(newJobCreateData);
     axios.post(`http://localhost:3000/job/postjob`, newJobCreateData, {withCredentials: true})
     .then(result=>{
       if(result.status === 200){

@@ -61,13 +61,14 @@ exports.postSignup = (req, res, next) => {
     const bio = req.body.bio;
     const profilePicture = req.body.profilePicture;
     const coverPicture = req.body.coverPicture;
+    const gender = req.body.gender;
     // console.log(profilePicture);
     // console.log(coverPicture);
 
     // const profilePicture = req.files['profilePicture'] ? req.files['profilePicture'][0] : '';
     // const coverPicture = req.files['coverPicture'] ? req.files['coverPicture'][0] : '';
 //    console.log(username,password,name,email)
-    if (!email || !password || !username || !name) {
+    if (!email || !password || !username || !name || !gender) {
         return res.status(400).json({ message: 'All fields are required.' });
     }
 
@@ -86,7 +87,8 @@ exports.postSignup = (req, res, next) => {
             bio: bio,
             name: name,
             profilePicture: profilePicture,
-            coverPicture: coverPicture
+            coverPicture: coverPicture,
+            gender: gender
         });
         return newUser.save()
         })

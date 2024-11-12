@@ -39,7 +39,7 @@ const Skills = ({userId}) => {
   const removeSkillHandler = (skillToRemove) => {
     axios.delete(`http://localhost:3000/user/${userId}/${skillToRemove}`,{withCredentials: true})
     .then(newSkills=>{ 
-      console.log(newSkills);
+      // console.log(newSkills);
       setSkills([...newSkills.data]);
       // setSkills((prevSkills) => prevSkills.filter(skill => skill !== skillToRemove));
     })

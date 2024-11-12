@@ -167,9 +167,10 @@ exports.likePost = async (req, res) => {
 
 exports.postComment = (req, res, next) => {
     const postId = req.params.postId;
-    const userId = req.session.user.id; 
-    const comment = req.body.comment;
-
+    const user = req.session.user; 
+    // console.log(req.body);
+    const comment = req.body.text.text;
+    const profilePicture = req.body.profilePicture;
 
     Post.findById(postId)
     .then(post=> {
@@ -178,14 +179,24 @@ exports.postComment = (req, res, next) => {
         }
 
         const newComment = {
-            user: userId,
-            text: comment
+            user: user.id,
+            text: comment,
+            profilePicture: profilePicture
         };
         post.comment.push(newComment);
-        return post.save();
+        post.save();
+        return res.status(200).json(post.comment);
     })
-    .then( () => res.status(200).json({message: "commented on post updated"}))
     .catch(err => console.log(err));
+}
+
+exports.getComments = (req, res, next) => {
+    const postId = req.params.postId;
+    Post.findById(postId)
+    .then(post=>{
+        return res.status(200).json(post.comment);
+    })
+    .catch(err=>console.log(err));
 }
 
 exports.postDeleteComment = (req, res, next) =>{
