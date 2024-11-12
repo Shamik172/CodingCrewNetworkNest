@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, useContext } from 'react';
 import { FaHeart, FaComment, FaShare, FaTimes } from 'react-icons/fa';
 import LikeCommentShere from './LikeCommentShere';
 import UserHeader from './UserHeader';
@@ -10,10 +10,12 @@ import AOS from 'aos'; // Import AOS for initialization
 
 
 import axios from 'axios';
-
+import CustomerData from '../../Store/LoginUserDataProvider';
 // Dummy user data for sharing (replace with real user data from props or state)
 
 function UserPost({ UserProfile, isLogin, myconnect }) {
+
+  const {userData} = useContext(CustomerData);
   const [connection, setConnection] = useState(false);
   const [isVisibleCard, setIsVisibleCard] = useState(true);
   const [CommentVisible, setCommentVisible] = useState(false);
@@ -39,7 +41,12 @@ function UserPost({ UserProfile, isLogin, myconnect }) {
   };
 
   const addComment = (newComment) => {
-    setComments([...comments, newComment]);
+    axios.post(`http://localhost:3000/post/comment/${UserProfile._id}`,{text: newComment, profilePicture: userData.profilePicture}, {withCredentials: true})
+      .then(result=>{
+        console.log("This is result data",result);
+        setComments(result.data);
+      })
+      .catch(err=>console.log(err));
   };
 
   const toggleShareModal = () => {
@@ -73,7 +80,7 @@ function UserPost({ UserProfile, isLogin, myconnect }) {
           if(result.data.result == -1)setIsLiked(false);
           else setIsLiked(true);
 
-          setIsLiked(!isLiked); // Toggle the like state
+          // setIsLiked(!isLiked); // Toggle the like state
         })
         .catch(err => console.log(err));
     } else {
@@ -83,8 +90,13 @@ function UserPost({ UserProfile, isLogin, myconnect }) {
 
   const handleComment = () => {
     if (isLogin) {
-      setCommentHandler(); // Open the comment section
+    setCommentHandler(); // Open the comment section
+    axios.get( `http://localhost:3000/post/getComments/${UserProfile._id}`, {withCredentials: true})
+    .then(result=>{
+      setComments(result.data);
       setIsCommented(true); // Mark as commented
+    })
+    .catch(err=>console.log(err));
     } else {
       console.log('Please log in to comment');
     }
@@ -157,6 +169,7 @@ function UserPost({ UserProfile, isLogin, myconnect }) {
           comments={comments}
           onClose={() => setCommentVisible(false)}
           onAddComment={addComment}
+          profilePicture = {userData.profilePicture}
         />
       )}
 

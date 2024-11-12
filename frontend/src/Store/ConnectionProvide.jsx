@@ -111,7 +111,7 @@ export const ConnectionProvide = ({children}) => {
         `http://localhost:3000/connection/sendRequest/${receiver}`,
         { username: receiver } , {withCredentials: true}
       );
-      console.log(result);
+      // console.log(result);
       unsetSuggestions(receiver);
     } catch (err) {
       console.log(err);

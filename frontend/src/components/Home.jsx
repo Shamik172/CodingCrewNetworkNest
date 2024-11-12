@@ -74,9 +74,9 @@ const Home = () => {
             params: { page: pageParam, limit }
         });
         const newPosts = response.data;
-        console.log('Fetched Posts:', newPosts); // Debugging output
+        // console.log('Fetched Posts:', newPosts); // Debugging output
 
-        console.log('Page:', pageParam, 'Data received:', newPosts);
+        // console.log('Page:', pageParam, 'Data received:', newPosts);
  
         if (newPosts.length < limit) {
             setHasMore(false);

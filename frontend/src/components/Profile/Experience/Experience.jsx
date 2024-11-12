@@ -54,7 +54,7 @@ const Experience = ({userId}) => {
       
       axios.post(`http://localhost:3000/user/exp/${userId}`, formData ,{withCredentials: true})
       .then(response=>{
-        console.log(response.data);
+        // console.log(response.data);
         setExperienceList([...response.data]);
       })
       .catch(err=>console.log(err));
@@ -74,7 +74,7 @@ const Experience = ({userId}) => {
   const handleRemoveExperience = (index) => {
     axios.delete(`http://localhost:3000/user/exp/${userId}/${index}`,{withCredentials: true})
     .then(newExp=>{ 
-      console.log(newExp);
+      // console.log(newExp);
       setExperienceList([...newExp.data]);
       // setSkills((prevSkills) => prevSkills.filter(skill => skill !== skillToRemove));
     })

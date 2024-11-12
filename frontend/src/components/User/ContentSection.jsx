@@ -7,7 +7,7 @@ const ContentSection = ({img,desc}) => {
       <TextToggle desc={desc}/>
 
 
-      <div className="flex justify-center items-center  bg-black text-gray-600 text-center">
+      <div className="flex justify-center items-center  dark:bg-black bg-white text-gray-600 text-center">
       <div className="flex flex-wrap">
   {img && img.length > 0 ? (
     img.map((image, index) => (

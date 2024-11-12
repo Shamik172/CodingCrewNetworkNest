@@ -11,7 +11,7 @@ const JobDescription = () => {
   const jobId = new URLSearchParams(locations.search).get('job');
 
   // const {jobId} = useParams(); 
-  console.log("jobId: ",jobId);
+  // console.log("jobId: ",jobId);
   const [job, setJob] = useState({});
 
   // console.log("kbsabfjasvjhavkhbkasbdkas",jobId); 
@@ -19,16 +19,16 @@ const JobDescription = () => {
   if(!jobId)return;
 
   useEffect (()=>{
-    console.log("Before the start");
+    // console.log("Before the start");
     axios.get(`http://localhost:3000/job/getjob/${jobId}`, {withCredentials: true})
     .then(result=>{
       setJob(result.data);
-      console.log("JobData: ",job);
+      // console.log("JobData: ",job);
     })
     .catch(err=>console.log(err));
   }, []);
   
-  console.log(job.skillsRequired);
+  // console.log(job.skillsRequired);
   
   const handleShare = ()=>{
 

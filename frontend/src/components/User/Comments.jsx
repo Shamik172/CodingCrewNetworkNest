@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaTimes, FaComment } from 'react-icons/fa';
 
-const Comments = ({ comments, onClose, onAddComment }) => {
+const Comments = ({ comments, onClose, onAddComment, profilePicture }) => {
   const [newComment, setNewComment] = useState('');
   const commentsEndRef = useRef(null); // Reference to the end of the comments list
   const modalRef = useRef(null); // Reference to the modal container
@@ -10,7 +10,7 @@ const Comments = ({ comments, onClose, onAddComment }) => {
     if (newComment.trim()) {
       onAddComment({
         text: newComment,
-        profileImage: 'https://via.placeholder.com/40', // Placeholder or replace with actual profile image
+        profileImage: profilePicture, // Placeholder or replace with actual profile image
       });
       setNewComment('');
     }
@@ -71,9 +71,9 @@ const Comments = ({ comments, onClose, onAddComment }) => {
                 style={{ maxWidth: '100%' }}
               >
                 <img
-                  src={comment.profileImage}
+                  src={comment.profilePicture}
                   alt="Profile"
-                  className="w-10 h-10 rounded-full border-2 border-blue-500"
+                  className="w-10 h-10 rounded-full border-2 border-blue-500 object-cover"
                 />
                 <div className="inline-block max-w-full text-gray-800 dark:text-gray-200 whitespace-pre-wrap break-words">
                   {comment.text}

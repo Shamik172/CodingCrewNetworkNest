@@ -11,7 +11,7 @@ const JobCard = ({ role, salary, location, city, jobType, deadline, postedBy, in
    useEffect(()=>{
     axios.get(`http://localhost:3000/job/getJobs/${postedBy}`, {withCredentials: true})
     .then(jobs=>{
-      console.log("this is jobs",jobs.data);
+      // console.log("this is jobs",jobs.data);
       setApplicantList(jobs.data[ind].applications);
       // console.log(applicantList);
     })

@@ -15,7 +15,7 @@ const Project = ({userId}) => {
       const newProjectWithFile = { ...newProject};
       axios.post(`http://localhost:3000/user/addProject`, newProjectWithFile, {withCredentials: true})
       .then(result=>{
-        console.log("fuckup", result);
+        // console.log("fuckup", result);
         setProjects(result.data);
         setAllProjects(result.data);
         setNewProject({ title: '', description: '', tags: '' });
@@ -30,9 +30,9 @@ const Project = ({userId}) => {
     // console.log("in the useEffect");
     axios.get(`http://localhost:3000/user/getProject`, {withCredentials: true})
     .then(result=>{
-      console.log("this is project", result);
+      // console.log("this is project", result);
       setAllProjects(result.data);
-      console.log(allProjects);
+      // console.log(allProjects);
     })
     .catch(err=>console.log(err));
   },[]);

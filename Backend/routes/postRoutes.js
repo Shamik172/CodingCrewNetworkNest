@@ -15,6 +15,8 @@ router.get('/getUserPosts/:username', postController.getUserPosts);
 
 router.get('/like/:postId', isAuth, postController.likePost);
 
+router.get('/getComments/:postId', postController.getComments);
+
 router.post('/comment/:postId', isAuth, postController.postComment);
 
 router.delete('/:postId/comment/:commentId', isAuth, postController.postDeleteComment);

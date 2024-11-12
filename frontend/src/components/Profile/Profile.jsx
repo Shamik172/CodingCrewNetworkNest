@@ -81,7 +81,7 @@ function ProfileSection({userId}) {
             }
         );
 
-        console.log(response);
+        // console.log(response);
 
         // Update the profile state with the new image URL from response
         setProfile((prevProfile) => ({
