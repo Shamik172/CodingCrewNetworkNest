@@ -34,7 +34,7 @@ const router = createBrowserRouter([
       { path: '/jobs', element: <Jobs /> },
       { path: '/jobDetails', element: <JobDescription /> },
       { path: '/message', element: <Message /> },
-      { path: '/notifications', element: <Notifications /> },
+      // { path: '/notifications', element: <Notifications /> },
       { path: '/profile', element: <YourProfile/> },
       { path: '/job', element: <CreatAndShowjob/>,
           children :[

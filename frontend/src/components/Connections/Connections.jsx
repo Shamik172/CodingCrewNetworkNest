@@ -21,7 +21,7 @@ const Connection = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row justify-center mt-10">
+    <div className="flex flex-col lg:flex-row justify-center mt-10 ">
       {/* Connection Requests Section */}
       <div className="lg:w-1/3 w-full bg-white dark:bg-black p-4 border rounded-md shadow-md mx-2">
         <h2 className="text-xl font-semibold mb-4 text-black dark:text-purple-500">Connection Requests</h2>

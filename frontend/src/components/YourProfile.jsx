@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ProfileSection from './Profile/Profile';
 import Skills from './Profile/Skills/Skills';
 import Project from './Profile/Project/Project';
@@ -8,6 +8,7 @@ import Education from './Profile/Education/Education';
 import CustomerData from '../Store/LoginUserDataProvider';
 import axios from 'axios';
 
+
 const YourProfile = () => {
     const { userData, isLogin } = useContext(CustomerData);
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ const YourProfile = () => {
     const [connections, setConnections] = useState([]);
 
     useEffect(() => {
-        console.log("isLogin status:", isLogin); // Debug check for isLogin status
+       
         if (!isLogin) {
             setShowPopup(true);
             const timer = setTimeout(() => {
@@ -24,6 +25,28 @@ const YourProfile = () => {
             return () => clearTimeout(timer);
         }
     }, [isLogin, navigate]);
+
+
+
+    if(showPopup){
+        return(
+            <>
+                {/* Popup box for not logged-in message */}
+           
+                <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+                        <p className="text-lg font-semibold mb-4">You are not logged in</p>
+                        <p className="text-gray-600">Redirecting to home page...</p>
+                    </div>
+                </div>
+           
+            </>
+        )
+    }
+
+    if(!isLogin){
+        return <div>Loading..........</div>
+    }
 
     useEffect(()=>{
         axios.get(`http://localhost:3000/user/connections/${userData.username}`, {withCredentials: true})
@@ -38,37 +61,30 @@ const YourProfile = () => {
         if (!str) return str; // Return an empty string or undefined if the input is falsy
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
+   
 
     return (
         <>
-            {/* Popup box for not logged-in message */}
-            {showPopup && (
-                <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-                        <p className="text-lg font-semibold mb-4">You are not logged in</p>
-                        <p className="text-gray-600">Redirecting to home page...</p>
-                    </div>
-                </div>
-            )}
+           
 
 
             {/* Profile content */}
             {userData ? (
-                <div className="flex md:justify-center md:space-x-10 justify-center">
-                    <div className="relative top-20 h-96 w-60 hidden md:flex flex-col rounded-lg p-5 bg-white dark:bg-black text-black dark:text-white">
-                        <div className="text-xl font-semibold border-b-2 dark:border-blue-950 pb-2">
+                <div className="flex md:justify-center md:space-x-10 justify-center ">
+                    <div className="relative top-20 h-96 w-60 hidden md:flex flex-col rounded-lg p-5 bg-white dark:bg-black text-black dark:text-white shadow shadow-blue-500">
+                        <div className="text-xl font-semibold border-b-2 dark:border-blue-950 pb-2 dark:text-purple-500">
                             Connections:
-                            <span className="ml-2 font-light relative top-0.5">
+                            <span className="ml-2 font-san text-2xl relative top-0.5 dark:text-red-500 ">
                                 {connections.length > 0 ? `${connections.length}`: ''}
                             </span>
                         </div>
                         <div 
-                            className="space-y-2 overflow-y-auto"
+                            className="flex-col space-y-4 overflow-y-auto text-center flex"
                             style={{ maxHeight: '50vh' }}  // Set max height to half the screen height
                         >
                             {connections.length > 0 ? (
                                 connections.map((connection, index) => (
-                                    <div key={index}>{capitalizeFirstLetter(connection.name)}</div>
+                                    <Link key={index} to={`/u/${connection.username}`} className='text-orange-500'>{capitalizeFirstLetter(connection.name)}</Link>
                                 ))
                             ) : (
                                 <div>No connections available</div>

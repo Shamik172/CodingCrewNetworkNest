@@ -90,12 +90,15 @@ useEffect(() => {
                     <p className="text-xl text-gray-600 dark:text-gray-300">Loading...</p>
                 </div>
             ) : (
+                <>
+                 <div className='fixed top-0 left-0 right-0 bottom-0 h-screen bg-slate-300 dark:bg-slate-950 -z-10'></div>
                 <div className="bg-slate-300 dark:bg-slate-950">
                     <DarkandLightTheme />
                     <Navbar />
                     <Outlet />
                     
                 </div>
+                </>
             )}
         </>
     );

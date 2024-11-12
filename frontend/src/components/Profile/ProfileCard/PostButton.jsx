@@ -8,7 +8,7 @@ const PostButton =({view, setShowSendPost}) => {
   return (
     <> 
         {isLogin === true ?(
-            <div className={`flex  flex-wrap items-center  ${view === 'pc'? 'flex-col  w-full   py-10 ':'flex-row justify-between  h-full '}`}>
+            <div   onClick={view === 'pc' ? () => setShowSendPost(true) : undefined} className={`flex  flex-wrap items-center  ${view === 'pc'? 'flex-col dark:bg-black bg-white rounded-md shadow shadow-blue-500 text-xl  w-full   py-10 ':'flex-row justify-between  h-full '}`}>
                 {view !=='pc' && <>
                       <img src="#" alt="pic" className='bg-gray-600 size-16  rounded-full ring-2 ring-offset-2 relative  left-2 my-2'  />
                       <div className='flex flex-col flex-wrap max-w-96 my-2'>
@@ -21,8 +21,8 @@ const PostButton =({view, setShowSendPost}) => {
 
                      </div>
                 </>}
-                <div onClick={()=>{setShowSendPost(true)}} className={`${view === 'pc' ? ' ' : 'mr-2'} bg-gray-700 text-white px-7 rounded-lg cursor-pointer py-1 dark:bg-gradient-to-r from-purple-500 to-indigo-500 `}>
-                post
+                <div onClick={()=>{setShowSendPost(true)}} className={`${view === 'pc' ? ' ' : 'mr-2'} bg-gray-700 text-white px-7 rounded-lg cursor-pointer py-1 dark:bg-gradient-to-r from-purple-500 to-indigo-500 dark:hover:bg-gradient-to-l transition-colors ease-in-out duration-100 delay-75 hover:bg-gray-600`}>
+                Post
                </div>
 
 
@@ -30,7 +30,7 @@ const PostButton =({view, setShowSendPost}) => {
            </div>
         ):(
            
-            <div className={` ${view === 'pc'? 'flex items-center h-40 relative left-1/3': 'flex justify-center items-center h-full'} `}>
+            <div className={` ${view === 'pc'? ' h-40   dark:bg-black bg-white shadow shadow-blue-500 rounded-md text-xl': ' h-full'} flex justify-center items-center `}>
                Welcome 
             </div>
          
