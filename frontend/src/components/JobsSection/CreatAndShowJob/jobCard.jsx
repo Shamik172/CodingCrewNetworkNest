@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ApplicantsList from './ApplicantsList';
+import axios from 'axios';
 
-const JobCard = ({ role, salary, location, city, jobType, deadline }) => {
+const JobCard = ({ role, salary, location, city, jobType, deadline, postedBy, ind ,_id}) => {
   
    const [showApplicantsList, setShow] = useState(false);
    const [SelectedStudent,setSelectedStudent] = useState(false)
+    const [applicantList, setApplicantList] = useState([[]]);
+
+   useEffect(()=>{
+    axios.get(`http://localhost:3000/job/getJobs/${postedBy}`, {withCredentials: true})
+    .then(jobs=>{
+      console.log("this is jobs",jobs.data);
+      setApplicantList(jobs.data[ind].applications);
+      // console.log(applicantList);
+    })
+    .catch(err=>console.log(err));
+   },[] ) 
+
+   
   const Completed = ()=>{
     setSelectedStudent(true);
   }
@@ -24,7 +38,7 @@ const JobCard = ({ role, salary, location, city, jobType, deadline }) => {
         </div>
          {showApplicantsList && <div className='dark:bg-gray-800 bg-white  fixed top-16 right-0 left-0 bottom-0 z-10 '>
         
-          <ApplicantsList data={[{username:'sumanta sahoo'},{username:'sumanta sahoo'}]} setShow={setShow} Completed={Completed} SelectedStudent={SelectedStudent}/>
+          <ApplicantsList data={applicantList} setShow={setShow} Completed={Completed} SelectedStudent={SelectedStudent} jobId = {_id}/>
           </div>}
       </div>
     </div>

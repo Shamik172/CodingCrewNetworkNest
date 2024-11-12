@@ -24,7 +24,7 @@ const CreatAndShowjob = () => {
       <Link to={`createJob?user=${userData.username}`}>
       <button className={` px-4 py-1 w-full rounded-l-full ${toggleButton ? 'bg-sky-400' : 'bg-white'}`} onClick={()=>setToggleButton(true)}>Create Job+</button></Link>
       <Link to={`pastJob?user=${userData.username}`}>
-      <button className={` px-4 py-1 w-full h-full rounded-r-full ${!toggleButton ? 'bg-sky-400' : 'bg-white'}`} onClick={()=>setToggleButton(false)}> Past Job</button>
+      <button className={` px-4 py-1 w-full h-full rounded-r-full ${!toggleButton ? 'bg-sky-400' : 'bg-white'}`} onClick={()=>setToggleButton(false)}> Past Jobs</button>
       </Link>
     </div>
   

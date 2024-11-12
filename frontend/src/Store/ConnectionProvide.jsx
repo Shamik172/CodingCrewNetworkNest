@@ -10,7 +10,7 @@ const ConnectionLocal = createContext();
 export const ConnectionProvide = ({children}) => {
   //you can set UserName
   const {userData} = useContext(CustomerData);  
-  console.log("userData is hisjdkjfbcsahkbdkasjfcsa", userData);
+  // console.log("userData is hisjdkjfbcsahkbdkasjfcsa", userData);
   const [sendList, setSendList] = useState([]);
   const [requestList,setRequestList] = useState([]);
   const [suggestions, setSuggestions] = useState([]);

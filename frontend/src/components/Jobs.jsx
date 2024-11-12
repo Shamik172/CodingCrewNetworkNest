@@ -49,7 +49,9 @@ useEffect(() => {
 
   // console.log("jobs",userData);
   // console.log("my login",isLogin)
-  
+  const handleSavedJobsClick = () => {
+    navigate('/savedJobs');
+  };
   
   
   const handleJobFilterClick = (obj) => {
@@ -106,7 +108,7 @@ useEffect(() => {
                     Past Job
                 </Link > 
                 <div onClick={()=>{ToggleShowJobs(true)}} className="px-6 py-2 bg-slate-50 dark:bg-sky-950 dark:text-white hover:bg-slate-300 dark:hover:bg-sky-800 rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3">Applied Jobs </div>
-                <div className="px-6 py-2 bg-slate-50 dark:bg-sky-950 dark:text-white hover:bg-slate-300 dark:hover:bg-sky-800 rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3">Save Jobs</div>
+                <div onClick={()=>{handleSavedJobsClick}} className="px-6 py-2 bg-slate-50 dark:bg-sky-950 dark:text-white hover:bg-slate-300 dark:hover:bg-sky-800 rounded-lg cursor-pointer shadow-md shadow-black dark:shadow-md dark:shadow-white space-y-3">Saved Jobs</div>
           </div>
           
          <div className='flex flex-col items-center space-y-10 p-4 sm:w-2/3 w-full max-w-3xl'>

@@ -123,7 +123,6 @@ exports.rejectRequest = (req, res, next) => {
     });
 };
 
-
 exports.getConnections = (req, res, next)=>{
   const username = req.params.username;
   // console.log("why this colaveri di", username);
@@ -137,6 +136,14 @@ exports.getConnections = (req, res, next)=>{
   })
   .catch(err=>console.log(err));
 }
+
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
 
 exports.getallConnections = async (req, res, next) => {
   const username = req.params.username;
@@ -157,9 +164,10 @@ exports.getallConnections = async (req, res, next) => {
     alreadyConnected.push(username);
     alreadyConnected = [...alreadyConnected,...receivedRequests,...sentRequests];
     // console.log("aleradadsldnl",alreadyConnected);
-    const result = await User.find({ 
+    let result = await User.find({ 
       username: { $nin: alreadyConnected } 
     });
+    result = shuffleArray(result);
     // console.log("resultascas",result);
     res.status(200).json(result);
   } catch (error) { 

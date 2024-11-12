@@ -48,8 +48,8 @@ const UserHeader = ({onHandler, isConnection, name, bio, img, isLogin, username}
               <Link to={`/u/${username}`} className='text-sky-950 shodow capitalize dark:text-purple-500'>
                 {name}
               </Link>
-              <button className="text-blue-600 font-medium text-sm mx-3" onClick={handleClick}>
-                {!isConnection ? 'follow' : 'unfollow'}</button>
+              {/* <button className="text-blue-600 font-medium text-sm mx-3" onClick={handleClick}>
+                {!isConnection ? 'follow' : 'unfollow'}</button> */}
             </p>
             <p className="text-sm dark:text-orange-500">{bio}</p>
             {/* <p className="text-xs">{skill} </p> */}

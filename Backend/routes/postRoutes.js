@@ -13,7 +13,7 @@ router.get('/getAllPosts', postController.getAllPosts);
 
 router.get('/getUserPosts/:username', postController.getUserPosts);
 
-router.post('/like/:postId', isAuth, postController.likePost);
+router.get('/like/:postId', isAuth, postController.likePost);
 
 router.post('/comment/:postId', isAuth, postController.postComment);
 
