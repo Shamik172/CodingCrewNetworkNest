@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect,useContext } from 'react';
-import img from '../../assets/avengers.jpg';
+// import img from '../../assets/avengers.jpg';
 import axios from 'axios'; // Import axios for making HTTP requests
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import YourProfile from '../YourProfile';
@@ -83,7 +83,7 @@ const NavDropDown = () => {
           onClick={toggleDropdown}
           className="inline-flex justify-center w-full size-10 rounded-full shadow-sm text-sm font-medium text-gray-700 ring-white ring"
         >
-          <img src={img} alt="" className="size-10 rounded-full min-w-10" />
+          <img src={userData.profilePicture} alt="" className="size-10 rounded-full min-w-10" />
         </button>
       </div>
 

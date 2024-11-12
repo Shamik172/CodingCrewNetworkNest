@@ -1,23 +1,44 @@
 import React, { useState } from 'react';
 import { FaCheck, FaTimes } from 'react-icons/fa';
+import axios from 'axios';
 
-const ApplicantsList = ({ data, setShow ,Completed, SelectedStudent}) => {
+
+const ApplicantsList = ({ data, setShow ,Completed, SelectedStudent, jobId}) => {
   const [applicantStatus, setApplicantStatus] = useState({});
+  console.log(data);
 
   const handleSelect = (index) => {
-    setApplicantStatus((prevStatus) => ({
-      ...prevStatus,
-      [index]: 'selected',
-    }));
+    axios.post(`http://localhost:3000/job/acceptJob/${data[index].applicantUsername}/${jobId}`)
+    .then(result=>{
+      setApplicantStatus((prevStatus) => ({
+        ...prevStatus,
+        [index]: 'Accepted',
+      }));
+    })
+    .catch(err=>console.log(err));
   };
 
   const handleReject = (index) => {
-    setApplicantStatus((prevStatus) => ({
-      ...prevStatus,
-      [index]: 'rejected',
-    }));
+    axios.post(`http://localhost:3000/job/rejectJob/${data[index].applicantUsername}/${jobId}`, {withCredentials: true})
+    .then(result=>{
+      setApplicantStatus((prevStatus) => ({
+        ...prevStatus,
+        [index]: 'Rejected',
+      }));
+    })
+    .catch(err=>console.log(err));
   };
   
+  const completed = () => {
+    console.log("This is the item",data);
+    // console.log(jobId);
+        axios.get(`http://localhost:3000/job/rejectAll/${jobId}`, {withCredentials: true})
+        .then(result=>{
+          console.log(result);
+            data = result.data;
+        })
+        .catch(err=>console.log(err));
+      }
 
 
   return (
@@ -40,9 +61,9 @@ const ApplicantsList = ({ data, setShow ,Completed, SelectedStudent}) => {
               </tr>
             </thead>
             <tbody >
-              {data.map((item, index) => (
+              {data.map((item, index) => (item.status === 'Pending'&&
                 <tr key={index} className="border-b dark:border-gray-600 text-center text-black dark:text-white">
-                  <td className="p-4">{item.username}</td>
+                  <td className="p-4">{item.applicantUsername}</td>
                   <td className="p-4">{item.email}</td>
                   <td className="p-4">
                     <a
@@ -84,7 +105,7 @@ const ApplicantsList = ({ data, setShow ,Completed, SelectedStudent}) => {
             </tfoot>
           </table>
           <div  className='text-white  relative h-16 flex justify-center items-center'>
-              <span className=' bg-sky-500 px-5 py-2 rounded-md' onClick={Completed}>Completed</span>
+              <button className=' bg-sky-500 px-5 py-2 rounded-md' onClick={completed}>Complete</button>
           </div>
         </div> :  (
                <div className="overflow-x-auto bg-white dark:bg-gray-800 shadow-md rounded">
@@ -97,28 +118,29 @@ const ApplicantsList = ({ data, setShow ,Completed, SelectedStudent}) => {
                    </tr>
                  </thead>
                  <tbody>
-                   {data.length > 0 ? (
-                     data.map((item, index) => (
-                       <tr key={index} className="border-b dark:border-gray-600 dark:text-white">
-                         <td className="p-4">{item.username}</td>
-                         <td className="p-4">{item.email}</td>
-                         <td className="p-4">
-                           <a
-                             href={item.resumeLink}
-                             target="_blank"
-                             rel="noopener noreferrer"
-                             className="text-blue-500 underline"
-                           >
-                             View Resume
-                           </a>
-                         </td>
-                       </tr>
-                     ))
-                   ) : (
-                     <tr>
-                       <td colSpan="3" className="p-4 text-center">No selected applicants</td>
-                     </tr>
-                   )}
+                 {data.length > 0 ? (
+                    data.map((item, index) => ( item.status === 'Pending' &&
+                      <tr key={index} className="border-b dark:border-gray-600 dark:text-white">
+                        <td className="p-4">{item.applicants.username}</td> {/* Accessing username */}
+                        {/* <td className="p-4">{item.applicants.email}</td> Accessing email */}
+                        <td className="p-4">
+                          <a
+                            href={item.applicants.resumeLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 underline"
+                          >
+                            View Resume
+                          </a>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="3" className="p-4 text-center">No selected applicants</td>
+                    </tr>
+                  )}
+
                  </tbody>
                </table>
              </div>

@@ -44,17 +44,26 @@ const MessageSection = ({ userData }) => {
 
 
   // Open chat with selected connection
-  const openChat = (connection) => {
+  const openChat = async (connection) => {
     setSelectedConnection(connection);
-
+  
     const roomId = [userData.username, connection.username].sort().join("-");
+  
+    // Join the room via Socket.IO
     socketRef.current.emit("joinRoom", roomId);
-
-    setMessages((prevMessages) => ({
-      ...prevMessages,
-      [connection.username]: prevMessages[connection.username] || [],
-    }));
+  
+    // Fetch message history
+    try {
+      const response = await axios.get(`http://localhost:3000/messages/${roomId}`);
+      setMessages((prevMessages) => ({
+        ...prevMessages,
+        [connection.username]: response.data,
+      }));
+    } catch (error) {
+      console.error("Error fetching message history:", error);
+    }
   };
+  
 
   // Send a message to the backend and update local messages
   const sendMessage = (text) => {

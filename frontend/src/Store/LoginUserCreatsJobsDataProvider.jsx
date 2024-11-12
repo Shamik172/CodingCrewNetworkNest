@@ -17,7 +17,7 @@ export const LoginUserCreatsJobsDataProvider = ({ children }) => {
     // console.log("goibg");
     axios.get(`http://localhost:3000/job/getJobs/${userData.username}`, { withCredentials: true })
       .then(jobs => {
-        console.log(jobs);
+        // console.log(jobs);
         setCreatedJob(jobs.data);
       })
       .catch(err => console.log(err));

@@ -5,7 +5,7 @@ import Search from "./Search";
 import Logo from "./Logo";
 import { NavIcon } from "./NavIcon";
 import { MobileIcon } from "./MobileIcon";
-import img from "../../assets/image1.jpeg";
+import img from "../../assets/logo.png";
 import NavDropDown from "./NavDropDown";
 import CustomerData from "../../Store/LoginUserDataProvider";
 import axios from "axios";
@@ -30,7 +30,7 @@ function Navbar() {
     { IconTitle: "Network", Icon: FaUserFriends, url: "/networks" },
     { IconTitle: "Jobs", Icon: FaBriefcase, url: "/jobs" },
     { IconTitle: "Messaging", Icon: FaEnvelope, url: "/message" },
-    { IconTitle: "Notifications", Icon: FaBell, url: "/notifications" },
+    // { IconTitle: "Notifications", Icon: FaBell, url: "/notifications" },
   ];
 
   const handleSearchChange = (event) => {
@@ -60,6 +60,7 @@ function Navbar() {
   };
 
   const handleResultClick = (user) => {
+    <Link to={`/u/${user.username}`}>a</Link>
     console.log("Selected user:", user);
     setShowDropdown(false);
   }; 
@@ -104,7 +105,7 @@ function Navbar() {
               className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
               onClick={() => handleResultClick(user)}
             >
-              <span className="font-semibold text-black">{user.name}</span>
+              <Link to={`/u/${user.username}`} className="font-semibold text-black">{user.name}</Link>
               {/* <span className="text-gray-600"> ({user.username})</span> */}
             </li>
           ))}

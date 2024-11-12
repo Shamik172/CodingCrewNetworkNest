@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { MdBookmark } from "react-icons/md";
 import AOS from 'aos'; // Import AOS for initialization
 import 'aos/dist/aos.css'; // Import the AOS CSS for animations
 import { Link } from "react-router-dom";
 import axios from "axios";
 import AppliedJobDetails from "./AppliedJobDetails";
+import CustomerData from "../../../Store/LoginUserDataProvider";
 
 
 const AplliedCard = ({ job, postedBy , username}) => {
     // job={companyName:'MicroSoft',role:'mern Stack',salary:6898,city:'adfa',deadline:'12-10-2000', 
         // location:'adfasd', companyLogo:'sdf'}
+        // console.log(job);
+      // const {userData} = useContext(CustomerData);
   const {
     companyName,
     companyLogo,
@@ -26,14 +29,25 @@ const AplliedCard = ({ job, postedBy , username}) => {
     description,
 
   } = job;
-  postedBy="Sumanta";
+  // postedBy="Sumanta";
 
- 
+   let status = 'Pending';
+   job.applications.forEach(application=>{
+    // console.log("this is one data", application);
+      
+      if(application.applicantUsername.toString() === username ){
+        status = application.status;
+        return;
+      }
+  })
+  let statusColor = 'text-yellow-500';
+  if(status === 'Accepted') statusColor = 'text-green-500';
+  else if(status === 'Rejected') statusColor = 'text-red-500';
   const [isModalOpen,setIsModalOpen]=useState(false);
 
   
   const hadlerModal = (set)=>{
-    console.log('ooo')
+    // console.log('ooo')
     setIsModalOpen(set)
   }
 
@@ -69,7 +83,8 @@ const AplliedCard = ({ job, postedBy , username}) => {
 
         <div className="flex space-x-10">
             <p className="dark:text-white text-black ">Status:</p>
-            <p>Pending</p>
+            
+            <p className={`${statusColor}`}>{status}</p>
         </div>
 
         

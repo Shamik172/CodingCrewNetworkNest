@@ -10,6 +10,7 @@ const User = require('./models/user');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const Message = require('./models/message');
 require('dotenv').config();
 
 // Import and initialize HTTP server and Socket.IO
@@ -75,33 +76,44 @@ const userRoutes = require('./routes/userRoutes');
 const postRoutes = require('./routes/postRoutes');
 const jobRoutes = require('./routes/jobRoutes');
 const connectionRoutes = require('./routes/connectionRoutes');
-
+const messageRoutes = require('./routes/messageRoutes');
 
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 app.use('/post', postRoutes);
 app.use('/job',  jobRoutes);
 app.use('/connection', connectionRoutes);
+app.use('/messages', messageRoutes);
 
 io.on("connection", (socket) => {
-    console.log("New client connected: ", socket.id);
-
-    // Handle joining a room
+    // console.log("New client connected:", socket.id);
+  
     socket.on("joinRoom", (roomId) => {
-        socket.join(roomId);
-        console.log(`User joined room: ${roomId}`);
+      socket.join(roomId);
+    //   console.log(`User joined room: ${roomId}`);
     });
-
-    // Handle sending a message
-    socket.on("sendMessage", (data) => {
-        const { roomId, message } = data;
-        io.to(roomId).emit("receiveMessage", message); // Broadcast message to the room
+  
+    socket.on("sendMessage", async (data) => {
+      const { roomId, message } = data;
+  
+      // Save the message to the database
+      const newMessage = new Message({
+        roomId,
+        sender: message.sender,
+        receiver: message.receiver,
+        text: message.text,
+        timestamp: new Date(),
+      });
+      await newMessage.save();
+  
+      // Broadcast message to the room
+      io.to(roomId).emit("receiveMessage", message);
     });
-
+  
     socket.on("disconnect", () => {
-        console.log("Client disconnected");
+    //   console.log("Client disconnected");
     });
-});
+  });
 
 // Connect to MongoDB and start server
 mongoose.connect(MONGODB_URI)

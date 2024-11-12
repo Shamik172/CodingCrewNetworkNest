@@ -186,6 +186,7 @@ exports.getAllJobsByUser = (req, res, next) => {
             Promise.all(jobPromises)
                 .then(jobs => {
                     // console.log("All jobs:", jobs);
+                    // jobs = jobs.filter(job=>job.status === 'Pending');
                     return res.status(200).json(jobs);
                 })
                 .catch(err => {
@@ -209,7 +210,8 @@ exports.getAppliedJobsByUser = (req, res, next) => {
             }
 
             const appliedJobIds = user.appliedJobs;
-            console.log(appliedJobIds);
+            // console.log(appliedJobIds);
+            // appliedJobIds.filter(obj=>obj.status === 'Pending');
             const appliedJobsDetails = await Job.find({ _id: { $in: appliedJobIds } });
             console.log(appliedJobsDetails);
             res.status(200).json(appliedJobsDetails);
@@ -308,8 +310,7 @@ exports.getAllJobs = async (req, res, next) => {
       return res.status(500).json({ message: "Error fetching jobs" }); // Return an error response
     }
   };
-  
-  
+   
 exports.getJob = (req, res, next) => {
     const jobId = req.params.jobId;
     // console.log(jobId);
@@ -321,6 +322,74 @@ exports.getJob = (req, res, next) => {
     .catch(err=>console.log(err));
 }
 
-//Pending->
-//acceptJobRequest
-//deleteJobRequest
+exports.acceptJob = (req, res, next) => {
+    const username = req.params.username;
+    const jobId = req.params.jobId;
+    User.findOne({username : username})
+    .then(user=>{
+        user.acceptedJobs.push(jobId);
+        user.save();
+        Job.findById(jobId)
+        .then(job=>{
+            // console.log(job);
+            job.applications.forEach(application => {
+                if (application.applicantUsername === username) {
+                    application.status = 'Accepted';
+                }
+            });
+            return job.save();
+        })
+        .catch(err=>console.log(err));
+    })
+    .catch(err=>console.log(err));
+}
+
+exports.rejectJob = (req, res, next) => {
+    const username = req.params.username;
+    const jobId = req.params.jobId;
+    User.findOne({username : username})
+    .then(user=>{
+        user.rejectedJobs.push(jobId);
+        user.save();
+        Job.findById(jobId)
+        .then(job=>{
+            // console.log(job);
+            job.applications.forEach(application => {
+                if (application.applicantUsername === username) {
+                    application.status = 'Rejected';
+                }
+            });
+            return job.save();
+        })
+        .catch(err=>console.log(err));
+    })
+    .catch(err=>console.log(err));
+}
+
+exports.rejectAll = async (req, res, next) => {
+    // console.log("thisih gjbma ");
+    try {
+      const jobId = req.params.jobId;
+    //   console.log("new jobId",jobId);
+      const job = await Job.findById(jobId);
+  
+      if (!job) {
+        return res.status(404).json({ message: "Job not found" });
+      }
+  
+      // Update status to "Rejected" for applications with status "Pending"
+      job.applications.forEach(application => {
+        if (application.status === 'Pending') {
+          application.status = 'Rejected';
+        }
+      });
+  
+      // Save the updated job
+      await job.save();
+  
+      return res.status(200).json({ message: "All pending applications rejected", job });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: "An error occurred while rejecting applications", error: err.message });
+    }
+  };
