@@ -3,13 +3,7 @@ import { useContext } from 'react';
 import CustomerData from '../../../Store/LoginUserDataProvider';
 const PostButton =({view, setShowSendPost}) => {
     const {userData,isLogin} = useContext(CustomerData);
-   
-  
- 
-
-
-
-     
+        
    
   return (
     <> 
@@ -37,7 +31,7 @@ const PostButton =({view, setShowSendPost}) => {
         ):(
            
             <div className={` ${view === 'pc'? 'flex items-center h-40 relative left-1/3': 'flex justify-center items-center h-full'} `}>
-               Wellcome 
+               Welcome 
             </div>
          
         )}

@@ -95,7 +95,7 @@ exports.deleteJob = (req, res, next) => {
 }
 
 exports.applyJob = (req, res, next) => {
-    const curUser = req.session.user.id;
+    const curUser = req.session.user;
     // console.log(typeof(curUser));
     const jobId = req.params.jobId;
 
@@ -111,25 +111,22 @@ exports.applyJob = (req, res, next) => {
         if(job.postedBy.toString() === req.session.user.username.toString()){
             return -2;
         }
-        const alreadyApplied = job.applications.some(obj=>obj.applicantId.toString() === curUser.toString());
+        const alreadyApplied = job.applications.some(obj=>obj.applicantUsername === curUser.username);
         if(alreadyApplied)return -3;
         
-        User.findById(curUser)
+        User.findById(curUser.id)
         .then(user=>{
             user.appliedJobs.push(job._id);
-            job.applications.push({applicantId: user._id, status: "Pending"});
-            return user.save();
-        })
-        .then(()=>{
+            job.applications.push({applicantUsername: user.username, status: "Pending"});
             job.save();
-            return;
+            return user.save();
         })
     })
     .then(result=>{
         if(result === -1)return res.status(404).json("Job not found");
         if(result === -2)return res.status(404).json("You cannot apply for this job");
         if(result === -3)return res.status(200).json("You have already applied");
-        return res.status(200).json({message: "applied for job successfully"});
+        return res.status(200).json("applied for job successfully");
     })
 }
 
@@ -170,7 +167,6 @@ exports.filterJob = (req, res, next) => {
         });
 };
 
-
 exports.getAllJobsByUser = (req, res, next) => {
     const username = req.params.username;
     // console.log(username);
@@ -205,7 +201,7 @@ exports.getAllJobsByUser = (req, res, next) => {
 
 exports.getAppliedJobsByUser = (req, res, next) => {
     const userId = req.session.user.id;
-    console.log("this is")
+    // console.log("this is")
     User.findById(userId)
         .then(async (user) => {
             if (!user) {
@@ -223,6 +219,48 @@ exports.getAppliedJobsByUser = (req, res, next) => {
             res.status(500).json({ message: 'An error occurred while fetching applied jobs' });
         });
 };
+
+exports.getAcceptedJobsByUser = (req, res, next) => {
+    const userId = req.session.user.id;
+    // console.log("this is")
+    User.findById(userId)
+        .then(async (user) => {
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+
+            const acceptedJobs = user.acceptedJobs;
+            // console.log(acceptedJobs);
+            const acceptedJobsDetails = await Job.find({ _id: { $in: acceptedJobs } });
+            // console.log(acceptedJobsDetails);
+            res.status(200).json(acceptedJobsDetails);
+        })
+        .catch((err) => {
+            console.error('Error fetching accepted jobs:', err);
+            res.status(500).json({ message: 'An error occurred while fetching accepted jobs' });
+        });
+}
+
+exports.getRejectedJobsByUser = (req, res, next) => {
+    const userId = req.session.user.id;
+    // console.log("this is")
+    User.findById(userId)
+        .then(async (user) => {
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+
+            const rejectedJobs = user.rejectedJobs;
+            // console.log(acceptedJobs);
+            const rejectedJobsDetails = await Job.find({ _id: { $in: rejectedJobs } });
+            // console.log(acceptedJobsDetails);
+            res.status(200).json(rejectedJobsDetails);
+        })
+        .catch((err) => {
+            console.error('Error fetching accepted jobs:', err);
+            res.status(500).json({ message: 'An error occurred while fetching accepted jobs' });
+        });
+}
 
 exports.saveJob = (req, res, next) =>{
     const jobId = req.params.jobId;
@@ -244,18 +282,34 @@ exports.saveJob = (req, res, next) =>{
     .catch(err=>console.log(err));
 }
 
-exports.getAllJobs = (req, res, next) =>{
-    const result = [];
-    Job.find()
-    .then(jobs=>{
-        // console.log(jobs);
-        jobs = jobs.filter(job => job.postedBy !== req.session.user.username);
-        // console.log(jobs);
-        return res.status(200).json(jobs);
-    })
-    .catch(err=>console.log(err));
-}
-
+exports.getAllJobs = async (req, res, next) => {
+    try {
+      const username = req.session.user.username; // Assuming the username is available in the session.
+      const jobs = await Job.find(); // Fetch all jobs
+      console.log(jobs);
+      const filteredJobs = jobs.filter(job => {
+        // Ensure job.applications exists and is an array
+        if (Array.isArray(job.applications)) {
+          // Exclude jobs where the user is the poster or has applied/been accepted/rejected
+          return job.postedBy !== username && !job.applications.some(application => {
+            // Check if the current user is in the applications array with specific statuses
+            return application.applicantUsername === username && (
+              application.status === 'Applied' || 
+              application.status === 'Accepted' || 
+              application.status === 'Rejected'
+            );
+          });
+        }
+        return job;
+      });
+      return res.status(200).json(filteredJobs); // Return the filtered jobs
+    } catch (err) {
+      console.log(err); // Log any error
+      return res.status(500).json({ message: "Error fetching jobs" }); // Return an error response
+    }
+  };
+  
+  
 exports.getJob = (req, res, next) => {
     const jobId = req.params.jobId;
     // console.log(jobId);

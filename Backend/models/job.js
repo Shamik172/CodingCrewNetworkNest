@@ -57,9 +57,8 @@ const JobSchema = new Schema({
     },
     applications:[
         {
-            applicantId:{
-                type: mongoose.Schema.ObjectId,
-                ref: 'User',
+            applicantUsername:{
+                type: String
             },
             status:{
                 type: String,

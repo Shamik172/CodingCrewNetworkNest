@@ -42,6 +42,7 @@ const CompactJobPostCard = ({ job, postedBy , username}) => {
     axios.get(`http://localhost:3000/job/applyjob/${job._id}`, {withCredentials: true})
     .then(result=>{
       console.log(result);
+      // console.log(result);
       alert(result.data);
     })
     .catch(err=>console.log(err));

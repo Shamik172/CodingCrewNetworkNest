@@ -39,7 +39,7 @@ useEffect(() => {
   useEffect(()=>{
     axios.get(`http://localhost:3000/job/alljobs`, {withCredentials : true})
     .then(jobs=>{
-      // console.log(jobs);
+      // console.log("Getting the all jobs here",jobs);
       setAllJobs(jobs.data);
       // console.log(allJobs);
     })
