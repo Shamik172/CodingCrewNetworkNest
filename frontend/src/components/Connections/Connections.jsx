@@ -21,9 +21,9 @@ const Connection = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row justify-center mt-10 ">
+    <div className="flex flex-col lg:flex-row justify-center mt-10  lg:items-start items-center">
       {/* Connection Requests Section */}
-      <div className="lg:w-1/3 w-full bg-white dark:bg-black p-4 border rounded-md shadow-md mx-2">
+      <div className="lg:w-1/3 w-full bg-white dark:bg-black p-4 border rounded-md shadow-md mx-2 max-w-2xl">
         <h2 className="text-xl font-semibold mb-4 text-black dark:text-purple-500">Connection Requests</h2>
         {requestList.length > 0 ? (
           requestList.map((request,index) => (
@@ -58,7 +58,7 @@ const Connection = () => {
       </div>
 
       {/* Current Connections Section */}
-      <div className="lg:w-1/3 w-full bg-white dark:bg-black p-4 border rounded-md shadow-md mx-2 mt-4 lg:mt-0">
+      <div className="lg:w-1/3 w-full bg-white dark:bg-black p-4 border rounded-md shadow-md mx-2 mt-4 lg:mt-0  max-w-2xl">
         <h2 className="text-xl font-semibold mb-4 text-black dark:text-purple-500">Your Connections</h2>
         {connectionList.length > 0 ? (
           connectionList.map((connection, index) => (
@@ -90,7 +90,7 @@ const Connection = () => {
       </div>
 
       {/* Suggestions Section */}
-      <div className="lg:w-1/3 w-full bg-white dark:bg-black p-4 border rounded-md shadow-md mx-2 mt-4 lg:mt-0">
+      <div className="lg:w-1/3 w-full bg-white dark:bg-black p-4 border rounded-md shadow-md mx-2 mt-4 lg:mt-0  max-w-2xl">
         <h2 className="text-xl font-semibold mb-4 text-black dark:text-purple-500">Suggestions</h2>
         {suggestions.length > 0 ? (
           suggestions.map((suggestion) => (

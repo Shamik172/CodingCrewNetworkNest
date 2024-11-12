@@ -4,12 +4,14 @@ import { FcSearch } from "react-icons/fc";
 import axios from 'axios';
 import { useContext } from 'react';
 import CustomerData from "../../../Store/LoginUserDataProvider";
+import { useNavigate } from 'react-router-dom';
 
-const AppliedJobs = ({ ToggleShowJobs }) => {
+const AppliedJobs = () => {
   const { userData } = useContext(CustomerData);
   const [job, setJob] = useState([]);
   const [NoText, setNoText] = useState('');
   const [jobFilter, setJobFilter] = useState('pending'); // track the selected filter (pending, accepted, rejected)
+  const navigate = useNavigate();
 
   // Fetch jobs when component loads or filter changes
   useEffect(() => {
@@ -44,12 +46,13 @@ const AppliedJobs = ({ ToggleShowJobs }) => {
   };
 
   return (
+    <div className='flex justify-center relative py-16'>
     <div className="flex w-full flex-col max-h-screen bg-white dark:bg-gray-800 shadow-lg max-w-3xl">
       {/* Header with navigation buttons */}
       <div className="flex justify-between items-center p-2 border-b dark:border-gray-700">
         <button
           className="text-black dark:text-white"
-          onClick={() => (ToggleShowJobs(false))}
+          onClick={()=>{navigate('/jobs')}}
         >
           Back
         </button>
@@ -63,12 +66,6 @@ const AppliedJobs = ({ ToggleShowJobs }) => {
           />
         </div> */}
 
-        <button
-          className="text-black dark:text-white"
-          onClick={() => (ToggleShowJobs(false))}
-        >
-          Next
-        </button>
       </div>
 
       <div className='flex justify-evenly '>
@@ -88,6 +85,7 @@ const AppliedJobs = ({ ToggleShowJobs }) => {
         )}
       </div>
 
+    </div>
     </div>
   );
 };

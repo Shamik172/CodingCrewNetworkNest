@@ -87,7 +87,9 @@ const Home = () => {
     } catch (error) {
         console.error("Error fetching posts:", error);
         setHasMore(false);
-    } 
+    } finally {
+      setIsFetching(false); // Reset fetching flag
+    }
  };
  
 
@@ -128,7 +130,7 @@ const Home = () => {
 
 
                     {/* below lg part */}
-                  <div className='dark:bg-slate-900 bg-slate-200 dark:text-white  w-full mx-2 rounded-md mt-2 lg:hidden   mb-2 py-3'>
+                  <div className='dark:bg-slate-900 bg-slate-200 dark:text-white  w-full mx-2 rounded-md mt-2 lg:hidden   mb-2 py-3 max-w-[620px]'>
                   
                   <PostButton view={'mobile'} setShowSendPost={setShowSendPost}/>
                   </div>

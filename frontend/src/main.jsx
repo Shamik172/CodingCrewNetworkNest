@@ -22,8 +22,8 @@ import { LoginUserCreatsJobsDataProvider } from './Store/LoginUserCreatsJobsData
 import JobDescription from './components/JobsSection/JobDescription.jsx'
 import { ConnectionProvide } from './Store/ConnectionProvide.jsx'
 import ConnectionDetails from './components/Connections/ConnectionDetails.jsx'
-
-import MissingUserId from './MissingUserId.jsx'
+import SaveJob from './components/JobsSection/saveJob/saveJob.jsx'
+import AppliedJobs from './components/JobsSection/AppliedJobs/AppliedJobs.jsx'
 
 const router = createBrowserRouter([
   { path: '/', element: <App />,
@@ -36,6 +36,8 @@ const router = createBrowserRouter([
       { path: '/message', element: <Message /> },
       // { path: '/notifications', element: <Notifications /> },
       { path: '/profile', element: <YourProfile/> },
+      { path: '/savedJobs', element: <SaveJob/>},
+      { path: '/appliedJobs', element: <AppliedJobs/>},
       { path: '/job', element: <CreatAndShowjob/>,
           children :[
              {path: 'createJob',  element: <CreateJob/>},
@@ -69,9 +71,9 @@ createRoot(document.getElementById('root')).render(
   <LoginUserDataProvider>
     <LoginUserCreatsJobsDataProvider>
       <ConnectionProvide>
-      <StrictMode>
+      {/* <StrictMode> */}
       <RouterProvider router={router} />
-      </StrictMode>
+      {/* </StrictMode> */}
       </ConnectionProvide>
       </LoginUserCreatsJobsDataProvider>
   </LoginUserDataProvider>
