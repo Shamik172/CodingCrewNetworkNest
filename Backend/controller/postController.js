@@ -6,8 +6,8 @@ const { uploadOnCloudinary } = require('../cloudaniary');
 
 exports.postCreatePost = async (req, res, next) => {
     try {
-        console.log(req.body); // Check incoming post data
-        console.log(req.files); // Check the uploaded files (images/videos)
+        // console.log(req.body); // Check incoming post data
+        // console.log(req.files); // Check the uploaded files (images/videos)
 
         const { description } = req.body;
         const author = req.session.user;
@@ -93,24 +93,24 @@ exports.getAllPosts = (req, res, next)=>{
 //+++++++++++++++++++++++++++++++++++++
 //------------------------------------
     //check code
-    exports.getAllPosts = (req, res, next) => {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 10;
-        const skip = (page - 1) * limit;
-    
-        Post.aggregate([
-            { $skip: skip },          // Apply pagination first
-            { $limit: limit },        // Limit documents to the specified limit
-            { $sample: { size: limit } } // Randomly sample from the paginated subset
-        ])
-        .then(allPosts => {
-            res.status(200).json(allPosts);
-        })
-        .catch(err => {
-            console.error(err);
-            res.status(500).json({ error: 'Failed to fetch posts' });
-        });
-    };
+exports.getAllPosts = (req, res, next) => {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    Post.aggregate([
+        { $skip: skip },          // Apply pagination first
+        { $limit: limit },        // Limit documents to the specified limit
+        { $sample: { size: limit } } // Randomly sample from the paginated subset
+    ])
+    .then(allPosts => {
+        res.status(200).json(allPosts);
+    })
+    .catch(err => {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to fetch posts' });
+    });
+};
     
     
 
@@ -160,7 +160,7 @@ exports.likePost = async (req, res) => {
   
       res.status(200).json({ result, likesCount: postFound.likes.length });
     } catch (err) {
-      console.error(err);
+    //   console.error(err);
       res.status(500).json({ message: "Server error" });
     }
   };
@@ -234,7 +234,7 @@ exports.postDeleteComment = (req, res, next) =>{
             return res.status(404).json({message: "You are not authorized to delete the comment"});
         }
 
-        console.log("odne");
+        // console.log("odne");
         return res.status(200).json({message: "comment deleted successfully"});
     })
     .catch(err=>console.log(err));

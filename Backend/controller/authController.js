@@ -17,7 +17,7 @@ exports.getIndex = (req, res, next) => {
 
 
 exports.postLogin = (req, res, next)=>{
-    console.log(req.body);
+    // console.log(req.body);
     const password = req.body.password;
     const username = req.body.username;
     // console.log(username, password);
@@ -53,7 +53,7 @@ exports.postLogin = (req, res, next)=>{
 }
 
 exports.postSignup = (req, res, next) => {
-    console.log(req.body)
+    // console.log(req.body)
     const email = req.body.email;
     const password = req.body.password;
     const username = req.body.username;
@@ -102,13 +102,13 @@ exports.postSignup = (req, res, next) => {
 };
 
 exports.postLogout = (req, res) => {
-    console.log("reached");
+    // console.log("reached");
     req.session.destroy(err => {
         if (err) {
             return res.status(500).json({ message: 'Logout failed' });
         }
         res.clearCookie('connect.sid'); 
-        console.log('Logged out successfully');
+        // console.log('Logged out successfully');
         // res.redirect('/login'); 
         return res.status(200).json({message: "Logged out successfully"});
     });

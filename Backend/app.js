@@ -119,7 +119,7 @@ io.on("connection", (socket) => {
 mongoose.connect(MONGODB_URI)
     .then(() => {
         server.listen(3000, () => {
-            console.log("Server and Socket.IO listening on port 3000");
+            // console.log("Server and Socket.IO listening on port 3000");
         });
     })
     .catch(err => console.log(err));

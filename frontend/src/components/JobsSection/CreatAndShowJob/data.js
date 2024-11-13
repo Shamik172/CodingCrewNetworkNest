@@ -43,7 +43,9 @@ export const jobTitles = [
     "Creative Spark Studios",
     "Redwood Logistics",
     "Fusion Energy Corp",
-    "Alpha Digital Agency"
+    "Alpha Digital Agency",
+    "Stark Industries",
+    "Wakanda Forever"
   ];
   
 

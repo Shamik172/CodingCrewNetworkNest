@@ -5,8 +5,8 @@ exports.sendConnectionRequest = (req, res, next) => {
   const receiverUsername = req.params.username;
   const senderUsername = req.session.user.username;
   
-  console.log(senderUsername);
-  console.log(receiverUsername);
+  // console.log(senderUsername);
+  // console.log(receiverUsername);
 
   // Rest of your logic remains the same
   User.findOne({ username: receiverUsername })
@@ -171,7 +171,7 @@ exports.getallConnections = async (req, res, next) => {
     // console.log("resultascas",result);
     res.status(200).json(result);
   } catch (error) { 
-    console.log(error);
+    // console.log(error);
     res.status(500).json({ message: "An error occurred while retrieving connections" });
   }
 };
