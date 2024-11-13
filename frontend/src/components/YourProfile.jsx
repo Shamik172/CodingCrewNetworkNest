@@ -92,7 +92,7 @@ const YourProfile = () => {
                         </div>
                     </div>
 
-                    <div>
+                    <div className='lg:w-2/3 md:w-3/5 w-[90%] '>
                         <ProfileSection userId={userData._id} />
                         <Skills userId={userData._id} />
                         <Project userId={userData._id} />

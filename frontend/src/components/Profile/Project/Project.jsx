@@ -54,39 +54,43 @@ const Project = ({userId}) => {
       <div className="py-8 px-4 relative">
         {/* Display Projects */}
         {allProjects.map((project, index) => (
-          <div key={index} className="flex flex-col md:flex-row items-center md:space-x-8 my-8 bg-gray-800 text-white p-4 rounded-lg relative">
-            {/* Delete Icon */}
-            <button
-              onClick={() => deleteProject(index)}
-              className="absolute top-2 right-2 text-red-500 hover:text-red-700"
-            >
-              <IoIosTrash size={24} />
-            </button>
-
-            {/* Left Side - Image or Video */}
-            {/* <div className="flex flex-col items-center md:items-end md:w-1/2">
-              <div className="border border-gray-700 rounded-lg overflow-hidden w-full md:w-3/4">
-                {project.file && project.file.type.startsWith('video') ? (
-                  <video controls src={URL.createObjectURL(project.file)} className="w-full" />
-                ) : (
-                  <img src={URL.createObjectURL(project.file)} alt={`${project.title} screenshot`} className="w-full" />
-                )}
-              </div>
-            </div> */}
-
-            {/* Middle Line */}
-            <div className="hidden md:block h-full border-l-2 border-gray-600 mx-8"></div>
+          <div key={index} className="flex flex-col dark:bg-slate-950 rounded-lg  bg-slate-200 shadow shadow-black dark:shadow-white">
             
-            {/* Right Side - Description */}
-            <div className="md:w-1/2 space-y-4">
-              <h2 className="text-4xl font-semibold text-orange-500">{project.title}</h2>
-              <p className="text-lg">{project.description}</p>
-              <div className="flex flex-wrap gap-2">
-                {/* {project.tags.split(',').map((tag, i) => (
-                  <span key={i} className="bg-gray-700 px-3 py-1 rounded-full text-sm">{`#${tag.trim()}`}</span>
-                ))} */}
-              </div>
-            </div>
+
+              {/* Left Side - Image or Video */}
+              {/* <div className="flex flex-col items-center md:items-end md:w-1/2">
+                <div className="border border-gray-700 rounded-lg overflow-hidden w-full md:w-3/4">
+                  {project.file && project.file.type.startsWith('video') ? (
+                    <video controls src={URL.createObjectURL(project.file)} className="w-full" />
+                  ) : (
+                    <img src={URL.createObjectURL(project.file)} alt={`${project.title} screenshot`} className="w-full" />
+                  )}
+                </div>
+                </div> */}
+
+           
+            
+                {/* Right Side - Description */}
+                <div className="space-y-4 ">
+                  <div className="text-xl p-2 px-4 font-semibold text-purple-500 flex justify-center items-center">{project.title}</div>
+                  <p className="text-lg flex justify-center">{project.description}</p>
+                  <div className="flex flex-wrap gap-2 m-4">
+                    {/* {console.log(project.tags)} */}
+                    {project.tags.split(',').map((tag, i) => (
+                      
+                      tag.length>0 &&  <span key={i} className="bg-sky-700 opacity-75 px-2.5 py-0.5 m-2 rounded-full text-sm">{`${tag.trim()}`}</span> 
+                    
+                    ))}
+                  </div>
+                </div>
+
+                {/* Delete Icon */}
+                <button
+                  onClick={() => deleteProject(index)}
+                  className=" p-2  text-red-400 hover:text-red-500"
+                > Remove
+                  {/* <IoIosTrash size={20} color='blue' /> */}
+                </button>
           </div>
         ))}
 

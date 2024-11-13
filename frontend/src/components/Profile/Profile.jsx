@@ -114,15 +114,16 @@ function ProfileSection({userId}) {
 }
 
   return (
-    <div className="max-w-2xl md:mx-auto p-6 bg-white dark:bg-black  shadow-sky-700 shadow-md  rounded-lg relative top-20 mx-2">
-      <div className="relative">
+    <div className="max-w-3xl w-full md:mx-auto p-6 bg-white dark:bg-black  shadow-sky-700 shadow-md  rounded-lg relative top-20  ">
+      <div className="relative ">
         {/* Cover Picture */}
-        <div className='w-full h-64 border-4 dark:border-gray-500 rounded-lg overflow-hidden'>
-        <CoverPic 
-          coverPicture={profile.coverPicture}
-          className="object-fit w-full h-full"
-        />
-      </div>
+          <div className="w-full h-64 border-4 dark:border-gray-500 dark:bg-gray-800 rounded-lg ">
+            <CoverPic 
+              coverPicture={profile.coverPicture}
+              
+            />
+          </div>
+
 
         <button
           onClick={() => setIsCoverModalOpen(true)}

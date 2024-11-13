@@ -90,7 +90,7 @@ const Experience = ({userId}) => {
     <Section title={'Work Experience'} onAddClick={() => setFormVisible(true)}>
       {/* Display list of job entries */}
       {experienceList.map((experience, index) => (
-        <div key={index} className="bg-slate-300 shadow-black dark:bg-slate-950 dark:shadow-white p-4 mb-6 mx-3 rounded shadow-sm">
+        <div key={index} className="bg-slate-300 shadow-black dark:bg-slate-950 dark:shadow-white p-4 mb-6 mx-3 rounded shadow">
           <p><strong>Job Title:</strong> {capitalizeFirstLetter(experience.jobTitle)}</p>
           <p><strong>Company Name:</strong> {capitalizeFirstLetter(experience.companyName)}</p>
           <p><strong>Start Date:</strong> {new Date(experience.startDate).getFullYear()|| 'No start date'}</p>

@@ -84,7 +84,7 @@ const Education = ({userId}) => {
     <Section title={'Education'} onAddClick={() => setFormVisible(true)}>
       {/* Display list of education entries */}
       {educationList.map((education, index) => (
-        <div key={index} className="bg-slate-300 shadow-black dark:bg-slate-950  dark:shadow-white p-4 mb-6 rounded shadow-md mx-3"> {/* Increased mb-4 to mb-6 */}
+        <div key={index} className="bg-slate-300 shadow-black dark:bg-slate-950  dark:shadow-white p-4 mb-6 rounded shadow mx-3"> {/* Increased mb-4 to mb-6 */}
           <p><strong>School Name:</strong> {capitalizeFirstLetter(education.schoolName)}</p>
           <p><strong>Start Year:</strong> {new Date(education.startDate).getFullYear()}</p>
           <p><strong>End Year:</strong> {new Date(education.endDate).getFullYear()}</p>
