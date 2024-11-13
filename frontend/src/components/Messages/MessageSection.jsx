@@ -87,18 +87,18 @@ const MessageSection = ({ userData }) => {
      
     <div className="flex h-screen pt-16  ">
       {/* Connections List on the Left */}
-      <div className="md:w-1/3 w-2/5  bg-white dark:bg-slate-800 border-r-2 border-gray-300 dark:border-gray-600 ">
+      <div className="md:w-1/4 w-2/5  bg-white dark:bg-slate-800 border-r-2 border-gray-300 dark:border-gray-600 ">
         <h2 className="text-2xl font-semibold  flex justify-center items-center dark:bg-gray-900 py-5 dark:text-purple-500 shadow shadow-blue-600">Connections</h2>
         {/* <div className='w-full dark:bg-slate-700 bg-slate-300  h-1 rounded-full border-none outline-none '></div> */}
-        <div className="space-y-2  flex">
-          {connections.map((connection) => (
-            <div className='flex justify-center items-center m-2 mx-4  cursor-pointer hover:bg-gray-300 hover:dark:bg-gray-900 p-2 rounded-md'>
+        <div className="space-y-2  flex flex-col ">
+          {connections.map((connection, index) => (
+            <div    onClick={() => openChat(connection)} key={index} className='flex  justify-start items-center m-2 mx-4  cursor-pointer hover:bg-gray-300 hover:dark:bg-gray-900 p-2 rounded-md'>
               <div className='size-10 rounded-full bg-slate-500 flex justify-center items-center text-2xl font-bold '>{
                 connection.username.charAt(0).toUpperCase()
                 }</div>
               <div
                 key={connection.username}
-                onClick={() => openChat(connection)}
+
                 className="px-2    text-center dark:text-purple-400"
               >
                 {connection.name}
@@ -110,7 +110,7 @@ const MessageSection = ({ userData }) => {
 
       {/* Chat Section on the Right */}
       {selectedConnection && (
-        <div className=" md:w-2/3 w-3/5">
+        <div className=" md:w-3/4 w-3/5">
           <ChatSection
             selectedConnection={selectedConnection}
             messages={messages[selectedConnection.username] || []}

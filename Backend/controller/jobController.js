@@ -6,7 +6,7 @@ const User = require('../models/user');
 
 exports.createJob = (req, res, next) => {
     // Log the body for debugging
-    console.log(req.body);  
+    // console.log(req.body);  
     
     const { description, companyName, location, jobType, salary, requiredSkills, deadline, role, city, experience, qualification } = req.body;
     
@@ -15,7 +15,7 @@ exports.createJob = (req, res, next) => {
 
     // Check if all required fields are provided
     if(!description || !companyName || !location || !salary || !role || !city || !qualification || !deadline || !jobType) {
-        console.log("this is the issue");
+        // console.log("this is the issue");
         return res.status(403).json({ message: "Complete required fields" });
     }
 
@@ -56,17 +56,17 @@ exports.createJob = (req, res, next) => {
                             return res.status(200).json({ message: "Job posted successfully" });
                         })
                         .catch(err => {
-                            console.log(err);
+                            // console.log(err);
                             return res.status(500).json({ message: "Error updating user with new job" });
                         });
                 })
                 .catch(err => {
-                    console.log(err);
+                    // console.log(err);
                     return res.status(500).json({ message: "Error finding user" });
                 });
         })
         .catch(err => {
-            console.log(err);
+            // console.log(err);
             return res.status(500).json({ message: "Error saving job" });
         });
 };
@@ -162,7 +162,7 @@ exports.filterJob = (req, res, next) => {
             res.status(200).json(jobs);
         })
         .catch(err => {
-            console.log(err);
+            // console.log(err);
             res.status(500).json({ error: "An error occurred while fetching jobs." });
         });
 };
@@ -190,12 +190,12 @@ exports.getAllJobsByUser = (req, res, next) => {
                     return res.status(200).json(jobs);
                 })
                 .catch(err => {
-                    console.log(err);
+                    // console.log(err);
                     return res.status(500).json({ message: "Error fetching jobs" });
                 });
         })
         .catch(err => {
-            console.log(err);
+            // console.log(err);
             return res.status(500).json({ message: "Error finding user" });
         });
 };
@@ -213,7 +213,7 @@ exports.getAppliedJobsByUser = (req, res, next) => {
             // console.log(appliedJobIds);
             // appliedJobIds.filter(obj=>obj.status === 'Pending');
             const appliedJobsDetails = await Job.find({ _id: { $in: appliedJobIds } });
-            console.log(appliedJobsDetails);
+            // console.log(appliedJobsDetails);
             res.status(200).json(appliedJobsDetails);
         })
         .catch((err) => {
@@ -306,7 +306,7 @@ exports.getAllJobs = async (req, res, next) => {
       });
       return res.status(200).json(filteredJobs); // Return the filtered jobs
     } catch (err) {
-      console.log(err); // Log any error
+    //   console.log(err); // Log any error
       return res.status(500).json({ message: "Error fetching jobs" }); // Return an error response
     }
   };
@@ -389,7 +389,7 @@ exports.rejectAll = async (req, res, next) => {
   
       return res.status(200).json({ message: "All pending applications rejected", job });
     } catch (err) {
-      console.error(err);
+    //   console.error(err);
       return res.status(500).json({ message: "An error occurred while rejecting applications", error: err.message });
     }
   };
@@ -414,7 +414,7 @@ exports.rejectAll = async (req, res, next) => {
             res.json(result); // Send the result array as a response
         })
         .catch(err => {
-            console.error(err);
+            // console.error(err);
             res.status(500).json({ message: "An error occurred", error: err });
         });
 };

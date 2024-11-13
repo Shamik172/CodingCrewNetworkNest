@@ -4,12 +4,12 @@ const { uploadOnCloudinary } = require('../cloudaniary.js');
 
 exports.uploadProfilePicture = async (req, res) => {
     try {
-        console.log("m functioh m aagya")
-        console.log(req.body);
+        // console.log("m functioh m aagya")
+        // console.log(req.body);
         const userId = req.params.userId;
 
-        console.log("User ID:", userId);
-        console.log("Uploaded File:", req.file);
+        // console.log("User ID:", userId);
+        // console.log("Uploaded File:", req.file);
 
         if (!req.file) {
             return res.status(400).json({ message: "No file uploaded" });
@@ -74,12 +74,12 @@ exports.getUserProfilePage = (req, res, next) =>{
 
 exports.uploadCoverPicture = async (req, res) => {
     try {
-        console.log("m functioh m aagya")
+        // console.log("m functioh m aagya")
         // console.log(req.body);
         const userId = req.params.userId;
 
-        console.log("User ID:", userId);
-        console.log("Uploaded File:", req.file);
+        // console.log("User ID:", userId);
+        // console.log("Uploaded File:", req.file);
 
         if (!req.file) {
             return res.status(400).json({ message: "No file uploaded" });
@@ -185,7 +185,7 @@ exports.deleteSkill = (req, res, next) => {
 exports.deleteEducation = (req, res, next) => {
     const userId = req.params.userId;
     const eduIndex = req.params.index;
-    console.log(eduIndex);
+    // console.log(eduIndex);
     User.findById(userId)
     .then(user=>{ 
         if(!user){
@@ -253,7 +253,7 @@ exports.addEducation = (req, res, next) => {
      User.findById(userId)
      .then(user=>{
         if(!user){
-            console.log("error");
+            // console.log("error");
             return;
         }
         if (!Array.isArray(user.education)) {
@@ -276,7 +276,7 @@ exports.addExperience = (req, res, next)=>{
      User.findById(userId)
      .then(user=>{
         if(!user){
-            console.log("error");
+            // console.log("error");
             return;
         }
         if (!Array.isArray(user.experience)) {
@@ -304,7 +304,7 @@ exports.searchUser = (req, res, next) => {
         res.status(200).json(users);
     })
     .catch(err => {
-        console.log(err);
+        // console.log(err);
         res.status(500).json({message: "Internal server error"});
     })
 }
@@ -313,7 +313,7 @@ exports.searchAll = (req, res, next) => {
     const searchQuery = req.body.searchQuery;
     // console.log(req.body);
     let result = {};
-    console.log(searchQuery);
+    // console.log(searchQuery);
     // Define filters with correct regex options
     const filterUser = {
         $or: [

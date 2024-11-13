@@ -19,6 +19,9 @@
     "dev": "nodemon app.js"
   },
   "devDependencies": {
+    "@types/connect-mongodb-session": "^2.4.7",
+    "@types/express-session": "^1.18.0",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/multer": "^1.4.12",
     "nodemon": "^3.1.7"
   }

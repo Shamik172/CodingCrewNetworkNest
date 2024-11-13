@@ -5,7 +5,7 @@ import Search from "./Search";
 import Logo from "./Logo";
 import { NavIcon } from "./NavIcon";
 import { MobileIcon } from "./MobileIcon";
-import img from "../../assets/logo.png";
+import img from "../../assets/logo1-removebg-preview.png";
 import NavDropDown from "./NavDropDown";
 import CustomerData from "../../Store/LoginUserDataProvider";
 import axios from "axios";
