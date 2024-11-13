@@ -150,14 +150,14 @@ function UserPost({ UserProfile, isLogin, myconnect }) {
           <LikeCommentShere
             Icon={FaComment}
             title={'Comment'}
-            col={isCommented ? 'green' : 'white'} // Change color based on comment state
+            col={isCommented ? 'green' : 'green'} // Change color based on comment state
             isLogin={isLogin}
             ClickHandler={handleComment}
           />
           <LikeCommentShere
             Icon={FaShare}
             title={'Share'}
-            col={isShared ? 'blue' : 'white'} // Change color based on share state
+            col={isShared ? 'blue' : 'blue'} // Change color based on share state
             isLogin={isLogin}
             ClickHandler={handleShare}
           />

@@ -67,7 +67,7 @@ const Comments = ({ comments, onClose, onAddComment, profilePicture }) => {
             comments.map((comment, index) => (
               <div
                 key={index}
-                className="flex items-start space-x-3 p-2 bg-gray-100 dark:bg-gray-700 rounded-lg"
+                className="flex items-center space-x-3 p-2 "
                 style={{ maxWidth: '100%' }}
               >
                 <img

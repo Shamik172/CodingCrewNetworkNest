@@ -9,7 +9,7 @@ const CoverPic = ({coverPicture,handleImageChange,editField,setEditField}) => {
              <img
         src={coverPicture}
         alt="Cover"
-        className="w-fit h-fit  object-contain rounded-lg mx-auto"
+        className="h-full w-full  object-center object-cover"
       />
        
      </>
